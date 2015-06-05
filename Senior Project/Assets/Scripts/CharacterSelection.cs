@@ -8,9 +8,19 @@ public class CharacterSelection : MonoBehaviour {
 	public GameObject[] characters = new GameObject[4];
 	public GameObject selectedCharacter;
 
-	public Vector3 characterPos = new Vector3 (5.18f,.12f,0);
+	public GameObject[] meleeWeapons = new GameObject[2];
+	public GameObject selectedMeleeWeapon;
+
+	public GameObject[] rangedWeapons = new GameObject[2];
+	public GameObject selectedRangedWeapon;
+
+	Vector3 characterPos = new Vector3 (5.18f,.12f,0);
+	Vector3 meleePos;
+	Vector3 rangedPos;
 
 	int prevChar = 0;
+	int prevMeleeWeapon = 0;
+	int prevRangedWeapon = 0;
 
 	//----------------------------------------------------
 	bool toAbilities;
@@ -58,7 +68,21 @@ public class CharacterSelection : MonoBehaviour {
 			Instantiate (characters [character], characterPos, Quaternion.identity);
 			prevChar = character;
 			abilitiesCanvas.GetComponent<AbilitySelection>().ResetBools();
+			selectedCharacter = characters[character];
 		}
+	}
+
+	public void SelectMeleeWeapon (int meleeWeapon) {
+		Destroy (GameObject.FindGameObjectWithTag ("Melee Weapon"));
+		GameObject meleeClone = (GameObject) Instantiate (meleeWeapons [meleeWeapon], characterPos, Quaternion.identity);
+		meleeClone.transform.parent = GameObject.FindWithTag("Player").transform;
+
+	}
+
+	public void SelectRangedWeapon (int rangedWeapon) {
+		Destroy (GameObject.FindGameObjectWithTag ("Ranged Weapon"));
+		GameObject rangedClone = (GameObject) Instantiate (rangedWeapons [rangedWeapon], characterPos, Quaternion.identity);
+		rangedClone.transform.parent = GameObject.FindWithTag("Player").transform;
 	}
 
 	public void MoveToAbilities () {

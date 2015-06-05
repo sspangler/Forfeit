@@ -7,13 +7,13 @@ public class PlayerStats : MonoBehaviour {
 	public float defence;
 	public float meleeDamage;
 	public float rangedDamage;
-	public float moveSpeed;
 	public float meleeAttackSpeed;
+	public float rangedAttackSpeed;
+	public float moveSpeed;
 	public float maxAmmo;
 
 
 	void Start () {
 		DontDestroyOnLoad (this.gameObject);
 	}
-
 }

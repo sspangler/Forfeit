@@ -90,9 +90,9 @@ public class AbilitySelection : MonoBehaviour {
 		} else if (passive == "Movement Speed") {
 			movementSpeed = !movementSpeed;
 			if (movementSpeed) {
-				playerStats.moveSpeed += 5;
+				playerStats.moveSpeed += .4f;
 			} else  {
-				playerStats.moveSpeed -= 5;
+				playerStats.moveSpeed -= .4f;
 			}
 		} else if (passive == "Damage Increase") {
 			damageIncrease = !damageIncrease;
