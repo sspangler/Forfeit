@@ -11,7 +11,7 @@ public class AssultRifleRanged : MonoBehaviour {
 
 	PlayerStats stats;
 	PlayerController playerController;
-	bool inMenu;
+	bool inMenu = true;
 
 	
 	// Use this for initialization
@@ -19,11 +19,11 @@ public class AssultRifleRanged : MonoBehaviour {
 		stats = transform.parent.GetComponent<PlayerStats> ();
 		playerController = transform.parent.GetComponent<PlayerController> ();
 		stats.rangedAttackSpeed = attackSpeed;
-		stats.rangedDamage = attackSpeed;
+		stats.rangedDamage = attackDamage;
 	}
 
 	void Update () {
-		if (inMenu) {
+		if (!inMenu) {
 			if (!canAttack) {
 				attackTimer -= Time.deltaTime;
 				if (attackTimer <= 0) {

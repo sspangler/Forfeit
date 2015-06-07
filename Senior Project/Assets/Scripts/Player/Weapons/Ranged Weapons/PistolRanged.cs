@@ -17,7 +17,7 @@ public class PistolRanged : MonoBehaviour {
 		stats = transform.parent.GetComponent<PlayerStats> ();
 		playerController = transform.parent.GetComponent<PlayerController> ();
 		stats.rangedAttackSpeed = attackSpeed;
-		stats.rangedDamage = attackSpeed;
+		stats.rangedDamage = attackDamage;
 	}
 
 	void Update () {

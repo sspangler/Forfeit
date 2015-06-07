@@ -4,6 +4,7 @@ using System.Collections;
 public class AbilitySelection : MonoBehaviour {
 	public GameObject mainCamera;
 	public GameObject characterCanvas;
+	public StatsCanvas statsCanvas;
 	public GameObject player;
 	public PlayerStats playerStats;
 
@@ -69,6 +70,8 @@ public class AbilitySelection : MonoBehaviour {
 				Destroy(player.gameObject.GetComponent<MassDamage>());
 			}
 		}
+
+		statsCanvas.UpdateStats();
 	}
 	
 	public void SetPassives (string passive) {

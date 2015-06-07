@@ -4,6 +4,7 @@ using System.Collections;
 public class CharacterSelection : MonoBehaviour {
 	public GameObject mainCamera;
 	public GameObject abilitiesCanvas;
+	public StatsCanvas statsCanvas;
 	public GameObject titleCanvas;
 	public GameObject[] characters = new GameObject[4];
 	public GameObject selectedCharacter;
@@ -14,7 +15,7 @@ public class CharacterSelection : MonoBehaviour {
 	public GameObject[] rangedWeapons = new GameObject[2];
 	public GameObject selectedRangedWeapon;
 
-	Vector3 characterPos = new Vector3 (5.18f,.12f,0);
+	Vector3 characterPos = new Vector3 (5f,-1.5f,0);
 	Vector3 meleePos;
 	Vector3 rangedPos;
 
@@ -47,6 +48,7 @@ public class CharacterSelection : MonoBehaviour {
 				abilitiesCanvas.GetComponent<AbilitySelection>().player = selectedCharacter;
 				abilitiesCanvas.GetComponent<AbilitySelection>().playerStats = selectedCharacter.GetComponent<PlayerStats>();
 				this.gameObject.SetActive(false);
+				statsCanvas.gameObject.SetActive(false);
 			}
 		}
 
@@ -58,7 +60,6 @@ public class CharacterSelection : MonoBehaviour {
 				this.gameObject.SetActive(false);
 			}
 		}
-
 	}
 
 
@@ -69,6 +70,7 @@ public class CharacterSelection : MonoBehaviour {
 			prevChar = character;
 			abilitiesCanvas.GetComponent<AbilitySelection>().ResetBools();
 			selectedCharacter = characters[character];
+			statsCanvas.Invoke("UpdateStats", .1f);
 		}
 	}
 
@@ -76,13 +78,14 @@ public class CharacterSelection : MonoBehaviour {
 		Destroy (GameObject.FindGameObjectWithTag ("Melee Weapon"));
 		GameObject meleeClone = (GameObject) Instantiate (meleeWeapons [meleeWeapon], characterPos, Quaternion.identity);
 		meleeClone.transform.parent = GameObject.FindWithTag("Player").transform;
-
+		statsCanvas.Invoke("UpdateStats", .1f);
 	}
 
 	public void SelectRangedWeapon (int rangedWeapon) {
 		Destroy (GameObject.FindGameObjectWithTag ("Ranged Weapon"));
 		GameObject rangedClone = (GameObject) Instantiate (rangedWeapons [rangedWeapon], characterPos, Quaternion.identity);
 		rangedClone.transform.parent = GameObject.FindWithTag("Player").transform;
+		statsCanvas.Invoke("UpdateStats", .1f);
 	}
 
 	public void MoveToAbilities () {

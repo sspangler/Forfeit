@@ -18,7 +18,7 @@ public class KatanaMelee : MonoBehaviour {
 		stats = transform.parent.GetComponent<PlayerStats> ();
 		playerController = transform.parent.GetComponent<PlayerController> ();
 		stats.meleeAttackSpeed = attackSpeed;
-		stats.meleeDamage = attackSpeed;
+		stats.meleeDamage = attackDamage;
 	}
 
 	void Update () {

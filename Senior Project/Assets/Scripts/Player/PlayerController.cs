@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (inMenu) {
+		if (!inMenu) {
 			// left and right movement
 			if (Input.GetKey (KeyCode.A)) {
 				playerRigidbody.velocity = new Vector3 (-speed, playerRigidbody.velocity.y) * stats.moveSpeed;

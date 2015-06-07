@@ -5,6 +5,7 @@ public class TitleScreen : MonoBehaviour {
 	public GameObject mainCamera;
 	public GameObject abilitiesCanvas;
 	public GameObject characterCanvas;
+	public GameObject statsCanvas;
 
 	bool toCharacter;
 
@@ -14,7 +15,7 @@ public class TitleScreen : MonoBehaviour {
 	void Start () {
 		abilitiesCanvas.SetActive (false);
 		characterCanvas.SetActive(false);
-
+		statsCanvas.SetActive (false);
 	}
 	
 	// Update is called once per frame
@@ -27,6 +28,7 @@ public class TitleScreen : MonoBehaviour {
 			if (mainCamera.transform.position == characterPos) {
 				toCharacter = false;
 				characterCanvas.SetActive(true);
+				statsCanvas.SetActive(true);
 				this.gameObject.SetActive(false);
 			}
 		}
