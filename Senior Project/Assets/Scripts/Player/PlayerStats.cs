@@ -3,6 +3,8 @@ using System.Collections;
 
 public class PlayerStats : MonoBehaviour {
 
+	public int avalPoints;
+
 	public float health;
 	public float defence;
 	public float meleeDamage;
@@ -14,6 +16,7 @@ public class PlayerStats : MonoBehaviour {
 
 
 	void Start () {
+		avalPoints = 5;
 		DontDestroyOnLoad (this.gameObject);
 	}
 }

@@ -5,14 +5,19 @@ public class PlayerController : MonoBehaviour {
 	PlayerStats stats;
 	Rigidbody2D playerRigidbody;
 	float speed = 5;
-	bool inMenu = true;
+	public bool inMenu = true;
 
 	// Use this for initialization
 	void Start () {
 		stats = GetComponent<PlayerStats> ();
 		playerRigidbody = GetComponent<Rigidbody2D> ();
 	}
-	
+
+	void OnLevelWasLoaded () {
+		Camera.main.transform.parent = this.gameObject.transform;
+		inMenu = false;
+	}
+
 	// Update is called once per frame
 	void Update () {
 		if (!inMenu) {
