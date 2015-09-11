@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class CharacterSelection : MonoBehaviour {
+
 	public GameObject mainCamera;
 	public GameObject abilitiesCanvas;
 	public StatsCanvas statsCanvas;
@@ -20,8 +21,7 @@ public class CharacterSelection : MonoBehaviour {
 	Vector3 rangedPos;
 
 	int prevChar = 0;
-	int prevMeleeWeapon = 0;
-	int prevRangedWeapon = 0;
+	int availablePoints;
 
 	//----------------------------------------------------
 	bool toAbilities;

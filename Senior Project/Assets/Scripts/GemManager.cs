@@ -18,5 +18,4 @@ public class GemManager : MonoBehaviour {
 			transform.parent = GameObject.FindGameObjectWithTag("Melee Weapon").transform;
 		}
 	}
-
 }

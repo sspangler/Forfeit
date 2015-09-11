@@ -5,11 +5,15 @@ public class PistolRanged : MonoBehaviour {
 	
 	public float attackSpeed;
 	public float attackDamage;
+	public float moveSpeed;
 
 	public bool canAttack = true;
 
-	PlayerStats stats;
+	public GameObject Projectile;
+
 	PlayerController playerController;
+
+	PlayerStats stats;
 	bool inMenu = true;
 
 	// Use this for initialization
@@ -20,15 +24,25 @@ public class PistolRanged : MonoBehaviour {
 		stats.rangedDamage = attackDamage;
 	}
 
+	void OnLevelWasLoaded () {
+		inMenu = false;
+	}
+
 	void Update () {
 		if (!inMenu) {
 			//can only fire after click is released
-			if (Input.GetKeyDown (KeyCode.Mouse0) && canAttack) {
-				playerController.RangedAttack ();
+			if (Input.GetMouseButtonDown(0) && canAttack) {
+				GameObject fired = (GameObject) Instantiate(Projectile, transform.position, Quaternion.identity);
+				fired.tag = "PlayerProjectile";
+				ProjectileStats firedStats = fired.AddComponent<ProjectileStats>();
+				firedStats.damage = attackDamage;
+				firedStats.speed = moveSpeed;
+				firedStats.targetPos = Camera.main.ScreenToWorldPoint(new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 0));
+				fired.transform.LookAt(firedStats.targetPos);
 				canAttack = false;
 			}
 
-			if (Input.GetKeyUp (KeyCode.Mouse0)) {
+			if (Input.GetMouseButtonUp(0) && !playerController.usingMelee) {
 				canAttack = true;
 			}
 		}

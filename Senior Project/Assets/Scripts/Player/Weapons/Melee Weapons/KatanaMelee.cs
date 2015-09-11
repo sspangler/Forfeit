@@ -24,21 +24,13 @@ public class KatanaMelee : MonoBehaviour {
 	void Update () {
 		if (!inMenu) {
 
-			if (Input.GetKeyDown (KeyCode.Mouse0) && canAttack) {
-				playerController.MeleeAttack ();
+			if (Input.GetMouseButtonDown(0) && playerController.usingMelee) {
 				canAttack = false;
 			}
-		
-			if (Input.GetKeyUp (KeyCode.Mouse0)) {
+			
+			if (Input.GetMouseButtonUp(0)) {
 				canAttack = true;
 			}
-		
-			if (Input.GetKey (KeyCode.Mouse1)) {
-			
-			}
-
 		}
-	
-	
 	}
 }

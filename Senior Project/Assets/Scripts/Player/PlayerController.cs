@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour {
 	Rigidbody2D playerRigidbody;
 	float speed = 5;
 	public bool inMenu = true;
+	public bool usingMelee;
 
 	// Use this for initialization
 	void Start () {
@@ -16,11 +17,13 @@ public class PlayerController : MonoBehaviour {
 	void OnLevelWasLoaded () {
 		Camera.main.transform.parent = this.gameObject.transform;
 		inMenu = false;
+		usingMelee = true;
 	}
 
 	// Update is called once per frame
 	void Update () {
 		if (!inMenu) {
+			// MOVEMENT --------------------------------------------------------------------------------------
 			// left and right movement
 			if (Input.GetKey (KeyCode.A)) {
 				playerRigidbody.velocity = new Vector3 (-speed, playerRigidbody.velocity.y) * stats.moveSpeed;
@@ -37,15 +40,12 @@ public class PlayerController : MonoBehaviour {
 			} else {
 				playerRigidbody.velocity = new Vector3 (playerRigidbody.velocity.x, 0) * stats.moveSpeed;
 			}
+
+			//-------------------------------------------------------------------------------------------------
+			//Other 
+			if (Input.GetKeyDown(KeyCode.Q)) {
+				usingMelee = !usingMelee;
+			}
 		}
-	}
-
-
-	public void MeleeAttack () {
-		print ("melee attack");
-	}
-
-	public void RangedAttack () {
-		print ("ranged attack");
 	}
 }

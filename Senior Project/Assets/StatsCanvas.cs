@@ -6,10 +6,9 @@ using UnityEngine.UI;
 public class StatsCanvas : MonoBehaviour {
 
 	public PlayerStats playerStats;
+	public AbilitySelection abilitySelect;
 	public List<Text> stats = new List<Text> ();
-	//public Text stats;
-
-
+	
 	// Use this for initialization
 	void Start () {
 		UpdateStats ();
@@ -29,5 +28,6 @@ public class StatsCanvas : MonoBehaviour {
 		stats [4].text = "Ranged Damage:" + playerStats.rangedDamage;
 		stats [5].text = "Fire Rate:" + (playerStats.rangedAttackSpeed * 10);
 		stats [6].text = "Move Speed:" + playerStats.moveSpeed;
+		stats [7].text = "Select " + abilitySelect.avalPoints + " Abilities";
 	}
 }

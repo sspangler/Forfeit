@@ -19,4 +19,5 @@ public class PlayerStats : MonoBehaviour {
 		avalPoints = 5;
 		DontDestroyOnLoad (this.gameObject);
 	}
+	
 }

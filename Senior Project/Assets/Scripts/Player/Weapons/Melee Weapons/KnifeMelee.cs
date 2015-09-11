@@ -32,8 +32,7 @@ public class KnifeMelee : MonoBehaviour {
 				}
 			}
 
-			if (Input.GetKeyDown (KeyCode.Mouse0) && canAttack) {
-				playerController.MeleeAttack ();
+			if (Input.GetKeyDown (KeyCode.Mouse0) && canAttack && playerController.usingMelee) {
 				canAttack = false;
 			}
 		}

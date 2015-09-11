@@ -141,6 +141,7 @@ public class AbilitySelection : MonoBehaviour {
 				}
 			}
 		}
+		statsCanvas.UpdateStats();
 	}
 
 	public void LoadLevel () {
