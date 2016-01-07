@@ -12,17 +12,13 @@ public class AssultRifleRanged : MonoBehaviour {
 
 	public GameObject Projectile;
 
-	PlayerController playerController;
 	PlayerStats stats;
 	bool inMenu = true;
 
 	
 	// Use this for initialization
 	void Start () {
-		stats = transform.parent.GetComponent<PlayerStats> ();
-		playerController = transform.parent.GetComponent<PlayerController> ();
-		stats.rangedAttackSpeed = attackSpeed;
-		stats.rangedDamage = attackDamage;
+
 	}
 
 	void OnLevelWasLoaded () {
@@ -39,7 +35,7 @@ public class AssultRifleRanged : MonoBehaviour {
 				}
 			}
 
-			if (Input.GetMouseButton(0) && canAttack && !playerController.usingMelee) {
+			if (Input.GetKeyDown (KeyCode.LeftArrow) && canAttack) {
 				GameObject fired = (GameObject) Instantiate(Projectile, transform.position, Quaternion.identity);
 				fired.tag = "PlayerProjectile";
 				ProjectileStats firedStats = fired.AddComponent<ProjectileStats>();

@@ -4,37 +4,35 @@ using System.Collections;
 public class KnifeMelee : MonoBehaviour {
 
 	public float attackSpeed;
-	public float attackDamage;
+	float totalAttackDamage;
+	public float slashDamage;
+	public float pierceDamage;
+	public float smashingDamage;
 
 	public bool canAttack = true;
 	public float attackTimer;
 
 	PlayerStats stats;
 	PlayerController playerController;
-	bool inMenu = true;
 
 
 	// Use this for initialization
 	void Start () {
-		stats = transform.parent.GetComponent<PlayerStats> ();
-		playerController = transform.parent.GetComponent<PlayerController> ();
-		stats.meleeAttackSpeed = attackSpeed;
-		stats.meleeDamage = attackDamage;
+
 	}
 
 	void Update () {
-		if (!inMenu) {
-			if (!canAttack) {
-				attackTimer -= Time.deltaTime;
-				if (attackTimer <= 0) {
-					canAttack = true;
-					attackTimer = attackSpeed;
-				}
+		if (!canAttack) {
+			attackTimer -= Time.deltaTime;
+			if (attackTimer <= 0) {
+				canAttack = true;
+				attackTimer = attackSpeed;
 			}
+		}
 
-			if (Input.GetKeyDown (KeyCode.Mouse0) && canAttack && playerController.usingMelee) {
-				canAttack = false;
-			}
+		if (Input.GetKey (KeyCode.LeftArrow) && canAttack) {
+			//attack
+			canAttack = false;
 		}
 	}
 }

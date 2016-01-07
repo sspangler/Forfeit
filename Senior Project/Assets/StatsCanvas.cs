@@ -21,13 +21,10 @@ public class StatsCanvas : MonoBehaviour {
 
 	public void UpdateStats () {
 		playerStats = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerStats> ();
-		stats [0].text = "Health:" + playerStats.health;
-		stats [1].text = "Defence:" + playerStats.defence;
-		stats [2].text = "Melee Damage:" + playerStats.meleeDamage;
-		stats [3].text = "Swing Rate:" + (playerStats.meleeAttackSpeed * 10);
-		stats [4].text = "Ranged Damage:" + playerStats.rangedDamage;
-		stats [5].text = "Fire Rate:" + (playerStats.rangedAttackSpeed * 10);
-		stats [6].text = "Move Speed:" + playerStats.moveSpeed;
-		stats [7].text = "Select " + abilitySelect.avalPoints + " Abilities";
+		stats [0].text = "" + playerStats.health;
+		stats [1].text = "" + playerStats.meleeDamage;
+		stats [2].text = "" + playerStats.rangedDamage;
+		stats [3].text = "" + playerStats.moveSpeed / 3;
+		stats [4].text = "Select " + abilitySelect.avalPoints + " Abilities";
 	}
 }
