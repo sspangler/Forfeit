@@ -7,6 +7,7 @@ public class AbilitySelection : MonoBehaviour {
 	public StatsCanvas statsCanvas;
 	public GameObject player;
 	public PlayerStats playerStats;
+	public DifficultyModifier difMod;
 	public int avalPoints;
 
 	bool bonusHealth;
@@ -137,6 +138,8 @@ public class AbilitySelection : MonoBehaviour {
 		player.transform.localScale = new Vector3 (5f, 5f, 1f);
 		player.AddComponent<Rigidbody2D> ();
 		player.GetComponent<Rigidbody2D>().freezeRotation = true;
+		difMod.InvokeRepeating ("UpDifficulty", difMod.secondsPerDif, difMod.secondsPerDif);
+
 	}
 
 	public void moveToCharacter () {

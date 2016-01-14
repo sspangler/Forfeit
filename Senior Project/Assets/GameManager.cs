@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour {
 
 	public int diffStage;
 	public GameObject player;
+	int sceneNum = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -13,10 +14,14 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (Input.GetKeyDown (KeyCode.Tab)) {
+			print ("asdfsd");
+			Application.LoadLevelAdditive (sceneNum + 1);
+		}
 	}
 
 	public void OnLevelWasLoaded (int level) {
+		sceneNum += 1;
 		if (level == 1) {
 			player = GameObject.FindGameObjectWithTag ("Player");
 			foreach (MonoBehaviour script in player.GetComponents<MonoBehaviour>()) {
