@@ -13,10 +13,16 @@ public class LevelGenerator : MonoBehaviour {
 	Vector3 nextPos;
 	int rowCounter;
 
+	Vector3 rayCastOffSet = new Vector3 (0.001f, -1f, 0f);
+
 	LayerMask roomParentLayer;
 
 	// Use this for initialization
 	void Start () {
+		while (levelRows * levelColumns > 100) {
+			levelRows--;
+			levelColumns--;
+		}
 		roomParentLayer = 1 << LayerMask.NameToLayer ("RoomParent");
 
 		for (int i = 0; i < levelColumns; i++) {
@@ -25,10 +31,8 @@ public class LevelGenerator : MonoBehaviour {
 
 			if (i == levelColumns - 1 && rowCounter != levelRows - 1) {
 				int num = Random.Range(0,levelColumns);
-				print(num);
 				nextPos = startPos + Vector3.down * smallDim * (rowCounter+1);
 				nextPos += Vector3.left * num * smallDim;
-				print(nextPos);
 				i = -1;
 				rowCounter += 1;
 			}
@@ -41,7 +45,6 @@ public class LevelGenerator : MonoBehaviour {
 			if (CheckSmall ()) {
 				CreatePiece(levelPiece);
 			} else {
-				print("in small");
 				nextPos += Vector3.right * smallDim;
 				ChooseNextPiece();
 			}
@@ -68,8 +71,8 @@ public class LevelGenerator : MonoBehaviour {
 	}
 	
 	bool CheckSmall () {
-		RaycastHit2D hit = Physics2D.Raycast(nextPos * 1.001f, Vector2.right, 1f, roomParentLayer);
-		Debug.DrawRay (nextPos * 1.001f, Vector2.right, Color.black, 5f);
+		RaycastHit2D hit = Physics2D.Raycast(nextPos + rayCastOffSet, Vector2.right, 1f, roomParentLayer);
+
 		if (hit.collider == null) {
 			return true;
 		} else {
@@ -78,11 +81,8 @@ public class LevelGenerator : MonoBehaviour {
 	}
 	
 	bool CheckLarge () {
-		RaycastHit2D hitTop = Physics2D.Raycast(nextPos * 1.001f, Vector2.right, smallDim, roomParentLayer);
-		Debug.DrawRay (nextPos * .90f, Vector2.right * smallDim, Color.red, 5f);
-	
-		RaycastHit2D hitBottom = Physics2D.Raycast(nextPos * 1.001f + Vector3.down * smallDim, Vector2.right, smallDim, roomParentLayer);
-		Debug.DrawRay (nextPos * 1.001f + Vector3.down * smallDim, Vector2.right * smallDim, Color.red, 5f);
+		RaycastHit2D hitTop = Physics2D.Raycast(nextPos + rayCastOffSet, Vector2.right, smallDim, roomParentLayer);	
+		RaycastHit2D hitBottom = Physics2D.Raycast(nextPos + rayCastOffSet + Vector3.down * smallDim, Vector2.right, smallDim, roomParentLayer);
 
 		if (hitTop.collider == null && hitBottom.collider == null) {
 			return true;
@@ -92,11 +92,8 @@ public class LevelGenerator : MonoBehaviour {
 	}
 
 	bool CheckVert () {
-		RaycastHit2D hitTop = Physics2D.Raycast(nextPos * 1.001f, Vector2.right, 1f, roomParentLayer);
-		Debug.DrawRay (nextPos * 1f, Vector2.right, Color.blue, 5f);
-
-		RaycastHit2D hitBottom = Physics2D.Raycast(nextPos * 1.001f, Vector2.right, 1f, roomParentLayer);
-		Debug.DrawRay (nextPos * 1f, Vector2.right, Color.blue, 5f);
+		RaycastHit2D hitTop = Physics2D.Raycast(nextPos + rayCastOffSet, Vector2.right, 1f, roomParentLayer);
+		RaycastHit2D hitBottom = Physics2D.Raycast(nextPos + rayCastOffSet, Vector2.right, 1f, roomParentLayer);
 
 		if (hitTop.collider == null && hitBottom.collider == null) {
 			return true;
@@ -106,9 +103,9 @@ public class LevelGenerator : MonoBehaviour {
 	}
 
 	bool CheckHorz () {
-		RaycastHit2D hitTop = Physics2D.Raycast(nextPos * 1.001f, Vector2.right, smallDim, roomParentLayer);
-		Debug.DrawRay (nextPos * 1.1f, Vector2.right * smallDim, Color.yellow, 5f);
-		if (hitTop.collider == null) {
+		RaycastHit2D hit = Physics2D.Raycast(nextPos + rayCastOffSet, Vector2.right, smallDim, roomParentLayer);
+
+		if (hit.collider == null) {
 			return true;
 		} else {
 			return false;
@@ -117,8 +114,6 @@ public class LevelGenerator : MonoBehaviour {
 	
 	void CreatePiece (int roomPiece) {
 		GameObject nextLevelPiece = (GameObject)Instantiate (Rooms [roomPiece], startPos + nextPos, Quaternion.identity);
-		//print ("Before   " + nextPos);
 		nextPos += Vector3.right * nextLevelPiece.transform.localScale.x;
-		//print (nextPos);
 	}
 }
