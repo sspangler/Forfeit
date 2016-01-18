@@ -10,6 +10,10 @@ public class PlayerController : MonoBehaviour {
 
 	float forceDown;
 
+	public bool leftDown, rightDown;
+	public bool isGroundLeft, isGroundRight;
+
+
 	// Use this for initialization
 	void Start () {
 		stats = GetComponent<PlayerStats> ();
@@ -34,9 +38,9 @@ public class PlayerController : MonoBehaviour {
 
 		// MOVEMENT --------------------------------------------------------------------------------------
 		// left and right movement
-		if (Input.GetKey (KeyCode.A)) {
+		if (Input.GetKey (KeyCode.A) && !isGroundLeft) {
 			playerRigidbody.velocity = new Vector2 (-speed, playerRigidbody.velocity.y);
-		} else if (Input.GetKey (KeyCode.D)) {
+		} else if (Input.GetKey (KeyCode.D) && !isGroundRight) {
 			playerRigidbody.velocity = new Vector2 (speed, playerRigidbody.velocity.y);
 		} else {
 			playerRigidbody.velocity = new Vector2 (0, playerRigidbody.velocity.y);
@@ -50,7 +54,7 @@ public class PlayerController : MonoBehaviour {
 
 		}
 		// up and down movement
-		// W for doors S for ????
+		// W for doors/stairs S for going through certain platforms
 		
 		//-------------------------------------------------------------------------------------------------
 		//Attacking left right and down (possible up?)
@@ -58,7 +62,10 @@ public class PlayerController : MonoBehaviour {
 
 	void OnCollisionStay2D (Collision2D col) {
 		if (col.gameObject.tag == "Ground") {
-			isGrounded = true;
+			ContactPoint2D contact = col.contacts [0];
+			if (Vector3.Dot(contact.normal, Vector2.up) > .5f) { //might need to change the .5 with character changes
+				isGrounded = true;
+			}
 		}
 	}
 

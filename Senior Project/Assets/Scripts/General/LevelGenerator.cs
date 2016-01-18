@@ -4,9 +4,14 @@ using System.Collections.Generic;
 
 public class LevelGenerator : MonoBehaviour {
 	public int smallDim;
+	public GameObject exitDoor;
+	public GameObject exitDoorKey;
 
+	[HideInInspector]
 	public List<GameObject> Rooms = new List<GameObject>();
-	
+	[HideInInspector]
+	public List<GameObject> availRooms = new List<GameObject> ();
+	public List<GameObject> availKeyRooms = new List<GameObject> ();
 	public int levelColumns;
 	public int levelRows;
 	Vector3 startPos = Vector3.zero;
@@ -16,6 +21,9 @@ public class LevelGenerator : MonoBehaviour {
 	Vector3 rayCastOffSet = new Vector3 (0.001f, -1f, 0f);
 
 	LayerMask roomParentLayer;
+
+	List<GameObject> GeneratedRooms = new List<GameObject>();
+	Vector3 playerPos;
 
 	// Use this for initialization
 	void Start () {
@@ -37,6 +45,12 @@ public class LevelGenerator : MonoBehaviour {
 				rowCounter += 1;
 			}
 		}
+
+		GameObject player = GameObject.FindGameObjectWithTag ("Player");
+		playerPos = GeneratedRooms[Random.Range(0,GeneratedRooms.Count)].transform.position + new Vector3(3,-10,0);
+		player.transform.position = playerPos;
+
+		SpawnExit ();
 	}
 	
 	void ChooseNextPiece () {
@@ -115,5 +129,45 @@ public class LevelGenerator : MonoBehaviour {
 	void CreatePiece (int roomPiece) {
 		GameObject nextLevelPiece = (GameObject)Instantiate (Rooms [roomPiece], startPos + nextPos, Quaternion.identity);
 		nextPos += Vector3.right * nextLevelPiece.transform.localScale.x;
+		GeneratedRooms.Add (nextLevelPiece);
+	}
+
+	void SpawnExit () {
+		foreach (GameObject room in GameObject.FindGameObjectsWithTag("SmallRoom")) {
+			if (Vector2.Distance(room.transform.position, playerPos) > 100)
+				availRooms.Add(room);
+		}
+		foreach (GameObject room in GameObject.FindGameObjectsWithTag("BigRoom")) {
+			if (Vector2.Distance(room.transform.position, playerPos) > 100)
+				availRooms.Add(room);
+		}
+		foreach (GameObject room in GameObject.FindGameObjectsWithTag("HorzRoom")) {
+			if (Vector2.Distance(room.transform.position, playerPos) > 100)
+				availRooms.Add(room);
+		}
+		foreach (GameObject room in GameObject.FindGameObjectsWithTag("VertRoom")) {
+			if (Vector2.Distance(room.transform.position, playerPos) > 100)
+				availRooms.Add(room);
+		}
+		Instantiate (exitDoor, availRooms [Random.Range (0, availRooms.Count)].transform.position + new Vector3 (3, -10, 0), Quaternion.identity);
+		SpawnExitKey ();
+	}
+	
+	void SpawnExitKey () {
+		foreach (GameObject room in availRooms) {
+			if (Vector2.Distance(room.transform.position, GameObject.FindGameObjectWithTag("ExitDoor").transform.position) > 40) {
+				availKeyRooms.Add(room);
+			}
+		}
+
+		if (availKeyRooms == null) {
+			Instantiate(exitDoorKey,GeneratedRooms[Random.Range(0,GeneratedRooms.Count)].transform.position + new Vector3(3,-10,0), Quaternion.identity);
+		} else {
+			Instantiate(exitDoorKey, availKeyRooms[Random.Range(0,availKeyRooms.Count)].transform.position + new Vector3 (3, -10, 0), Quaternion.identity);
+		}
 	}
 }
+
+
+
+
