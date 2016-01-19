@@ -19,10 +19,13 @@ public class PlayerController : MonoBehaviour {
 		stats = GetComponent<PlayerStats> ();
 		playerRigidbody = GetComponent<Rigidbody2D> ();
 		speed = stats.moveSpeed;
+		//Camera.main.transform.parent = this.gameObject.transform;
+
 	}
 
 	void OnLevelWasLoaded () {
 		Camera.main.transform.parent = this.gameObject.transform;
+		Camera.main.transform.localPosition = new Vector3 (0, 0, -10);
 	}
 
 

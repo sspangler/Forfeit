@@ -8,9 +8,10 @@ public class LevelGenerator : MonoBehaviour {
 	public GameObject exitDoorKey;
 
 	//[HideInInspector]
-	public List<GameObject> Rooms = new List<GameObject>();
-	List<GameObject> availRooms = new List<GameObject> ();
-	List<GameObject> availKeyRooms = new List<GameObject> ();
+	public List<GameObject> Rooms = new List<GameObject>(); //list of rooms that can be spawned
+	List<GameObject> GeneratedRooms = new List<GameObject>(); // rooms that are in this level
+	List<GameObject> availRooms = new List<GameObject> (); //rooms that the exit can be put into
+	List<GameObject> availKeyRooms = new List<GameObject> (); // rooms that the key can be put into
 	public int levelColumns;
 	public int levelRows;
 	Vector3 nextPos;
@@ -19,13 +20,8 @@ public class LevelGenerator : MonoBehaviour {
 
 	LayerMask roomParentLayer;
 
-	List<GameObject> GeneratedRooms = new List<GameObject>();
+
 	Vector3 playerPos;
-
-	// Use this for initialization
-	void Start () {
-
-	}
 
 	void OnLevelWasLoaded () {
 		int rowCounter = 0;
@@ -53,10 +49,7 @@ public class LevelGenerator : MonoBehaviour {
 			}
 		}
 		
-		GameObject player = GameObject.FindGameObjectWithTag ("Player");
-		playerPos = GeneratedRooms[Random.Range(0,GeneratedRooms.Count)].transform.position + new Vector3(3,-10,0);
-		player.transform.position = playerPos;
-		
+		PlacePlayer ();
 		SpawnExit ();
 	}
 
@@ -139,6 +132,18 @@ public class LevelGenerator : MonoBehaviour {
 		GeneratedRooms.Add (nextLevelPiece);
 	}
 
+	void PlacePlayer () {
+		GameObject player = GameObject.FindGameObjectWithTag ("Player");
+		int num1 = Random.Range (0, GeneratedRooms.Count);
+		GameObject chosenRoom = GeneratedRooms [num1];
+
+		Vector2 roomPos = chosenRoom.transform.position;
+		Vector2 offset = chosenRoom.GetComponent<BoxCollider2D>().offset;
+
+		offset.Scale (chosenRoom.transform.localScale);
+		player.transform.position = offset + roomPos;
+	}
+
 	void SpawnExit () {
 		foreach (GameObject room in GameObject.FindGameObjectsWithTag("SmallRoom")) {
 			if (Vector2.Distance(room.transform.position, playerPos) > 100)
@@ -158,7 +163,6 @@ public class LevelGenerator : MonoBehaviour {
 		}
 		Instantiate (exitDoor, availRooms [Random.Range (0, availRooms.Count)].transform.position + new Vector3 (3, -10, 0), Quaternion.identity);
 		SpawnExitKey ();
-		print ("ekafd");
 	}
 	
 	void SpawnExitKey () {
