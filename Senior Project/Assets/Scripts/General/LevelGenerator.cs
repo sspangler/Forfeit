@@ -7,16 +7,13 @@ public class LevelGenerator : MonoBehaviour {
 	public GameObject exitDoor;
 	public GameObject exitDoorKey;
 
-	[HideInInspector]
+	//[HideInInspector]
 	public List<GameObject> Rooms = new List<GameObject>();
-	[HideInInspector]
-	public List<GameObject> availRooms = new List<GameObject> ();
-	public List<GameObject> availKeyRooms = new List<GameObject> ();
+	List<GameObject> availRooms = new List<GameObject> ();
+	List<GameObject> availKeyRooms = new List<GameObject> ();
 	public int levelColumns;
 	public int levelRows;
-	Vector3 startPos = Vector3.zero;
 	Vector3 nextPos;
-	int rowCounter;
 
 	Vector3 rayCastOffSet = new Vector3 (0.001f, -1f, 0f);
 
@@ -27,32 +24,42 @@ public class LevelGenerator : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+	}
+
+	void OnLevelWasLoaded () {
+		int rowCounter = 0;
+		//clears list from previous level
+		availRooms.Clear ();
+		availKeyRooms.Clear ();
+		GeneratedRooms.Clear ();
+
 		while (levelRows * levelColumns > 100) {
 			levelRows--;
 			levelColumns--;
 		}
 		roomParentLayer = 1 << LayerMask.NameToLayer ("RoomParent");
-
+		
 		for (int i = 0; i < levelColumns; i++) {
-
+			
 			ChooseNextPiece();
-
+			
 			if (i == levelColumns - 1 && rowCounter != levelRows - 1) {
 				int num = Random.Range(0,levelColumns);
-				nextPos = startPos + Vector3.down * smallDim * (rowCounter+1);
+				nextPos = Vector3.down * smallDim * (rowCounter+1);
 				nextPos += Vector3.left * num * smallDim;
 				i = -1;
 				rowCounter += 1;
 			}
 		}
-
+		
 		GameObject player = GameObject.FindGameObjectWithTag ("Player");
 		playerPos = GeneratedRooms[Random.Range(0,GeneratedRooms.Count)].transform.position + new Vector3(3,-10,0);
 		player.transform.position = playerPos;
-
+		
 		SpawnExit ();
 	}
-	
+
 	void ChooseNextPiece () {
 		int levelPiece = Random.Range (0, Rooms.Count);
 		if (Rooms [levelPiece].tag == "SmallRoom") {
@@ -127,7 +134,7 @@ public class LevelGenerator : MonoBehaviour {
 	}
 	
 	void CreatePiece (int roomPiece) {
-		GameObject nextLevelPiece = (GameObject)Instantiate (Rooms [roomPiece], startPos + nextPos, Quaternion.identity);
+		GameObject nextLevelPiece = (GameObject)Instantiate (Rooms [roomPiece], nextPos, Quaternion.identity);
 		nextPos += Vector3.right * nextLevelPiece.transform.localScale.x;
 		GeneratedRooms.Add (nextLevelPiece);
 	}
@@ -151,6 +158,7 @@ public class LevelGenerator : MonoBehaviour {
 		}
 		Instantiate (exitDoor, availRooms [Random.Range (0, availRooms.Count)].transform.position + new Vector3 (3, -10, 0), Quaternion.identity);
 		SpawnExitKey ();
+		print ("ekafd");
 	}
 	
 	void SpawnExitKey () {
@@ -167,7 +175,3 @@ public class LevelGenerator : MonoBehaviour {
 		}
 	}
 }
-
-
-
-

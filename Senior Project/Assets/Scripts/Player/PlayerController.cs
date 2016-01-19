@@ -28,6 +28,10 @@ public class PlayerController : MonoBehaviour {
 
 	void Update () {
 
+		if (Input.GetKeyDown (KeyCode.L)) {
+			Application.LoadLevel(Application.loadedLevel + 1);
+		}
+
 		if (!isGrounded) {
 			playerRigidbody.velocity += new Vector2 (0, forceDown);
 			if (forceDown > -.1f)
@@ -50,12 +54,9 @@ public class PlayerController : MonoBehaviour {
 			playerRigidbody.velocity = new Vector2 (playerRigidbody.velocity.x, jumpForce);
 		}
 
-		if (Input.GetKeyDown (KeyCode.Space)) {
-
-		}
 		// up and down movement
 		// W for doors/stairs S for going through certain platforms
-		
+
 		//-------------------------------------------------------------------------------------------------
 		//Attacking left right and down (possible up?)
 	}
