@@ -2,26 +2,16 @@
 using System.Collections;
 
 public class OneWayPlatforms : MonoBehaviour {
-	public Collider2D thisCollider;
+	public BoxCollider2D thisCollider;
 
 	// Use this for initialization
 	void Start () {
-
+		thisCollider = GetComponent<BoxCollider2D> ();
 	}
 
 	// Update is called once per frame
 	void Update () {
 
-	}
-
-	void OnTriggerEnter2D (Collider2D col) {
-		if (col.transform.position.y < transform.position.y) { //might need to change the .5 with character changes
-			Physics2D.IgnoreCollision(col, thisCollider);
-		}
-	}
-
-	void OnTriggerExit2D (Collider2D col) {
-		Physics2D.IgnoreCollision(col, thisCollider, false);
 	}
 
 	void OnCollisionEnter2D (Collision2D col) {
@@ -32,8 +22,10 @@ public class OneWayPlatforms : MonoBehaviour {
 	}
 
 	void OnCollisionExit2D (Collision2D col) {
-		if (col.transform.tag == "Player") {
-			//Physics2D.IgnoreCollision (col.collider, thisCollider, false);
-		}
+		ContactPoint2D contact = col.contacts [0];
+		if (col.transform.tag == "Player" && (Vector3.Dot(contact.normal, Vector2.up) > .5f)) { //if below
+			Physics2D.IgnoreCollision (col.collider, thisCollider, false);
+			col.gameObject.GetComponent<PlayerController> ().onOneWay = false;
+		} 
 	}
 }

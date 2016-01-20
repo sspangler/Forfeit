@@ -60,7 +60,6 @@ public class PlayerController : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Space) && isGrounded && !Input.GetKey (KeyCode.S)) {
 			playerRigidbody.velocity = new Vector2 (playerRigidbody.velocity.x, jumpForce);
 		} else if (Input.GetKeyDown (KeyCode.Space) && isGrounded && Input.GetKey (KeyCode.S) && onOneWay) {
-			print ("here");
 			Physics2D.IgnoreCollision (playerCol, oneWayCol);
 		}
 
