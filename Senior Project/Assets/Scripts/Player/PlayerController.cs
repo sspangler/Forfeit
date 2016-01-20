@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 	PlayerStats stats;
 	Rigidbody2D playerRigidbody;
+	public Collider2D playerCol;
 	float speed;
 	float jumpForce = 10f;
 	bool isGrounded;
@@ -13,14 +14,17 @@ public class PlayerController : MonoBehaviour {
 	public bool leftDown, rightDown;
 	public bool isGroundLeft, isGroundRight;
 
+	//[HideInInspector]
+	public bool onOneWay;
+	//[HideInInspector]
+	public Collider2D oneWayCol;
 
 	// Use this for initialization
 	void Start () {
 		stats = GetComponent<PlayerStats> ();
 		playerRigidbody = GetComponent<Rigidbody2D> ();
 		speed = stats.moveSpeed;
-		//Camera.main.transform.parent = this.gameObject.transform;
-
+		playerCol = GetComponent<Collider2D> ();
 	}
 
 	void OnLevelWasLoaded () {
@@ -52,9 +56,12 @@ public class PlayerController : MonoBehaviour {
 		} else {
 			playerRigidbody.velocity = new Vector2 (0, playerRigidbody.velocity.y);
 		}
-		
-		if (Input.GetKeyDown (KeyCode.Space) && isGrounded) {
+			
+		if (Input.GetKeyDown (KeyCode.Space) && isGrounded && !Input.GetKey (KeyCode.S)) {
 			playerRigidbody.velocity = new Vector2 (playerRigidbody.velocity.x, jumpForce);
+		} else if (Input.GetKeyDown (KeyCode.Space) && isGrounded && Input.GetKey (KeyCode.S) && onOneWay) {
+			print ("here");
+			Physics2D.IgnoreCollision (playerCol, oneWayCol);
 		}
 
 		// up and down movement
