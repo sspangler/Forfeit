@@ -141,7 +141,8 @@ public class LevelGenerator : MonoBehaviour {
 		Vector2 offset = chosenRoom.GetComponent<BoxCollider2D>().offset;
 
 		offset.Scale (chosenRoom.transform.localScale);
-		player.transform.position = offset + roomPos;
+		playerPos = offset + roomPos;
+		player.transform.position = playerPos;
 	}
 
 	void SpawnExit () {

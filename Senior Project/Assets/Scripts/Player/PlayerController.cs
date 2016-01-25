@@ -10,14 +10,13 @@ public class PlayerController : MonoBehaviour {
 	bool isGrounded;
 
 	float forceDown;
+	[HideInInspector] public bool leftDown, rightDown, isGroundLeft, isGroundRight;
 
-	public bool leftDown, rightDown;
-	public bool isGroundLeft, isGroundRight;
+	[HideInInspector] public bool onOneWay;
+	[HideInInspector] public Collider2D oneWayCol;
 
-	//[HideInInspector]
-	public bool onOneWay;
-	//[HideInInspector]
-	public Collider2D oneWayCol;
+	Vector3 leftFacing = new Vector3 (0,180,0);
+	Vector3 rightFacing = new Vector3 (0,0,0);
 
 	// Use this for initialization
 	void Start () {
@@ -51,21 +50,22 @@ public class PlayerController : MonoBehaviour {
 		// left and right movement
 		if (Input.GetKey (KeyCode.A) && !isGroundLeft) {
 			playerRigidbody.velocity = new Vector2 (-speed, playerRigidbody.velocity.y);
+
 		} else if (Input.GetKey (KeyCode.D) && !isGroundRight) {
 			playerRigidbody.velocity = new Vector2 (speed, playerRigidbody.velocity.y);
 		} else {
 			playerRigidbody.velocity = new Vector2 (0, playerRigidbody.velocity.y);
 		}
 			
+
+		// up and down movement
+		// W for doors/stairs S for going through certain platforms
+
 		if (Input.GetKeyDown (KeyCode.Space) && isGrounded && !Input.GetKey (KeyCode.S)) {
 			playerRigidbody.velocity = new Vector2 (playerRigidbody.velocity.x, jumpForce);
 		} else if (Input.GetKeyDown (KeyCode.Space) && isGrounded && Input.GetKey (KeyCode.S) && onOneWay) {
 			Physics2D.IgnoreCollision (playerCol, oneWayCol);
 		}
-
-		// up and down movement
-		// W for doors/stairs S for going through certain platforms
-
 		//-------------------------------------------------------------------------------------------------
 		//Attacking left right and down (possible up?)
 	}

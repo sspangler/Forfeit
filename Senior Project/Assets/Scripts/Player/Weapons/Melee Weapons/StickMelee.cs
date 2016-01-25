@@ -13,12 +13,13 @@ public class StickMelee : MonoBehaviour {
 	
 	PlayerStats stats;
 	PlayerController playerController;
+	BoxCollider2D weaponCol;
 
 	//must release between swings
 	
 	// Use this for initialization
 	void Start () {
-
+		weaponCol = GetComponent<BoxCollider2D> ();
 	}
 	
 	// Update is called once per frame
@@ -31,5 +32,9 @@ public class StickMelee : MonoBehaviour {
 		if (Input.GetMouseButtonUp(0)) {
 			canAttack = true;
 		}
+	}
+
+	void OnTriggerEnter2D (Collider2D col) {
+		print (col.name);
 	}
 }
