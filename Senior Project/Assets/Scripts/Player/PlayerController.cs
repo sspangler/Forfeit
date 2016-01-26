@@ -27,8 +27,8 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void OnLevelWasLoaded () {
-		Camera.main.transform.parent = this.gameObject.transform;
-		Camera.main.transform.localPosition = new Vector3 (0, 0, -10);
+		//Camera.main.transform.parent = this.gameObject.transform;
+		//Camera.main.transform.localPosition = new Vector3 (0, 0, -10);
 	}
 
 
@@ -50,9 +50,10 @@ public class PlayerController : MonoBehaviour {
 		// left and right movement
 		if (Input.GetKey (KeyCode.A) && !isGroundLeft) {
 			playerRigidbody.velocity = new Vector2 (-speed, playerRigidbody.velocity.y);
-
+			transform.localEulerAngles = leftFacing;
 		} else if (Input.GetKey (KeyCode.D) && !isGroundRight) {
 			playerRigidbody.velocity = new Vector2 (speed, playerRigidbody.velocity.y);
+			transform.localEulerAngles = rightFacing;
 		} else {
 			playerRigidbody.velocity = new Vector2 (0, playerRigidbody.velocity.y);
 		}
