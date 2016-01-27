@@ -6,6 +6,7 @@ public class LevelGenerator : MonoBehaviour {
 	public int smallDim;
 	public GameObject exitDoor;
 	public GameObject exitDoorKey;
+	public GameObject lockedDoor;
 
 	//[HideInInspector]
 	public List<GameObject> Rooms = new List<GameObject>(); //list of rooms that can be spawned
@@ -178,5 +179,46 @@ public class LevelGenerator : MonoBehaviour {
 		} else {
 			Instantiate(exitDoorKey, availKeyRooms[Random.Range(0,availKeyRooms.Count)].transform.position + new Vector3 (3, -10, 0), Quaternion.identity);
 		}
+	}
+
+	void SpawnLockedDoors () {
+
+	}
+
+	bool CheckTopLeft (GameObject room) {
+		RaycastHit2D hitLeft = Physics2D.Raycast(room.transform.position + Vector3.down * smallDim, Vector2.left, smallDim, roomParentLayer);	
+
+		if (hitLeft.collider == null)
+			return true;
+		else 
+			return false;
+	}
+
+	bool CheckTopRight (GameObject room) {
+		RaycastHit2D hitRight = Physics2D.Raycast(room.transform.position + Vector3.down * smallDim, Vector2.right, smallDim, roomParentLayer);	
+
+		if (hitRight.collider == null)
+			return true;
+		else 
+			return false;
+	}
+
+	bool CheckBotLeft (GameObject room) {
+		RaycastHit2D hitBotLeft = Physics2D.Raycast(room.transform.position + Vector3.down * smallDim * 2, Vector2.left, smallDim, roomParentLayer);	
+
+		if (hitBotLeft.collider == null)
+			return true;
+		else 
+			return false;
+	
+	}
+
+	bool CheckBotRight (GameObject room) {
+		RaycastHit2D hitBotRight = Physics2D.Raycast(room.transform.position + Vector3.down * smallDim * 2, Vector2.right, smallDim, roomParentLayer);	
+
+		if (hitBotRight.collider == null)
+			return true;
+		else 
+			return false;
 	}
 }
