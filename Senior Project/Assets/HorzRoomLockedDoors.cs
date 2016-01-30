@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SpawnLockedDoors : MonoBehaviour {
+public class HorzRoomLockedDoors : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
