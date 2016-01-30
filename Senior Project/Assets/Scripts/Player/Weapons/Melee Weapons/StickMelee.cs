@@ -11,8 +11,6 @@ public class StickMelee : MonoBehaviour {
 	
 	public bool canAttack = true;
 	
-	PlayerStats stats;
-	PlayerController playerController;
 	BoxCollider2D weaponCol;
 
 	Vector3 startPos;
@@ -31,11 +29,6 @@ public class StickMelee : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if ((Input.GetKeyDown (KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow)) && canAttack) {
-			swinging = true;
-			canAttack = false;
-			transform.localPosition = startPos;
-		}
 
 		if (swinging) {
 			timer += Time.deltaTime;
@@ -48,6 +41,14 @@ public class StickMelee : MonoBehaviour {
 				transform.localPosition = startPos;
 				transform.localEulerAngles = startRot;
 			}
+		}
+	}
+
+	public void StartAttack () {
+		if (canAttack) {
+			swinging = true;
+			canAttack = false;
+			transform.localPosition = startPos;
 		}
 	}
 }

@@ -181,10 +181,6 @@ public class LevelGenerator : MonoBehaviour {
 		}
 	}
 
-	void SpawnLockedDoors () {
-
-	}
-
 	bool CheckTopLeft (GameObject room) {
 		RaycastHit2D hitLeft = Physics2D.Raycast(room.transform.position + Vector3.down * smallDim, Vector2.left, smallDim, roomParentLayer);	
 

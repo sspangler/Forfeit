@@ -18,20 +18,18 @@ public class PlayerController : MonoBehaviour {
 	Vector3 leftFacing = new Vector3 (0,180,0);
 	Vector3 rightFacing = new Vector3 (0,0,0);
 
+	public MeleeWeapons meleeWeaponScript;
+
+
 	// Use this for initialization
 	void Start () {
 		stats = GetComponent<PlayerStats> ();
 		playerRigidbody = GetComponent<Rigidbody2D> ();
 		speed = stats.moveSpeed;
 		playerCol = GetComponent<Collider2D> ();
+		meleeWeaponScript = GameObject.FindGameObjectWithTag ("Melee Weapon").GetComponent<MeleeWeapons> ();
 	}
-
-	void OnLevelWasLoaded () {
-		//Camera.main.transform.parent = this.gameObject.transform;
-		//Camera.main.transform.localPosition = new Vector3 (0, 0, -10);
-	}
-
-
+		
 	void Update () {
 
 		if (Input.GetKeyDown (KeyCode.L)) {
@@ -50,10 +48,14 @@ public class PlayerController : MonoBehaviour {
 		// left and right movement
 		if (Input.GetKey (KeyCode.A) && !isGroundLeft) {
 			playerRigidbody.velocity = new Vector2 (-speed, playerRigidbody.velocity.y);
-			transform.localEulerAngles = leftFacing;
+			if (!meleeWeaponScript.swinging)
+				transform.localEulerAngles = leftFacing;
+			
 		} else if (Input.GetKey (KeyCode.D) && !isGroundRight) {
 			playerRigidbody.velocity = new Vector2 (speed, playerRigidbody.velocity.y);
-			transform.localEulerAngles = rightFacing;
+			if (!meleeWeaponScript.swinging)
+				transform.localEulerAngles = rightFacing;
+			
 		} else {
 			playerRigidbody.velocity = new Vector2 (0, playerRigidbody.velocity.y);
 		}
@@ -69,6 +71,14 @@ public class PlayerController : MonoBehaviour {
 		}
 		//-------------------------------------------------------------------------------------------------
 		//Attacking left right and down (possible up?)
+		if (Input.GetKey (KeyCode.LeftArrow)) {
+			meleeWeaponScript.StartAttack ();
+			transform.localEulerAngles = leftFacing;
+		} else if (Input.GetKey (KeyCode.RightArrow)) {
+			meleeWeaponScript.StartAttack ();
+			transform.localEulerAngles = rightFacing;
+		}
+
 	}
 
 	void OnCollisionStay2D (Collision2D col) {
@@ -85,5 +95,4 @@ public class PlayerController : MonoBehaviour {
 			isGrounded = false;
 		}
 	}
-
 }
