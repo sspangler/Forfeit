@@ -6,7 +6,6 @@ public class LevelGenerator : MonoBehaviour {
 	public int smallDim;
 	public GameObject exitDoor;
 	public GameObject exitDoorKey;
-	public GameObject lockedDoor;
 
 	//[HideInInspector]
 	public List<GameObject> Rooms = new List<GameObject>(); //list of rooms that can be spawned
@@ -163,7 +162,10 @@ public class LevelGenerator : MonoBehaviour {
 			if (Vector2.Distance(room.transform.position, playerPos) > 100)
 				availRooms.Add(room);
 		}
-		Instantiate (exitDoor, availRooms [Random.Range (0, availRooms.Count)].transform.position + new Vector3 (3, -10, 0), Quaternion.identity);
+		if (availRooms.Count != 0)
+			Instantiate (exitDoor, availRooms [Random.Range (0, availRooms.Count)].transform.position + new Vector3 (3, -10, 0), Quaternion.identity);
+		else
+			Instantiate (exitDoor, GeneratedRooms [Random.Range (0, availRooms.Count)].transform.position + new Vector3 (3, -10, 0), Quaternion.identity);
 		SpawnExitKey ();
 	}
 	
@@ -174,7 +176,7 @@ public class LevelGenerator : MonoBehaviour {
 			}
 		}
 
-		if (availKeyRooms == null) {
+		if (availKeyRooms.Count == 0) {
 			Instantiate(exitDoorKey,GeneratedRooms[Random.Range(0,GeneratedRooms.Count)].transform.position + new Vector3(3,-10,0), Quaternion.identity);
 		} else {
 			Instantiate(exitDoorKey, availKeyRooms[Random.Range(0,availKeyRooms.Count)].transform.position + new Vector3 (3, -10, 0), Quaternion.identity);
