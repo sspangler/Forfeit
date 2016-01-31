@@ -17,11 +17,14 @@ public class LevelGenerator : MonoBehaviour {
 	Vector3 nextPos;
 
 	Vector3 rayCastOffSet = new Vector3 (0.001f, -1f, 0f);
-
 	LayerMask roomParentLayer;
-
-
 	Vector3 playerPos;
+
+	SpawnEnemies spawnEnemies;
+
+	void Start () {
+		spawnEnemies = GetComponent<SpawnEnemies> ();
+	}
 
 	void OnLevelWasLoaded () {
 		int rowCounter = 0;
@@ -143,6 +146,8 @@ public class LevelGenerator : MonoBehaviour {
 		offset.Scale (chosenRoom.transform.localScale);
 		playerPos = offset + roomPos;
 		player.transform.position = playerPos;
+
+		GeneratedRooms.RemoveAt (num1);
 	}
 
 	void SpawnExit () {
@@ -181,6 +186,10 @@ public class LevelGenerator : MonoBehaviour {
 		} else {
 			Instantiate(exitDoorKey, availKeyRooms[Random.Range(0,availKeyRooms.Count)].transform.position + new Vector3 (3, -10, 0), Quaternion.identity);
 		}
+
+		spawnEnemies.EnemyRooms = GeneratedRooms;
+		spawnEnemies.Spawn ();
+
 	}
 
 	bool CheckTopLeft (GameObject room) {
