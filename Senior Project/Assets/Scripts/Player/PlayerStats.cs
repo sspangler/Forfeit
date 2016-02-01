@@ -6,12 +6,9 @@ public class PlayerStats : MonoBehaviour {
 	public int avalPoints;
 
 	public float health;
-	public float meleeDamage;
-	public float rangedDamage;
-	public float moveSpeed;
-
-	public float meleeAttackSpeed;
-	public float rangedAttackSpeed;
+	public float strength;
+	public float dexterity;
+	public float agility;
 
 
 	void Start () {

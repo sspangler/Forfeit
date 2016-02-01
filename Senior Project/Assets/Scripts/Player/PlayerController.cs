@@ -5,8 +5,9 @@ public class PlayerController : MonoBehaviour {
 	PlayerStats stats;
 	Rigidbody2D playerRigidbody;
 	public Collider2D playerCol;
-	float speed;
-	float jumpForce = 10f;
+	//[HideInInspector]
+	public float speed;
+	float jumpForce;
 	bool isGrounded;
 
 	float forceDown;
@@ -28,10 +29,11 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
 		stats = GetComponent<PlayerStats> ();
 		playerRigidbody = GetComponent<Rigidbody2D> ();
-		speed = stats.moveSpeed;
+		speed += stats.agility * 3;
 		playerCol = GetComponent<Collider2D> ();
 		activeWeaponScript = weapon1.GetComponent<MonoBehaviour> ();
 		activeWeaponNum = 1;
+		jumpForce = stats.strength * stats.agility;
 	}
 		
 	void Update () {

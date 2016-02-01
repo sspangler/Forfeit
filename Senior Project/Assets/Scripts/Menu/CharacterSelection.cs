@@ -45,7 +45,8 @@ public class CharacterSelection : MonoBehaviour {
 				selectedCharacter = GameObject.FindGameObjectWithTag("Player");
 				abilitiesCanvas.GetComponent<AbilitySelection>().player = selectedCharacter;
 				abilitiesCanvas.GetComponent<AbilitySelection>().playerStats = selectedCharacter.GetComponent<PlayerStats>();
-				abilitiesCanvas.GetComponent<AbilitySelection>().avalPoints = selectedCharacter.GetComponent<PlayerStats>().avalPoints;
+				abilitiesCanvas.GetComponent<AbilitySelection> ().playerCont = selectedCharacter.GetComponent<PlayerController> ();
+				abilitiesCanvas.GetComponent<AbilitySelection>().availPoints = selectedCharacter.GetComponent<PlayerStats>().avalPoints;
 				this.gameObject.SetActive(false);
 			}
 		}
