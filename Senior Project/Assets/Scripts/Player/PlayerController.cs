@@ -18,8 +18,11 @@ public class PlayerController : MonoBehaviour {
 	Vector3 leftFacing = new Vector3 (0,180,0);
 	Vector3 rightFacing = new Vector3 (0,0,0);
 
-	public MeleeWeapons meleeWeaponScript;
+	public MonoBehaviour activeWeaponScript;
+	public GameObject weapon1;
+	public GameObject weapon2;
 
+	int activeWeaponNum;
 
 	// Use this for initialization
 	void Start () {
@@ -27,7 +30,8 @@ public class PlayerController : MonoBehaviour {
 		playerRigidbody = GetComponent<Rigidbody2D> ();
 		speed = stats.moveSpeed;
 		playerCol = GetComponent<Collider2D> ();
-		meleeWeaponScript = GameObject.FindGameObjectWithTag ("Melee Weapon").GetComponent<MeleeWeapons> ();
+		activeWeaponScript = weapon1.GetComponent<MonoBehaviour> ();
+		activeWeaponNum = 1;
 	}
 		
 	void Update () {
@@ -43,18 +47,26 @@ public class PlayerController : MonoBehaviour {
 		} else 
 			forceDown = 0;
 
+		//switch active weapon
+		if (Input.GetKeyDown (KeyCode.Q)) {
+			if (weapon2 != null && weapon1 != null) {
+				if (activeWeaponNum == 1) {
+					activeWeaponScript = weapon2.GetComponent<MonoBehaviour> ();
+					activeWeaponNum = 2;
+				} else {
+					activeWeaponScript = weapon1.GetComponent<MonoBehaviour> ();
+					activeWeaponNum = 1;
+				}
+			}
+		}
 
 		// MOVEMENT --------------------------------------------------------------------------------------
 		// left and right movement
 		if (Input.GetKey (KeyCode.A) && !isGroundLeft) {
 			playerRigidbody.velocity = new Vector2 (-speed, playerRigidbody.velocity.y);
-			if (!meleeWeaponScript.swinging)
-				transform.localEulerAngles = leftFacing;
 			
 		} else if (Input.GetKey (KeyCode.D) && !isGroundRight) {
 			playerRigidbody.velocity = new Vector2 (speed, playerRigidbody.velocity.y);
-			if (!meleeWeaponScript.swinging)
-				transform.localEulerAngles = rightFacing;
 			
 		} else {
 			playerRigidbody.velocity = new Vector2 (0, playerRigidbody.velocity.y);
@@ -72,10 +84,10 @@ public class PlayerController : MonoBehaviour {
 		//-------------------------------------------------------------------------------------------------
 		//Attacking left right and down (possible up?)
 		if (Input.GetKey (KeyCode.LeftArrow)) {
-			meleeWeaponScript.StartAttack ();
+			activeWeaponScript.SendMessage ("StartAttack");
 			transform.localEulerAngles = leftFacing;
 		} else if (Input.GetKey (KeyCode.RightArrow)) {
-			meleeWeaponScript.StartAttack ();
+			activeWeaponScript.SendMessage ("StartAttack");
 			transform.localEulerAngles = rightFacing;
 		}
 
