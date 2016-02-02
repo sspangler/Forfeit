@@ -14,7 +14,7 @@ public class AbilitySelection : MonoBehaviour {
 
 	bool bonusHealth;
 	bool movementSpeed;
-	bool damageIncrease;
+	bool strengthIncrease;
 	
 	bool selfHeal;
 	bool invincibility;
@@ -103,6 +103,17 @@ public class AbilitySelection : MonoBehaviour {
 					availPoints += 1;
 				}
 			}
+		} else if (passive == "Added Strength") {
+			if (availPoints > 0 || strengthIncrease) {
+				strengthIncrease = !strengthIncrease;
+				if (strengthIncrease && availPoints > 0) {
+					playerStats.strength += 1;
+					availPoints -= 1;
+				} else if (!strengthIncrease) {
+					playerStats.strength -= 1;
+					availPoints += 1;
+				}
+			}
 		}
 
 		statsCanvas.UpdateStats();
@@ -125,7 +136,7 @@ public class AbilitySelection : MonoBehaviour {
 	public void ResetBools () {
 		bonusHealth = false;
 		movementSpeed = false;
-		damageIncrease = false;
+		strengthIncrease = false;
 		
 		selfHeal = false;
 		invincibility = false;

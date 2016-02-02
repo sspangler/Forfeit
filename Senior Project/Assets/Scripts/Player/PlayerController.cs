@@ -4,8 +4,8 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 	PlayerStats stats;
 	Rigidbody2D playerRigidbody;
-	public Collider2D playerCol;
-	//[HideInInspector]
+	Collider2D playerCol;
+	[HideInInspector]
 	public float speed;
 	float jumpForce;
 	bool isGrounded;
@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour {
 		playerCol = GetComponent<Collider2D> ();
 		activeWeaponScript = weapon1.GetComponent<MonoBehaviour> ();
 		activeWeaponNum = 1;
-		jumpForce = stats.strength * stats.agility;
+		jumpForce = (stats.strength * 1.75f) * (stats.agility * 1.5f);
 	}
 		
 	void Update () {
@@ -77,7 +77,6 @@ public class PlayerController : MonoBehaviour {
 
 		// up and down movement
 		// W for doors/stairs S for going through certain platforms
-
 		if (Input.GetKeyDown (KeyCode.Space) && isGrounded && !Input.GetKey (KeyCode.S)) {
 			playerRigidbody.velocity = new Vector2 (playerRigidbody.velocity.x, jumpForce);
 		} else if (Input.GetKeyDown (KeyCode.Space) && isGrounded && Input.GetKey (KeyCode.S) && onOneWay) {
