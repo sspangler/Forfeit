@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour {
 	Collider2D playerCol;
 	[HideInInspector]
 	public float speed;
-	float jumpForce;
+	public float jumpForce;
 	bool isGrounded;
 
 	float forceDown;
@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour {
 		playerCol = GetComponent<Collider2D> ();
 		activeWeaponScript = weapon1.GetComponent<MonoBehaviour> ();
 		activeWeaponNum = 1;
-		jumpForce = (stats.strength * 1.75f) * (stats.agility * 1.5f);
+		jumpForce = 10 + (stats.strength * .5f) * (stats.agility * .25f);
 		jumpsLeft = amountOfJumps;
 	}
 		
@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour {
 				playerRigidbody.velocity = new Vector2 (playerRigidbody.velocity.x, jumpForce);
 				jumpsLeft--;
 				jumpOffGround = true;
-			} else if (jumpsLeft > 1 || jumpOffGround) { // for double jumps
+			} else if (jumpsLeft > 0 && (jumpsLeft > 1 || jumpOffGround)) { // for double jumps
 				playerRigidbody.velocity = new Vector2 (playerRigidbody.velocity.x, jumpForce);
 				jumpsLeft--;
 			}
@@ -96,6 +96,7 @@ public class PlayerController : MonoBehaviour {
 		} else if (Input.GetKeyDown (KeyCode.Space) && isGrounded && Input.GetKey (KeyCode.S) && onOneWay) {
 			Physics2D.IgnoreCollision (playerCol, oneWayCol);
 		}
+
 		//-------------------------------------------------------------------------------------------------
 		//Attacking left right and down (possible up?)
 		if (Input.GetKey (KeyCode.LeftArrow)) {

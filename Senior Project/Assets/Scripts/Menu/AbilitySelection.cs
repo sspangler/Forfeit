@@ -158,9 +158,11 @@ public class AbilitySelection : MonoBehaviour {
 				if (groundDash && availPoints > 0) {
 					playerStats.agility += 1;
 					availPoints -= 1;
+					player.gameObject.AddComponent<DashAbility> ();
 				} else if (!groundDash) {
 					playerStats.agility -= 1;
 					availPoints += 1;
+					Destroy (player.gameObject.GetComponent<DashAbility> ());
 				}
 			}
 		}
