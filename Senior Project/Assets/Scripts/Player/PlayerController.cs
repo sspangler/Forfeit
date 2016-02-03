@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour {
 	[HideInInspector]
 	public float speed;
 	public float jumpForce;
-	bool isGrounded;
+	[HideInInspector] public bool isGrounded;
 
 	float forceDown;
 	[HideInInspector] public bool leftDown, rightDown, isGroundLeft, isGroundRight;
@@ -23,10 +23,9 @@ public class PlayerController : MonoBehaviour {
 	public GameObject weapon1;
 	public GameObject weapon2;
 
-	int activeWeaponNum;
-	//[HideInInspector] 
-	public int amountOfJumps = 1;
-	public int jumpsLeft;
+	int activeWeaponNum; 
+	[HideInInspector] public int amountOfJumps = 1;
+	[HideInInspector] public int jumpsLeft;
 	bool jumpOffGround;
 
 	// Use this for initialization
