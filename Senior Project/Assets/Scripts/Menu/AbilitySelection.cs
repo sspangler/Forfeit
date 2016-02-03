@@ -12,9 +12,14 @@ public class AbilitySelection : MonoBehaviour {
 	public DifficultyModifier difMod;
 	public int availPoints;
 
+	// stat passives
 	bool bonusHealth;
 	bool movementSpeed;
 	bool strengthIncrease;
+	bool dexterityIncrease;
+	bool agilityIncrease;
+	bool doubleJump;
+	bool groundDash;
 	
 	bool selfHeal;
 	bool invincibility;
@@ -111,6 +116,50 @@ public class AbilitySelection : MonoBehaviour {
 					availPoints -= 1;
 				} else if (!strengthIncrease) {
 					playerStats.strength -= 1;
+					availPoints += 1;
+				}
+			}
+		} else if (passive == "Added Dexterity") {
+			if (availPoints > 0 || dexterityIncrease) {
+				dexterityIncrease = !dexterityIncrease;
+				if (dexterityIncrease && availPoints > 0) {
+					playerStats.dexterity += 1;
+					availPoints -= 1;
+				} else if (!dexterityIncrease) {
+					playerStats.dexterity -= 1;
+					availPoints += 1;
+				}
+			}
+		} else if (passive == "Added Agility") {
+			if (availPoints > 0 || agilityIncrease) {
+				agilityIncrease = !agilityIncrease;
+				if (agilityIncrease && availPoints > 0) {
+					playerStats.agility += 1;
+					availPoints -= 1;
+				} else if (!agilityIncrease) {
+					playerStats.agility -= 1;
+					availPoints += 1;
+				}
+			}
+		} else if (passive == "Double Jump") {
+			if (availPoints > 0 || doubleJump) {
+				doubleJump = !doubleJump;
+				if (doubleJump && availPoints > 0) {
+					playerCont.amountOfJumps += 1;
+					availPoints -= 1;
+				} else if (!doubleJump) {
+					playerCont.amountOfJumps -= 1;
+					availPoints += 1;
+				}
+			}
+		} else if (passive == "Ground Dash") {
+			if (availPoints > 0 || groundDash) {
+				groundDash = !groundDash;
+				if (groundDash && availPoints > 0) {
+					playerStats.agility += 1;
+					availPoints -= 1;
+				} else if (!groundDash) {
+					playerStats.agility -= 1;
 					availPoints += 1;
 				}
 			}

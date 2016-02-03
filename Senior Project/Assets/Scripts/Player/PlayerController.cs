@@ -24,6 +24,10 @@ public class PlayerController : MonoBehaviour {
 	public GameObject weapon2;
 
 	int activeWeaponNum;
+	//[HideInInspector] 
+	public int amountOfJumps = 1;
+	public int jumpsLeft;
+	bool jumpOffGround;
 
 	// Use this for initialization
 	void Start () {
@@ -34,6 +38,7 @@ public class PlayerController : MonoBehaviour {
 		activeWeaponScript = weapon1.GetComponent<MonoBehaviour> ();
 		activeWeaponNum = 1;
 		jumpForce = (stats.strength * 1.75f) * (stats.agility * 1.5f);
+		jumpsLeft = amountOfJumps;
 	}
 		
 	void Update () {
@@ -77,8 +82,17 @@ public class PlayerController : MonoBehaviour {
 
 		// up and down movement
 		// W for doors/stairs S for going through certain platforms
-		if (Input.GetKeyDown (KeyCode.Space) && isGrounded && !Input.GetKey (KeyCode.S)) {
-			playerRigidbody.velocity = new Vector2 (playerRigidbody.velocity.x, jumpForce);
+		if (Input.GetKeyDown (KeyCode.Space) && !Input.GetKey (KeyCode.S)) {
+			if (isGrounded) { 
+				playerRigidbody.velocity = new Vector2 (playerRigidbody.velocity.x, jumpForce);
+				jumpsLeft--;
+				jumpOffGround = true;
+			} else if (jumpsLeft > 1 || jumpOffGround) { // for double jumps
+				playerRigidbody.velocity = new Vector2 (playerRigidbody.velocity.x, jumpForce);
+				jumpsLeft--;
+			}
+			
+			
 		} else if (Input.GetKeyDown (KeyCode.Space) && isGrounded && Input.GetKey (KeyCode.S) && onOneWay) {
 			Physics2D.IgnoreCollision (playerCol, oneWayCol);
 		}
@@ -99,6 +113,8 @@ public class PlayerController : MonoBehaviour {
 			ContactPoint2D contact = col.contacts [0];
 			if (Vector3.Dot(contact.normal, Vector2.up) > .5f) { //might need to change the .5 with character changes
 				isGrounded = true;
+				jumpsLeft = amountOfJumps;
+				jumpOffGround = false;
 			}
 		}
 	}

@@ -11,6 +11,7 @@ public class SelfHeal : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		stats = GetComponent<PlayerStats> ();
+		chargeTime = 25f;
 	}
 	
 	// Update is called once per frame
@@ -28,6 +29,7 @@ public class SelfHeal : MonoBehaviour {
 			else
 				stats.health += 2;
 			ready = false;
+			timer = 0;
 		}
 
 	}
