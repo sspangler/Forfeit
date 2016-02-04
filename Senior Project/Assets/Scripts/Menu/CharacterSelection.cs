@@ -12,6 +12,7 @@ public class CharacterSelection : MonoBehaviour {
 	public GameObject selectedCharacter;
 	public Text charNameText;
 
+	AbilitySelection abilitySelection;
 
 	Vector3 characterPos;
 	Vector3 meleePos;
@@ -30,6 +31,7 @@ public class CharacterSelection : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+		abilitySelection = GameObject.FindGameObjectWithTag ("GameController").GetComponent<AbilitySelection> ();;
 		abilitiesCanvas.SetActive (false);
 		characterPos = GameObject.FindGameObjectWithTag ("Player").transform.position;
 
@@ -43,10 +45,13 @@ public class CharacterSelection : MonoBehaviour {
 				toAbilities = false;
 				abilitiesCanvas.SetActive(true);
 				selectedCharacter = GameObject.FindGameObjectWithTag("Player");
-				abilitiesCanvas.GetComponent<AbilitySelection>().player = selectedCharacter;
-				abilitiesCanvas.GetComponent<AbilitySelection>().playerStats = selectedCharacter.GetComponent<PlayerStats>();
-				abilitiesCanvas.GetComponent<AbilitySelection> ().playerCont = selectedCharacter.GetComponent<PlayerController> ();
-				abilitiesCanvas.GetComponent<AbilitySelection>().availPoints = selectedCharacter.GetComponent<PlayerStats>().avalPoints;
+				abilitiesCanvas.GetComponent<AbilityCanvas> ().player = selectedCharacter;
+				abilitySelection.player = selectedCharacter;
+				abilitySelection.playerStats = selectedCharacter.GetComponent<PlayerStats>();
+				abilitySelection.playerCont = selectedCharacter.GetComponent<PlayerController> ();
+				abilitySelection.availPoints = selectedCharacter.GetComponent<PlayerStats>().avalPoints;
+				abilitySelection.startpoints = abilitySelection.availPoints;
+				statsCanvas.UpdateStats ();
 				this.gameObject.SetActive(false);
 			}
 		}
@@ -74,7 +79,7 @@ public class CharacterSelection : MonoBehaviour {
 
 		statsCanvas.Invoke("UpdateStats", .1f);
 		selectedCharacter = characters[curChar];
-		abilitiesCanvas.GetComponent<AbilitySelection>().ResetBools();
+		abilitySelection.ResetBools();
 		charNameText.text = selectedCharacter.name;
 
 	}
@@ -91,22 +96,10 @@ public class CharacterSelection : MonoBehaviour {
 
 		statsCanvas.Invoke("UpdateStats", .1f);
 		selectedCharacter = characters[curChar];
-		abilitiesCanvas.GetComponent<AbilitySelection>().ResetBools();
+		abilitySelection.ResetBools();
 		charNameText.text = selectedCharacter.name;
 
 	}
-
-//	public void SelectCharacter (int character) {
-//		if (character != prevChar) {
-//			Destroy (GameObject.FindGameObjectWithTag ("Player"));
-//			Instantiate (characters [character], characterPos, Quaternion.identity);
-//			prevChar = character;
-//			abilitiesCanvas.GetComponent<AbilitySelection>().ResetBools();
-//			selectedCharacter = characters[character];
-//			statsCanvas.Invoke("UpdateStats", .1f);
-//		}
-//	}
-	
 
 	public void MoveToAbilities () {
 		toAbilities = true;

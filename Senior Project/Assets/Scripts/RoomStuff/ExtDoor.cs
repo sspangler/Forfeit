@@ -6,6 +6,7 @@ public class ExtDoor : MonoBehaviour {
 	bool atDoor;
 	public bool hasKey;
 
+	public GameObject forfeitCanvas;
 	// Use this for initialization
 	void Start () {
 	
@@ -17,7 +18,7 @@ public class ExtDoor : MonoBehaviour {
 			if (hasKey)
 				LoadNextLevel ();
 			else {
-				//pick power to lose
+				Instantiate (forfeitCanvas, transform.position, Quaternion.identity);
 			}
 		}
 	}
@@ -25,7 +26,6 @@ public class ExtDoor : MonoBehaviour {
 	void LoadNextLevel () {
 		Application.LoadLevel(Application.loadedLevel + 1);
 	}
-
 
 	void OnTriggerStay2D (Collider2D col) {
 		if (col.tag == "Player") {
