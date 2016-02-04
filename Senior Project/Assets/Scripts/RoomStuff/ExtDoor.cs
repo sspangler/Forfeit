@@ -4,6 +4,7 @@ using System.Collections;
 public class ExtDoor : MonoBehaviour {
 
 	bool atDoor;
+	public bool hasKey;
 
 	// Use this for initialization
 	void Start () {
@@ -13,10 +14,18 @@ public class ExtDoor : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (atDoor && Input.GetKeyDown (KeyCode.W)) {
-			Application.LoadLevel(Application.loadedLevel + 1);
-			atDoor = false;
+			if (hasKey)
+				LoadNextLevel ();
+			else {
+				//pick power to lose
+			}
 		}
 	}
+
+	void LoadNextLevel () {
+		Application.LoadLevel(Application.loadedLevel + 1);
+	}
+
 
 	void OnTriggerStay2D (Collider2D col) {
 		if (col.tag == "Player") {

@@ -3,13 +3,14 @@ using System.Collections;
 
 public class AbilitySelection : MonoBehaviour {
 	
-	public GameObject mainCamera;
-	public GameObject characterCanvas;
-	public StatsCanvas statsCanvas;
+	GameObject mainCamera;
+	GameObject characterCanvas;
+	StatsCanvas statsCanvas;
 	public GameObject player;
 	public PlayerController playerCont;
 	public PlayerStats playerStats;
-	public DifficultyModifier difMod;
+	 DifficultyModifier difMod;
+	AbilityTracker abilTracker;
 	public int availPoints;
 
 	// stat passives
@@ -32,6 +33,12 @@ public class AbilitySelection : MonoBehaviour {
 	//-------------------------------
 	
 
+	void Start () {
+		statsCanvas = GameObject.Find ("Stats Canvas").GetComponent<StatsCanvas>();
+		difMod = GameObject.FindGameObjectWithTag ("GameController").GetComponent<DifficultyModifier> ();
+		abilTracker = GameObject.FindGameObjectWithTag ("GameController").GetComponent<AbilityTracker> ();
+	}
+
 	void Update () {
 		if (toChracter) {
 			mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, characterPos, 10 * Time.deltaTime);
@@ -51,20 +58,24 @@ public class AbilitySelection : MonoBehaviour {
 				if (selfHeal) {
 					player.gameObject.AddComponent<SelfHeal> ();
 					availPoints -= 1;
+					abilTracker.abilities.Add (active);
 				} else if (!selfHeal) {
 					Destroy (player.gameObject.GetComponent<SelfHeal> ());
 					availPoints += 1;
+					abilTracker.abilities.Remove (active);
 				}
 			}
-		} else if (active == "Invinc") {
+		} else if (active == "Invincibility") {
 			if (availPoints > 0 || invincibility) {
 				invincibility = !invincibility;
 				if (invincibility && availPoints > 0) {
 					player.gameObject.AddComponent<Invincibility> ();
 					availPoints -= 1;
+					abilTracker.abilities.Add (active);
 				} else if (!invincibility) {
 					Destroy (player.gameObject.GetComponent<Invincibility> ());
 					availPoints += 1;
+					abilTracker.abilities.Remove (active);
 				}
 			}
 		} else if (active == "Mass Damage") {
@@ -73,9 +84,11 @@ public class AbilitySelection : MonoBehaviour {
 				if (massDamage && availPoints > 0) {
 					player.gameObject.AddComponent<MassDamage> ();
 					availPoints -= 1;
+					abilTracker.abilities.Add (active);
 				} else if (!massDamage) {
 					Destroy (player.gameObject.GetComponent<MassDamage> ());
 					availPoints += 1;
+					abilTracker.abilities.Remove (active);
 				}
 			}
 		}
@@ -85,27 +98,30 @@ public class AbilitySelection : MonoBehaviour {
 	
 	public void SetPassives (string passive) {
 		
-		if (passive == "Bonus Health") {
+		if (passive == "Bonus Max Health") {
 			if (availPoints > 0 || bonusHealth) {
 				bonusHealth = !bonusHealth;
 				if (bonusHealth && availPoints > 0) {
 					playerStats.health += 2;
 					availPoints -= 1;
-
+					abilTracker.abilities.Add (passive);
 				} else if (!bonusHealth) {
 					playerStats.health -= 2;
 					availPoints += 1;
+					abilTracker.abilities.Remove (passive);
 				}
 			}
-		} else if (passive == "Movement Speed") {
+		} else if (passive == "Extra Movement Speed") {
 			if (availPoints > 0 || movementSpeed) {
 				movementSpeed = !movementSpeed;
 				if (movementSpeed && availPoints > 0) {
 					playerCont.speed += 2;
 					availPoints -= 1;
+					abilTracker.abilities.Add (passive);
 				} else if (!movementSpeed) {
 					playerCont.speed -= 2;
 					availPoints += 1;
+					abilTracker.abilities.Remove (passive);
 				}
 			}
 		} else if (passive == "Added Strength") {
@@ -114,9 +130,11 @@ public class AbilitySelection : MonoBehaviour {
 				if (strengthIncrease && availPoints > 0) {
 					playerStats.strength += 1;
 					availPoints -= 1;
+					abilTracker.abilities.Add (passive);
 				} else if (!strengthIncrease) {
 					playerStats.strength -= 1;
 					availPoints += 1;
+					abilTracker.abilities.Remove (passive);
 				}
 			}
 		} else if (passive == "Added Dexterity") {
@@ -125,9 +143,11 @@ public class AbilitySelection : MonoBehaviour {
 				if (dexterityIncrease && availPoints > 0) {
 					playerStats.dexterity += 1;
 					availPoints -= 1;
+					abilTracker.abilities.Add (passive);
 				} else if (!dexterityIncrease) {
 					playerStats.dexterity -= 1;
 					availPoints += 1;
+					abilTracker.abilities.Remove (passive);
 				}
 			}
 		} else if (passive == "Added Agility") {
@@ -136,9 +156,11 @@ public class AbilitySelection : MonoBehaviour {
 				if (agilityIncrease && availPoints > 0) {
 					playerStats.agility += 1;
 					availPoints -= 1;
+					abilTracker.abilities.Add (passive);
 				} else if (!agilityIncrease) {
 					playerStats.agility -= 1;
 					availPoints += 1;
+					abilTracker.abilities.Remove (passive);
 				}
 			}
 		} else if (passive == "Double Jump") {
@@ -147,9 +169,11 @@ public class AbilitySelection : MonoBehaviour {
 				if (doubleJump && availPoints > 0) {
 					playerCont.amountOfJumps += 1;
 					availPoints -= 1;
+					abilTracker.abilities.Add (passive);
 				} else if (!doubleJump) {
 					playerCont.amountOfJumps -= 1;
 					availPoints += 1;
+					abilTracker.abilities.Remove (passive);
 				}
 			}
 		} else if (passive == "Ground Dash") {
@@ -159,10 +183,12 @@ public class AbilitySelection : MonoBehaviour {
 					playerStats.agility += 1;
 					availPoints -= 1;
 					player.gameObject.AddComponent<DashAbility> ();
+					abilTracker.abilities.Add (passive);
 				} else if (!groundDash) {
 					playerStats.agility -= 1;
 					availPoints += 1;
 					Destroy (player.gameObject.GetComponent<DashAbility> ());
+					abilTracker.abilities.Remove (passive);
 				}
 			}
 		}
