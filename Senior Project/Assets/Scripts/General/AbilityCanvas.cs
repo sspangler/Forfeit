@@ -3,7 +3,7 @@ using System.Collections;
 
 public class AbilityCanvas : MonoBehaviour {
 	GameObject mainCamera;
-	GameObject characterCanvas;
+	public GameObject characterCanvas;
 	DifficultyModifier difMod;
 	Vector3 characterPos = new Vector3 (0,0,-10);
 

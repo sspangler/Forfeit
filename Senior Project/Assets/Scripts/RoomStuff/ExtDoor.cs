@@ -14,7 +14,7 @@ public class ExtDoor : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (atDoor && Input.GetKeyDown (KeyCode.W)) {
+		if (atDoor && Input.GetKeyDown (KeyCode.W) || Input.GetKeyDown(KeyCode.LeftControl)) {
 			if (hasKey)
 				LoadNextLevel ();
 			else {

@@ -34,7 +34,6 @@ public class AbilitySelection : MonoBehaviour {
 	}
 	
 	public void SetAbilities (GameObject passive) {
-		
 		if (passive.name == "Bonus Max Health") {
 			if (availPoints > 0 || bonusHealth) {
 				bonusHealth = !bonusHealth;
