@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemyStats : MonoBehaviour {
+public class ChargeAttack : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
