@@ -29,12 +29,12 @@ public class PlayerStats : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerEnter2D (Collider2D col) {
-		if (col.tag == "Enemy" && !inGrace) {
-			inGrace = true;
-			health -= col.gameObject.GetComponent<EnemyStats> ().damage;
-			if (health <= 0)
-				print ("Dead");
-		}
-	}
+//	void OnTriggerEnter2D (Collider2D col) {
+//		if (col.tag == "Enemy" && !inGrace) {
+//			inGrace = true;
+//			health -= col.gameObject.GetComponent<EnemyStats> ().damage;
+//			if (health <= 0)
+//				print ("Dead");
+//		}
+//	}
 }

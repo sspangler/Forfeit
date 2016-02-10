@@ -33,8 +33,8 @@ public class ChargeAttack : MonoBehaviour {
 
 	void Charge () {
 		enemyRigidbody.AddForce (direction * 1000);
-		delay = 1f;
-		cooldown = 4f;
+		delay = .5f;
+		cooldown = 2f;
 	}
 
 
