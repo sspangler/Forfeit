@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SpeedDebuffer : MonoBehaviour {
+public class SpeedDebuff : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
