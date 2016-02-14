@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Debuffer : MonoBehaviour {
 
+	public float speed;
 	public string debuff;
 	GameObject player;
 
@@ -12,6 +13,7 @@ public class Debuffer : MonoBehaviour {
 	public float delay = 3f;
 
 	Rigidbody2D enemyRigidbody;
+	Vector3 direction;
 
 	// Use this for initialization
 	void Start () {
@@ -26,6 +28,11 @@ public class Debuffer : MonoBehaviour {
 			delay -= Time.deltaTime;
 			if (delay <= 0)
 				ApplyDebuff ();
+		}
+
+		if (inRange && Vector3.Distance (transform.position, player.transform.position) < 5) {
+			direction = transform.position - player.transform.position;
+			transform.Translate (direction.normalized * speed * Time.deltaTime);
 		}
 
 		if (cooldown >= 0 && inRange)
