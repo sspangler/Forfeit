@@ -10,6 +10,9 @@ public class EnemyStats : MonoBehaviour {
 	public float pierceRes;
 	public float smashRes;
 
+	bool inGrace;
+	float graceTimer;
+
 	// Use this for initialization
 	void Start () {
 		maxHealth = health;
@@ -17,6 +20,12 @@ public class EnemyStats : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (inGrace) {
+			graceTimer -= Time.deltaTime;
+			if (graceTimer < 0) {
+				inGrace = false;
+				graceTimer = .1f;
+			}
+		}
 	}
 }

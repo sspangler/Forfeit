@@ -28,7 +28,6 @@ public class MeleeWeapons : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-
 		if (swinging) {
 			timer += Time.deltaTime;
 			if (timer < attackSpeed / 2)
@@ -37,6 +36,7 @@ public class MeleeWeapons : MonoBehaviour {
 				timer = 0;
 				swinging = false;
 				canAttack = true;
+				weaponCol.enabled = false;
 				transform.localPosition = startPos;
 				transform.localEulerAngles = startRot;
 			}
@@ -47,7 +47,17 @@ public class MeleeWeapons : MonoBehaviour {
 		if (canAttack) {
 			swinging = true;
 			canAttack = false;
+			weaponCol.enabled = true;
 			transform.localPosition = startPos;
+		}
+	}
+
+	void OnTriggerEnter2D (Collider2D col) {
+		if (col.tag == "Enemy" && !col.isTrigger) {
+			col.gameObject.GetComponent<EnemyStats> ().health -= slashDamage;
+			if (col.gameObject.GetComponent<EnemyStats> ().health <= 0) {
+				Destroy (col.gameObject);
+			}
 		}
 	}
 }
