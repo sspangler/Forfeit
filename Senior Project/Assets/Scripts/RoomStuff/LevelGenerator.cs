@@ -28,6 +28,7 @@ public class LevelGenerator : MonoBehaviour {
 
 	void OnLevelWasLoaded () {
 		int rowCounter = 0;
+		nextPos = Vector3.zero;
 		//clears list from previous level
 		availRooms.Clear ();
 		availKeyRooms.Clear ();

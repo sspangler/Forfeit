@@ -26,6 +26,7 @@ public class ForfeitMechanic : MonoBehaviour {
 			button.GetComponent<Button> ().onClick.AddListener (() => {
 				abilSelect.SetAbilities(button);
 				RemoveAbility(button.name);
+				Application.LoadLevel(Application.loadedLevel + 1);
 			});
 			i++;
 		}

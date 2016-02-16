@@ -29,6 +29,7 @@ public class PlayerStats : MonoBehaviour {
 			if (graceTimer < 0) {
 				inGrace = false;
 				graceTimer = .5f;
+				GetComponent<SpriteRenderer> ().color = Color.white;
 			}
 		}
 	}
