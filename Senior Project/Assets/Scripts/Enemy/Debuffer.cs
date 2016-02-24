@@ -23,7 +23,7 @@ public class Debuffer : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		if (inRange && cooldown < 0) {
 			delay -= Time.deltaTime;
 			if (delay <= 0)
@@ -32,7 +32,7 @@ public class Debuffer : MonoBehaviour {
 
 		if (inRange && Vector3.Distance (transform.position, player.transform.position) < 5) {
 			direction = transform.position - player.transform.position;
-			transform.Translate (direction.normalized * speed * Time.deltaTime);
+			enemyRigidbody.AddForce(direction.normalized * speed);
 		}
 
 		if (cooldown >= 0 && inRange)

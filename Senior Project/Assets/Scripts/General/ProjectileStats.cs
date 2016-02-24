@@ -10,6 +10,8 @@ public class ProjectileStats : MonoBehaviour {
 
 	PlayerStats playerStats;
 
+	public float lifeTime;
+	float counter;
 	// Use this for initialization
 	void Start () {
 
@@ -17,7 +19,16 @@ public class ProjectileStats : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		counter += Time.deltaTime;
+		if (counter >= lifeTime)
+			Destroy (this.gameObject);
+
 		transform.position += transform.forward * speed * Time.deltaTime;
 		transform.LookAt(targetPos);
+	}
+
+	void OnCollisionEnter2D (Collision2D col) {
+		print (col.transform.name);
+		Destroy (this.gameObject);
 	}
 }
