@@ -1,10 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
-public class Shop : MonoBehaviour {
-
-	public List<GameObject> shopItems = new List<GameObject>();
+public class DestroyObjects : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -13,6 +10,6 @@ public class Shop : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+	
 	}
 }

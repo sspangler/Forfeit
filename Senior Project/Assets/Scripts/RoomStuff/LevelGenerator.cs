@@ -9,6 +9,7 @@ public class LevelGenerator : MonoBehaviour {
 
 	//[HideInInspector]
 	public List<GameObject> Rooms = new List<GameObject>(); //list of rooms that can be spawned
+	public List<GameObject> tasks = new List<GameObject>(); //list of tasks that can be chosen to open the gate without penilty
 	List<GameObject> GeneratedRooms = new List<GameObject>(); // rooms that are in this level
 	List<GameObject> availRooms = new List<GameObject> (); //rooms that the exit can be put into
 	List<GameObject> availKeyRooms = new List<GameObject> (); // rooms that the key can be put into
@@ -55,6 +56,8 @@ public class LevelGenerator : MonoBehaviour {
 		
 		PlacePlayer ();
 		SpawnExit ();
+		int num1 = Random.Range (0, tasks.Count);
+		Instantiate (tasks [num1]);
 	}
 
 	void ChooseNextPiece () {
