@@ -4,7 +4,7 @@ using System.Collections;
 public class ExtDoor : MonoBehaviour {
 
 	bool atDoor;
-	public bool hasKey;
+	public bool taskComplete;
 
 	public GameObject forfeitCanvas;
 	// Use this for initialization
@@ -15,7 +15,7 @@ public class ExtDoor : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (atDoor && Input.GetKeyDown (KeyCode.W) || Input.GetKeyDown(KeyCode.LeftControl)) {
-			if (hasKey)
+			if (taskComplete)
 				LoadNextLevel ();
 			else {
 				Instantiate (forfeitCanvas, transform.position, Quaternion.identity);

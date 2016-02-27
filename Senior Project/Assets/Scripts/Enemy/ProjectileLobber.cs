@@ -40,7 +40,6 @@ public class ProjectileLobber : MonoBehaviour {
 				
 		}
 
-		print(Vector3.Distance (transform.position, player.transform.position));
 		if (inRange && Vector3.Distance (transform.position, player.transform.position) < 5) {
 			direction = transform.position - player.transform.position;
 			enemyRigidbody.AddForce(direction.normalized * speed);

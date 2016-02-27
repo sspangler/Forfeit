@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour {
 
 	void OnTriggerEnter2D (Collider2D col) {
 		if (col.tag == "ExitKey") {
-			GameObject.FindGameObjectWithTag ("ExitDoor").GetComponent<ExtDoor> ().hasKey = true;
+			GameObject.FindGameObjectWithTag ("ExitDoor").GetComponent<ExtDoor> ().taskComplete = true;
 			Destroy (col.gameObject);
 		}
 	}

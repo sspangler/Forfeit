@@ -10,9 +10,8 @@ public class LevelGenerator : MonoBehaviour {
 	//[HideInInspector]
 	public List<GameObject> Rooms = new List<GameObject>(); //list of rooms that can be spawned
 	public List<GameObject> tasks = new List<GameObject>(); //list of tasks that can be chosen to open the gate without penilty
-	List<GameObject> GeneratedRooms = new List<GameObject>(); // rooms that are in this level
-	List<GameObject> availRooms = new List<GameObject> (); //rooms that the exit can be put into
-	List<GameObject> availKeyRooms = new List<GameObject> (); // rooms that the key can be put into
+	[HideInInspector] public List<GameObject> GeneratedRooms = new List<GameObject>(); // rooms that are in this level
+	public List<GameObject> availRooms = new List<GameObject> (); //rooms that the exit can be put into
 	public int levelColumns;
 	public int levelRows;
 	Vector3 nextPos;
@@ -30,9 +29,7 @@ public class LevelGenerator : MonoBehaviour {
 	void OnLevelWasLoaded () {
 		int rowCounter = 0;
 		nextPos = Vector3.zero;
-		//clears list from previous level
 		availRooms.Clear ();
-		availKeyRooms.Clear ();
 		GeneratedRooms.Clear ();
 
 		while (levelRows * levelColumns > 100) {
@@ -56,6 +53,10 @@ public class LevelGenerator : MonoBehaviour {
 		
 		PlacePlayer ();
 		SpawnExit ();
+
+		spawnEnemies.EnemyRooms = GeneratedRooms;
+		spawnEnemies.Spawn ();
+
 		int num1 = Random.Range (0, tasks.Count);
 		Instantiate (tasks [num1]);
 	}
@@ -175,26 +176,8 @@ public class LevelGenerator : MonoBehaviour {
 			Instantiate (exitDoor, availRooms [Random.Range (0, availRooms.Count)].transform.position + new Vector3 (3, -10, 0), Quaternion.identity);
 		else
 			Instantiate (exitDoor, GeneratedRooms [Random.Range (0, availRooms.Count)].transform.position + new Vector3 (3, -10, 0), Quaternion.identity);
-		SpawnExitKey ();
 	}
-	
-	void SpawnExitKey () {
-		foreach (GameObject room in availRooms) {
-			if (Vector2.Distance(room.transform.position, GameObject.FindGameObjectWithTag("ExitDoor").transform.position) > 40) {
-				availKeyRooms.Add(room);
-			}
-		}
 
-		if (availKeyRooms.Count == 0) {
-			Instantiate(exitDoorKey,GeneratedRooms[Random.Range(0,GeneratedRooms.Count)].transform.position + new Vector3(3,-10,0), Quaternion.identity);
-		} else {
-			Instantiate(exitDoorKey, availKeyRooms[Random.Range(0,availKeyRooms.Count)].transform.position + new Vector3 (3, -10, 0), Quaternion.identity);
-		}
-
-		spawnEnemies.EnemyRooms = GeneratedRooms;
-		spawnEnemies.Spawn ();
-
-	}
 
 	bool CheckTopLeft (GameObject room) {
 		RaycastHit2D hitLeft = Physics2D.Raycast(room.transform.position + Vector3.down * smallDim, Vector2.left, smallDim, roomParentLayer);	
