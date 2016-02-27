@@ -3,6 +3,9 @@ using System.Collections;
 
 public class Debuffer : MonoBehaviour {
 
+	public GameObject projectile;
+	public float shotSpeed;
+
 	public float speed;
 	public string debuff;
 	GameObject player;
@@ -11,6 +14,9 @@ public class Debuffer : MonoBehaviour {
 
 	public float cooldown = 22f;
 	public float delay = 3f;
+
+	float cooldown2;
+	float delay2;
 
 	Rigidbody2D enemyRigidbody;
 	Vector3 direction;
@@ -28,6 +34,11 @@ public class Debuffer : MonoBehaviour {
 			delay -= Time.deltaTime;
 			if (delay <= 0)
 				ApplyDebuff ();
+
+			delay2 -= Time.deltaTime;
+
+			if (delay2 <= 0)
+				Fire ();
 		}
 
 		if (inRange && Vector3.Distance (transform.position, player.transform.position) < 5) {
@@ -37,6 +48,11 @@ public class Debuffer : MonoBehaviour {
 
 		if (cooldown >= 0 && inRange)
 			cooldown -= Time.deltaTime;
+	}
+
+	void Fire() {
+		GameObject proj = (GameObject)Instantiate (projectile, transform.position, Quaternion.identity);
+		proj.GetComponent<Rigidbody2D> ().velocity = direction.normalized * shotSpeed;
 	}
 
 	void ApplyDebuff () {
