@@ -27,12 +27,14 @@ public class DestroyObjects : MonoBehaviour {
 		for (int i = 0; i < 4; i++) {
 			if (availSpawnRooms.Count == 0) {
 				int num1 = Random.Range (0, levelGen.GeneratedRooms.Count);
-				Instantiate (desObj, levelGen.GeneratedRooms [num1].transform.position + new Vector3 (3, -10, 0), Quaternion.identity);
+				GameObject obj = (GameObject) Instantiate (desObj, levelGen.GeneratedRooms [num1].transform.position + new Vector3 (3, -10, 0), Quaternion.identity);
 				levelGen.GeneratedRooms.RemoveAt (num1);
+				obj.tag = "DestroyTaskObj";
 			} else {
 				int num2 = Random.Range (0, availSpawnRooms.Count);
-				Instantiate (desObj, availSpawnRooms [num2].transform.position + new Vector3 (3, -10, 0), Quaternion.identity);
+				GameObject obj = (GameObject) Instantiate (desObj, availSpawnRooms [num2].transform.position + new Vector3 (3, -10, 0), Quaternion.identity);
 				availSpawnRooms.RemoveAt (num2);
+				obj.tag = "DestroyTaskObj";
 			}
 		}
 	}
