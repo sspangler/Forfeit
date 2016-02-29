@@ -23,6 +23,7 @@ public class DestructableObj : MonoBehaviour {
 					GameObject.FindGameObjectWithTag ("ExitDoor").GetComponent<ExtDoor> ().taskComplete = true;
 				}
 			}
+			Destroy (this.gameObject);
 		}
 	}
 

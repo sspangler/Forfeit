@@ -32,12 +32,14 @@ public class DestroyObjects : MonoBehaviour {
 				levelGen.GeneratedRooms.RemoveAt (num1);
 				obj.tag = "DestroyTaskObj";
 				obj.GetComponent<DestructableObj> ().desObj = this;
+				obj.GetComponent<DestructableObj> ().taskRelated = true;
 			} else {
 				int num2 = Random.Range (0, availSpawnRooms.Count);
 				GameObject obj = (GameObject) Instantiate (desObj, availSpawnRooms [num2].transform.position + new Vector3 (3, -10, 0), Quaternion.identity);
 				availSpawnRooms.RemoveAt (num2);
 				obj.tag = "DestroyTaskObj";
 				obj.GetComponent<DestructableObj> ().desObj = this;
+				obj.GetComponent<DestructableObj> ().taskRelated = true;
 			}
 		}
 	}

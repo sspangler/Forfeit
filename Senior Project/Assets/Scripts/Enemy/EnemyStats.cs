@@ -30,8 +30,11 @@ public class EnemyStats : MonoBehaviour {
 			}
 		}
 
-		if (dropKey && health <= 0) {
-			GameObject.FindGameObjectWithTag ("ExitDoor").GetComponent<ExtDoor> ().taskComplete = true;
+		if (health <= 0) {
+			if (dropKey)
+				GameObject.FindGameObjectWithTag ("ExitDoor").GetComponent<ExtDoor> ().taskComplete = true;
+			
+			Destroy (this.gameObject);
 		}
 
 	}
