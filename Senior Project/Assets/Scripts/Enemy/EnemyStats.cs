@@ -13,6 +13,8 @@ public class EnemyStats : MonoBehaviour {
 	bool inGrace;
 	float graceTimer;
 
+	public bool dropKey;
+
 	// Use this for initialization
 	void Start () {
 		maxHealth = health;
@@ -27,5 +29,10 @@ public class EnemyStats : MonoBehaviour {
 				graceTimer = .1f;
 			}
 		}
+
+		if (dropKey && health <= 0) {
+			GameObject.FindGameObjectWithTag ("ExitDoor").GetComponent<ExtDoor> ().taskComplete = true;
+		}
+
 	}
 }

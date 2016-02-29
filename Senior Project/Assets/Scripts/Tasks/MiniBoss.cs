@@ -10,6 +10,8 @@ public class MiniBoss : MonoBehaviour {
 
 	public List<GameObject> availSpawnRooms = new List<GameObject> ();
 
+
+
 	// Use this for initialization
 	void Start () {
 		levelGen = GameObject.FindGameObjectWithTag ("GameController").GetComponent<LevelGenerator> ();

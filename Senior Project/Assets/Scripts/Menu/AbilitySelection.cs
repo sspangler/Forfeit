@@ -5,7 +5,7 @@ public class AbilitySelection : MonoBehaviour {
 	
 	GameObject mainCamera;
 	GameObject characterCanvas;
-	StatsCanvas statsCanvas;
+	public StatsCanvas statsCanvas;
 	public GameObject player;
 	public PlayerController playerCont;
 	public PlayerStats playerStats;
@@ -29,8 +29,8 @@ public class AbilitySelection : MonoBehaviour {
 	
 
 	void Start () {
-		statsCanvas = GameObject.Find ("Stats Canvas").GetComponent<StatsCanvas>();
-		abilTracker = GetComponent<AbilityTracker> ();
+		//statsCanvas = GameObject.Find ("Stats Canvas").GetComponent<StatsCanvas>();
+		//abilTracker = GetComponent<AbilityTracker> ();
 	}
 	
 	public void SetAbilities (GameObject passive) {

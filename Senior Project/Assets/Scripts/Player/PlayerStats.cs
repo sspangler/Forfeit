@@ -15,6 +15,9 @@ public class PlayerStats : MonoBehaviour {
 	public float pierceDamage;
 	public float smashDamage;
 
+	public int currency;
+	public int protectedHits;
+
 	bool inGrace;
 	float graceTimer;
 	void Start () {
@@ -36,10 +39,13 @@ public class PlayerStats : MonoBehaviour {
 
 	void OnCollisionEnter2D (Collision2D col) {
 		if (col.transform.tag == "Enemy" && !inGrace) {
-			print ("hit");
 			inGrace = true;
 			GetComponent<SpriteRenderer> ().color = Color.red;
-			health -= col.gameObject.GetComponent<EnemyStats> ().damage;
+			if (protectedHits > 0)
+				protectedHits--;
+			else
+				health -= col.gameObject.GetComponent<EnemyStats> ().damage;
+			
 			if (health <= 0)
 				print ("Dead");
 		}
