@@ -24,11 +24,13 @@ public class ProjectileStats : MonoBehaviour {
 			Destroy (this.gameObject);
 
 		transform.position += transform.forward * speed * Time.deltaTime;
-		transform.LookAt(targetPos);
+		//transform.LookAt(targetPos);
 	}
 
 	void OnCollisionEnter2D (Collision2D col) {
-		print (col.transform.name);
-		Destroy (this.gameObject);
+		if (col.transform.tag == "Player") {
+			print (col.transform.name);
+			Destroy (this.gameObject);
+		}
 	}
 }

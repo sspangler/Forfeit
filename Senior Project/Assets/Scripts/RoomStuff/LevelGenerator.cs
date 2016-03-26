@@ -1,14 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class LevelGenerator : MonoBehaviour {
 	public int smallDim;
 	public GameObject exitDoor;
 	public GameObject exitDoorKey;
 
-	//[HideInInspector]
-	public List<GameObject> Rooms = new List<GameObject>(); //list of rooms that can be spawned
+	List<GameObject> tier1Rooms, tier2Rooms, tier3Rooms, tier4Rooms, tier5Rooms;
+
+	public List<GameObject> Rooms; //list of rooms that can be spawned
 	public List<GameObject> tasks = new List<GameObject>(); //list of tasks that can be chosen to open the gate without penilty
 	[HideInInspector] public List<GameObject> GeneratedRooms = new List<GameObject>(); // rooms that are in this level
 	public List<GameObject> availRooms = new List<GameObject> (); //rooms that the exit can be put into
@@ -24,6 +26,11 @@ public class LevelGenerator : MonoBehaviour {
 
 	void Start () {
 		spawnEnemies = GetComponent<SpawnEnemies> ();
+		tier1Rooms = Resources.LoadAll<GameObject> ("Rooms/Tier1").ToList ();
+		tier2Rooms = Resources.LoadAll<GameObject> ("Rooms/Tier2").ToList ();
+		tier3Rooms = Resources.LoadAll<GameObject> ("Rooms/Tier3").ToList ();
+		tier4Rooms = Resources.LoadAll<GameObject> ("Rooms/Tier4").ToList ();
+		tier5Rooms = Resources.LoadAll<GameObject> ("Rooms/Tier5").ToList ();
 	}
 
 	void OnLevelWasLoaded () {
@@ -31,6 +38,28 @@ public class LevelGenerator : MonoBehaviour {
 		nextPos = Vector3.zero;
 		availRooms.Clear ();
 		GeneratedRooms.Clear ();
+
+		int diffLevel = GetComponent<DifficultyModifier> ().difModifier;
+
+		if (diffLevel == 1) {
+			Rooms.AddRange (tier1Rooms);
+			Rooms.AddRange (tier2Rooms);
+		} else if (diffLevel == 2) {
+			Rooms.AddRange (tier1Rooms);
+			Rooms.AddRange (tier2Rooms);
+			Rooms.AddRange (tier3Rooms);
+		} else if (diffLevel == 3) {
+			Rooms.AddRange (tier2Rooms);
+			Rooms.AddRange (tier3Rooms);
+			Rooms.AddRange (tier4Rooms);
+		} else if (diffLevel == 4) {
+			Rooms.AddRange (tier3Rooms);
+			Rooms.AddRange (tier4Rooms);
+			Rooms.AddRange (tier5Rooms);
+		} else {
+			Rooms.AddRange (tier4Rooms);
+			Rooms.AddRange (tier5Rooms);
+		}
 
 		while (levelRows * levelColumns > 100) {
 			levelRows--;
@@ -54,8 +83,6 @@ public class LevelGenerator : MonoBehaviour {
 		PlacePlayer ();
 		SpawnExit ();
 
-		spawnEnemies.EnemyRooms = GeneratedRooms;
-		spawnEnemies.Spawn ();
 
 		int num1 = Random.Range (0, tasks.Count);
 		Instantiate (tasks [num1]);

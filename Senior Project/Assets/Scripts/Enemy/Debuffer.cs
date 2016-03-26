@@ -12,13 +12,14 @@ public class Debuffer : MonoBehaviour {
 
 	bool inRange;
 
-	public float cooldown = 22f;
-	public float delay = 3f;
+	float cooldown = 22f;
+	float delay = 3f;
 
-	float cooldown2;
-	float delay2;
+	float cooldown2 = 6f;
+	float delay2 = 2f;
 
 	Rigidbody2D enemyRigidbody;
+	public BoxCollider2D physCol;
 	Vector3 direction;
 
 	// Use this for initialization
@@ -30,29 +31,37 @@ public class Debuffer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		if (inRange && cooldown < 0) {
-			delay -= Time.deltaTime;
-			if (delay <= 0)
-				ApplyDebuff ();
+		if (inRange) {
+			cooldown -= Time.deltaTime;
+			cooldown2 -= Time.deltaTime;
 
-			delay2 -= Time.deltaTime;
+			if (cooldown < 0) {
+				delay -= Time.deltaTime;
+				if (delay <= 0)
+					ApplyDebuff ();
+			}
 
-			if (delay2 <= 0)
-				Fire ();
+			if (cooldown2 < 0) {
+				delay2 -= Time.deltaTime;
+				if (delay2 <= 0)
+					Fire ();
+			}
 		}
 
 		if (inRange && Vector3.Distance (transform.position, player.transform.position) < 5) {
 			direction = transform.position - player.transform.position;
 			enemyRigidbody.AddForce(direction.normalized * speed);
 		}
-
-		if (cooldown >= 0 && inRange)
-			cooldown -= Time.deltaTime;
+			
 	}
 
 	void Fire() {
-		GameObject proj = (GameObject)Instantiate (projectile, transform.position, Quaternion.identity);
+		direction = player.transform.position - transform.position;
+		GameObject proj = (GameObject)Instantiate (projectile, transform.position , Quaternion.identity);
 		proj.GetComponent<Rigidbody2D> ().velocity = direction.normalized * shotSpeed;
+		proj.GetComponent<Rigidbody2D> ().gravityScale = 0;
+		delay2 = 2;
+		cooldown2 = 5;
 	}
 
 	void ApplyDebuff () {

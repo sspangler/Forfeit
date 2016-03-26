@@ -3,7 +3,6 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
-	public int diffStage;
 	public GameObject player;
 	int sceneNum = 0;
 

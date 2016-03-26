@@ -15,9 +15,15 @@ public class EnemyStats : MonoBehaviour {
 
 	public bool dropKey;
 
+	GameObject player;
+	bool isActive;
+
+	SpriteRenderer rend;
+
 	// Use this for initialization
 	void Start () {
 		maxHealth = health;
+		rend = GetComponent<SpriteRenderer> ();
 	}
 	
 	// Update is called once per frame
@@ -30,6 +36,13 @@ public class EnemyStats : MonoBehaviour {
 			}
 		}
 
+		if (isActive) {
+			if (player.transform.position.x < transform.position.x)
+				rend.flipX = true;
+			else
+				rend.flipX = false;
+		}
+
 		if (health <= 0) {
 			if (dropKey)
 				GameObject.FindGameObjectWithTag ("ExitDoor").GetComponent<ExtDoor> ().taskComplete = true;
@@ -37,5 +50,18 @@ public class EnemyStats : MonoBehaviour {
 			Destroy (this.gameObject);
 		}
 
+	}
+
+	void OnTriggerEnter2D (Collider2D col) {
+		if (col.tag == "Player") {
+			isActive = true;
+			player = col.gameObject;
+		}
+	}
+
+	void OnTriggerExit2D (Collider2D col) {
+		if (col.tag == "Player") {
+			isActive = false;
+		}
 	}
 }

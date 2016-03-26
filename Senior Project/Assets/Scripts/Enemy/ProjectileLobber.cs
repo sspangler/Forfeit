@@ -34,7 +34,6 @@ public class ProjectileLobber : MonoBehaviour {
 			delay -= Time.deltaTime;
 			if (delay <= 0) {
 				direction = player.transform.position - transform.position;
-				distance = Vector2.Distance (player.transform.position, transform.position);
 				LobProj ();
 			}
 				
@@ -42,7 +41,9 @@ public class ProjectileLobber : MonoBehaviour {
 
 		if (inRange && Vector3.Distance (transform.position, player.transform.position) < 5) {
 			direction = transform.position - player.transform.position;
-			enemyRigidbody.AddForce(direction.normalized * speed);
+			enemyRigidbody.AddForce (direction.normalized * speed);
+		} else {
+			enemyRigidbody.velocity = Vector2.zero;
 		}
 
 		if (cooldown >= 0 && inRange)
@@ -52,9 +53,9 @@ public class ProjectileLobber : MonoBehaviour {
 	void LobProj () {
 		int projnum;
 		if (range == 1) {
-			projnum = 3;
+			projnum = 1;
 		} else if (range == 2) {
-			projnum = 2;
+			projnum = 1;
 		} else {
 			projnum = 1;
 		}
@@ -74,6 +75,7 @@ public class ProjectileLobber : MonoBehaviour {
 			GameObject proj = (GameObject)Instantiate (projectile, transform.position, Quaternion.identity);
 			Physics2D.IgnoreCollision (GetComponent<Collider2D> (), proj.GetComponent<Collider2D> ());
 			proj.GetComponent<Rigidbody2D>().AddForce(new Vector2(direction.x * forceMultiplierX, direction.y * forceMultiplierY));
+			print (new Vector2 (direction.x * forceMultiplierX, direction.y * forceMultiplierY));
 		}
 		cooldown = 2;
 		delay = 3;
