@@ -3,13 +3,12 @@ using System.Collections;
 
 public class SlopeDetector : MonoBehaviour {
 	
-	public PlayerController player;
+	public PlayerController Parent;
 	public bool isRight, isLeft;
 	
 	// Use this for initialization
 	void Start () {
-		
-		player = GetComponentInParent<PlayerController> ();
+		Parent = GetComponentInParent<PlayerController> ();
 	}
 	
 	// Update is called once per frame
@@ -20,9 +19,9 @@ public class SlopeDetector : MonoBehaviour {
 	void OnTriggerStay2D (Collider2D col) {
 		if (col.tag == "Ground") {
 			if (isLeft) {
-				player.isGroundLeft = true;
+				Parent.isGroundLeft = true;
 			} else if (isRight){
-				player.isGroundRight = true;
+				Parent.isGroundRight = true;
 			}
 		}
 	}
@@ -30,9 +29,9 @@ public class SlopeDetector : MonoBehaviour {
 	void OnTriggerExit2D (Collider2D col) {
 		if (col.tag == "Ground") {
 			if (isLeft) {
-				player.isGroundLeft = false;
+				Parent.isGroundLeft = false;
 			} else {
-				player.isGroundRight = false;
+				Parent.isGroundRight = false;
 			}
 		}
 	}
