@@ -11,10 +11,6 @@ public class PlayerStats : MonoBehaviour {
 	public float dexterity;
 	public float agility;
 
-	public float slashDamage;
-	public float pierceDamage;
-	public float smashDamage;
-
 	public int currency;
 	public int protectedHits;
 

@@ -9,6 +9,8 @@ public class EnemyStats : MonoBehaviour {
 	public float slashRes;
 	public float pierceRes;
 	public float smashRes;
+	public float knockbackRes;
+
 
 	bool inGrace;
 	float graceTimer;
@@ -19,11 +21,13 @@ public class EnemyStats : MonoBehaviour {
 	bool isActive;
 
 	SpriteRenderer rend;
+	Rigidbody2D rigBody;
 
 	// Use this for initialization
 	void Start () {
 		maxHealth = health;
 		rend = GetComponent<SpriteRenderer> ();
+		rigBody = GetComponent<Rigidbody2D> ();
 	}
 	
 	// Update is called once per frame
@@ -62,6 +66,17 @@ public class EnemyStats : MonoBehaviour {
 	void OnTriggerExit2D (Collider2D col) {
 		if (col.tag == "Player") {
 			isActive = false;
+		}
+	}
+
+	public void TakeDamage (float slash, float pierce, float smash) {
+		health -= (slash * slashRes) + (pierce * pierceRes) + (smash * smashRes);
+	}
+
+	public void KnockBack (float knockback, Vector3 pos) {
+		if (knockback > knockbackRes) {
+			Vector3 direction = pos - transform.position;
+			rigBody.AddForce(direction.normalized * (knockback * knockbackRes));
 		}
 	}
 }
