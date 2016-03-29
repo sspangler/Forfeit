@@ -27,6 +27,7 @@ public class PlayerStats : MonoBehaviour {
 			graceTimer -= Time.deltaTime;
 			if (graceTimer < 0) {
 				inGrace = false;
+				Physics2D.IgnoreLayerCollision (13, 14, false);
 				graceTimer = .5f;
 				GetComponent<SpriteRenderer> ().color = Color.white;
 			}
@@ -36,14 +37,24 @@ public class PlayerStats : MonoBehaviour {
 	void OnCollisionEnter2D (Collision2D col) {
 		if (col.transform.tag == "Enemy" && !inGrace) {
 			inGrace = true;
+			Physics2D.IgnoreLayerCollision (13, 14, true);
 			GetComponent<SpriteRenderer> ().color = Color.red;
 			if (protectedHits > 0)
 				protectedHits--;
-			else
+			else {
 				health -= col.gameObject.GetComponent<EnemyStats> ().damage;
+				Vector3 direction = col.transform.position - transform.position;
+				GetComponent<Rigidbody2D> ().AddForce (direction * col.gameObject.GetComponent<EnemyStats> ().knockback);
+			}
 			
-			if (health <= 0)
-				print ("Dead");
+			if (health <= 0) {
+				//Invoke ("Dead", 2f);
+				//Destroy (this.gameObject);
+			}
 		}
+	}
+
+	void Dead () {
+		Application.LoadLevel (0);
 	}
 }

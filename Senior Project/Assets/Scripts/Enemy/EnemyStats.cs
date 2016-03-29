@@ -6,6 +6,7 @@ public class EnemyStats : MonoBehaviour {
 	public float health;
 	public float maxHealth;
 	public float damage;
+	public float knockback;
 	public float slashRes;
 	public float pierceRes;
 	public float smashRes;
@@ -75,8 +76,10 @@ public class EnemyStats : MonoBehaviour {
 
 	public void KnockBack (float knockback, Vector3 pos) {
 		if (knockback > knockbackRes) {
-			Vector3 direction = pos - transform.position;
-			rigBody.AddForce(direction.normalized * (knockback * knockbackRes));
+			Vector2 direction = transform.position - pos;
+			rigBody.AddForce (Vector2.up * knockback);
+			rigBody.AddForce(direction * (knockback * (1 - knockbackRes)));
+			print (direction * (knockback * (1 - knockbackRes)));
 		}
 	}
 }
