@@ -19,7 +19,6 @@ public class EnemyStats : MonoBehaviour {
 	public bool dropKey;
 
 	GameObject player;
-	bool isActive;
 
 	SpriteRenderer rend;
 	Rigidbody2D rigBody;
@@ -41,13 +40,6 @@ public class EnemyStats : MonoBehaviour {
 			}
 		}
 
-		if (isActive) {
-			if (player.transform.position.x < transform.position.x)
-				rend.flipX = true;
-			else
-				rend.flipX = false;
-		}
-
 		if (health <= 0) {
 			if (dropKey)
 				GameObject.FindGameObjectWithTag ("ExitDoor").GetComponent<ExtDoor> ().taskComplete = true;
@@ -57,29 +49,17 @@ public class EnemyStats : MonoBehaviour {
 
 	}
 
-	void OnTriggerEnter2D (Collider2D col) {
-		if (col.tag == "Player") {
-			isActive = true;
-			player = col.gameObject;
-		}
-	}
-
-	void OnTriggerExit2D (Collider2D col) {
-		if (col.tag == "Player") {
-			isActive = false;
-		}
-	}
-
 	public void TakeDamage (float slash, float pierce, float smash) {
-		health -= (slash * slashRes) + (pierce * pierceRes) + (smash * smashRes);
+		health -= (slash * (1 -slashRes)) + (pierce * (1-pierceRes)) + (smash * (1-smashRes));
 	}
 
 	public void KnockBack (float knockback, Vector3 pos) {
 		if (knockback > knockbackRes) {
 			Vector2 direction = transform.position - pos;
-			rigBody.AddForce (Vector2.up * knockback);
-			rigBody.AddForce(direction * (knockback * (1 - knockbackRes)));
-			print (direction * (knockback * (1 - knockbackRes)));
+			Vector2 force = direction.normalized;
+			rigBody.velocity = Vector2.up * 20;
+			rigBody.velocity = force * knockback * (1 - knockbackRes )* 3;
+			print ("asdfsd");
 		}
 	}
 }

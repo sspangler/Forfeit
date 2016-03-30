@@ -7,7 +7,7 @@ public class MeleeWeapons : MonoBehaviour {
 	public float slashDamage;
 	public float pierceDamage;
 	public float smashingDamage;
-	public float knockBack;
+	public float knockBack; //1 - almost none       10 - insane amount
 
 	public bool canAttack = true;
 
@@ -57,9 +57,6 @@ public class MeleeWeapons : MonoBehaviour {
 		if (col.tag == "Enemy" && !col.isTrigger) {
 			col.gameObject.GetComponent<EnemyStats> ().TakeDamage (slashDamage, slashDamage, smashingDamage);
 			col.gameObject.GetComponent<EnemyStats> ().KnockBack (knockBack, transform.position);
-			if (col.gameObject.GetComponent<EnemyStats> ().health <= 0) {
-				Destroy (col.gameObject);
-			}
 		}
 	}
 }
