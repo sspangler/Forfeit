@@ -61,10 +61,10 @@ public class LevelGenerator : MonoBehaviour {
 			Rooms.AddRange (tier5Rooms);
 		}
 
-		while (levelRows * levelColumns > 100) {
-			levelRows--;
-			levelColumns--;
-		}
+//		while (levelRows * levelColumns > 100) {
+//			levelRows--;
+//			levelColumns--;
+//		}
 		roomParentLayer = 1 << LayerMask.NameToLayer ("RoomParent");
 		
 		for (int i = 0; i < levelColumns; i++) {

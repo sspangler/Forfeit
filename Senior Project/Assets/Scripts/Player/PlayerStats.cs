@@ -28,7 +28,7 @@ public class PlayerStats : MonoBehaviour {
 			if (graceTimer < 0) {
 				inGrace = false;
 				Physics2D.IgnoreLayerCollision (13, 14, false);
-				graceTimer = .5f;
+				graceTimer = 1.0f;
 				GetComponent<SpriteRenderer> ().color = Color.white;
 			}
 		}
@@ -44,7 +44,7 @@ public class PlayerStats : MonoBehaviour {
 			else {
 				health -= col.gameObject.GetComponent<EnemyStats> ().damage;
 				Vector3 direction = col.transform.position - transform.position;
-				GetComponent<Rigidbody2D> ().AddForce (direction * col.gameObject.GetComponent<EnemyStats> ().knockback);
+				//KnockBack ();
 			}
 			
 			if (health <= 0) {
@@ -53,6 +53,13 @@ public class PlayerStats : MonoBehaviour {
 			}
 		}
 	}
+
+//	public void KnockBack () {
+//			Vector2 direction = transform.position - pos;
+//			Vector2 force = direction.normalized;
+//			GetComponent<Rigidbody2D> ().velocity = Vector2.up * 20;
+//			GetComponent<Rigidbody2D> ().velocity = force * knockback * 3;
+//	}
 
 	void Dead () {
 		Application.LoadLevel (0);

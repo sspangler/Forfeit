@@ -59,7 +59,6 @@ public class EnemyStats : MonoBehaviour {
 			Vector2 force = direction.normalized;
 			rigBody.velocity = Vector2.up * 20;
 			rigBody.velocity = force * knockback * (1 - knockbackRes )* 3;
-			print ("asdfsd");
 		}
 	}
 }

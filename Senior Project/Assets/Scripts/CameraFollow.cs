@@ -8,6 +8,7 @@ public class CameraFollow : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		target = GameObject.FindGameObjectWithTag ("Player").transform;
+		GetComponent<Camera> ().orthographicSize = 10f;
 	}
 	
 	// Update is called once per frame
