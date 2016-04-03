@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour {
 
@@ -16,10 +17,16 @@ public class PlayerStats : MonoBehaviour {
 
 	bool inGrace;
 	float graceTimer;
+
+	public Text healthText;
+	public Slider healthSlider;
+
 	void Start () {
 		avalPoints = 5;
-		maxHealth = health;
 		DontDestroyOnLoad (this.gameObject);
+		healthSlider.maxValue = maxHealth;
+		healthText.text = health + "/" + maxHealth;
+		healthSlider.value = health;
 	}
 
 	void Update () {
@@ -44,6 +51,8 @@ public class PlayerStats : MonoBehaviour {
 			else {
 				health -= col.gameObject.GetComponent<EnemyStats> ().damage;
 				Vector3 direction = col.transform.position - transform.position;
+				healthText.text = health + "/" + maxHealth;
+				healthSlider.value = health;
 				//KnockBack ();
 			}
 			

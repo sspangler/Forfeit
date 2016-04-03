@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 
 public class LevelGenerator : MonoBehaviour {
 	public int smallDim;
@@ -11,7 +12,7 @@ public class LevelGenerator : MonoBehaviour {
 	List<GameObject> tier1Rooms, tier2Rooms, tier3Rooms, tier4Rooms, tier5Rooms;
 
 	public List<GameObject> Rooms; //list of rooms that can be spawned
-	public List<GameObject> tasks = new List<GameObject>(); //list of tasks that can be chosen to open the gate without penilty
+	public List<MonoScript> tasks = new List<MonoScript>(); //list of tasks that can be chosen to open the gate without penilty
 	[HideInInspector] public List<GameObject> GeneratedRooms = new List<GameObject>(); // rooms that are in this level
 	public List<GameObject> availRooms = new List<GameObject> (); //rooms that the exit can be put into
 	public int levelColumns;

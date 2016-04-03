@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DestroyCheck : MonoBehaviour {
+public class Tasks : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

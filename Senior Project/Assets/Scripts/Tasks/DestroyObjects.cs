@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class DestroyObjects : MonoBehaviour {
 	
@@ -12,10 +13,13 @@ public class DestroyObjects : MonoBehaviour {
 
 	public int objsLeft;
 
+	public GameObject taskText;
+
 	// Use this for initialization
 	void Start () {
 		levelGen = GameObject.FindGameObjectWithTag ("GameController").GetComponent<LevelGenerator> ();
 		SpawnDesObj ();
+		taskText = GameObject.Find ("Player UI/TaskImage/TaskText");
 	}
 
 	void SpawnDesObj () {
