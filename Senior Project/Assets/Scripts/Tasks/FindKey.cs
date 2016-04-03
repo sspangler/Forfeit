@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
+
 public class FindKey : MonoBehaviour {
 
 	public LevelGenerator levelGen;
@@ -8,11 +10,14 @@ public class FindKey : MonoBehaviour {
 	public List<GameObject> availKeyRooms = new List<GameObject> ();
 
 	public GameObject exitDoorKey;
+	public Text taskText;
 
 	// Use this for initialization
 	void Start () {
 		levelGen = GameObject.FindGameObjectWithTag ("GameController").GetComponent<LevelGenerator> ();
 		SpawnExitKey ();
+		taskText = GameObject.Find ("Player UI/TaskImage/TaskText").GetComponent<Text> ();
+		taskText.text = "Find the Key!";
 	}
 
 	void SpawnExitKey () {

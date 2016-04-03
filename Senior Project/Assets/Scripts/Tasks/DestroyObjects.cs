@@ -13,13 +13,14 @@ public class DestroyObjects : MonoBehaviour {
 
 	public int objsLeft;
 
-	public GameObject taskText;
+	public Text taskText;
 
 	// Use this for initialization
 	void Start () {
 		levelGen = GameObject.FindGameObjectWithTag ("GameController").GetComponent<LevelGenerator> ();
 		SpawnDesObj ();
-		taskText = GameObject.Find ("Player UI/TaskImage/TaskText");
+		taskText = GameObject.Find ("Player UI/TaskImage/TaskText").GetComponent<Text> ();
+		taskText.text = "Destroy the " + objsLeft + " " + desObj.name;
 	}
 
 	void SpawnDesObj () {

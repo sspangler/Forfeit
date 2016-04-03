@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class MiniBoss : MonoBehaviour {
 	
@@ -10,12 +11,14 @@ public class MiniBoss : MonoBehaviour {
 
 	public List<GameObject> availSpawnRooms = new List<GameObject> ();
 
+	public Text taskText;
 
 
 	// Use this for initialization
 	void Start () {
 		levelGen = GameObject.FindGameObjectWithTag ("GameController").GetComponent<LevelGenerator> ();
 		SpawnMiniBoss ();
+		taskText = GameObject.Find ("Player UI/TaskImage/TaskText").GetComponent<Text> ();
 	}
 
 	void SpawnMiniBoss () {
@@ -31,5 +34,7 @@ public class MiniBoss : MonoBehaviour {
 		} else {
 			Instantiate(miniBosses[num1], availSpawnRooms[Random.Range(0,availSpawnRooms.Count)].transform.position + new Vector3 (3, -10, 0), Quaternion.identity);
 		}
+
+		taskText.text = "Slay " + miniBosses [num1].name;
 	}
 }
