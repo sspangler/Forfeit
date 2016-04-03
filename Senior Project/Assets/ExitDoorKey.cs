@@ -12,4 +12,12 @@ public class ExitDoorKey : MonoBehaviour {
 	void Update () {
 	
 	}
+
+	void OnTriggerEnter2D (Collider2D col) {
+		if (col.tag == "Player") {
+			GameObject.FindGameObjectWithTag ("ExitDoor").GetComponent<ExtDoor> ().taskComplete = true;
+			Destroy (col.gameObject);
+		}
+	}
+
 }
