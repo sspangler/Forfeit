@@ -4,6 +4,7 @@ using System.Collections;
 public class GameManager : MonoBehaviour {
 
 	public GameObject player;
+	public GameObject playerUI;
 	int sceneNum = 0;
 
 	// Use this for initialization
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour {
 		sceneNum += 1;
 		if (level == 1) {
 			player = GameObject.FindGameObjectWithTag ("Player");
+			playerUI.GetComponent<Canvas> ().enabled = true;
 			foreach (MonoBehaviour script in player.GetComponents<MonoBehaviour>()) {
 				script.enabled = true;
 			}

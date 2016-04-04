@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class EnemyStats : MonoBehaviour {
 
@@ -41,8 +42,10 @@ public class EnemyStats : MonoBehaviour {
 		}
 
 		if (health <= 0) {
-			if (dropKey)
+			if (dropKey) {
 				GameObject.FindGameObjectWithTag ("ExitDoor").GetComponent<ExtDoor> ().taskComplete = true;
+				GameObject.Find("GameManager/Player UI/TaskImage/TaskText").GetComponent<Text>().text = "Task Complete!";
+			}
 			
 			Destroy (this.gameObject);
 		}
