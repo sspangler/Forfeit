@@ -21,6 +21,9 @@ public class ExtDoor : MonoBehaviour {
 				Instantiate (forfeitCanvas, transform.position, Quaternion.identity);
 			}
 		}
+
+		transform.Rotate (Vector3.back * 10 * Time.deltaTime);
+
 	}
 
 	void LoadNextLevel () {
