@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
+/// <summary>
+/// adds script to the room names enemycounter which keeps track
+/// </summary>
 public class ClearRoom : MonoBehaviour {
 	public LevelGenerator levelGen;
 	public List<GameObject> availClearRooms = new List<GameObject> ();
@@ -26,9 +29,16 @@ public class ClearRoom : MonoBehaviour {
 		if (availClearRooms.Count == 0) {
 			int num1 = Random.Range (0, levelGen.GeneratedRooms.Count);
 			availClearRooms [num1].gameObject.AddComponent <EnemyCounter>();
+			availClearRooms [num1].gameObject.GetComponent<EnemyCounter> ().clearRoom = this;
 		} else {
 			int num2 = Random.Range (0, availClearRooms.Count);
 			availClearRooms [num2].gameObject.AddComponent <EnemyCounter>();
+			availClearRooms [num2].gameObject.GetComponent<EnemyCounter> ().clearRoom = this;
 		}
+	}
+
+	public void TaskComplete () {
+		taskText.text = "Task Complete!";
+		GameObject.FindGameObjectWithTag ("ExitDoor").GetComponent<ExtDoor> ().taskComplete = true;
 	}
 }

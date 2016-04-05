@@ -46,10 +46,9 @@ public class EnemyStats : MonoBehaviour {
 				GameObject.FindGameObjectWithTag ("ExitDoor").GetComponent<ExtDoor> ().taskComplete = true;
 				GameObject.Find("GameManager/Player UI/TaskImage/TaskText").GetComponent<Text>().text = "Task Complete!";
 			}
-			
+			RemovefromLists ();
 			Destroy (this.gameObject);
 		}
-
 	}
 
 	public void TakeDamage (float slash, float pierce, float smash) {
@@ -62,6 +61,12 @@ public class EnemyStats : MonoBehaviour {
 			Vector2 force = direction.normalized;
 			rigBody.velocity = Vector2.up * 20;
 			rigBody.velocity = force * knockback * (1 - knockbackRes )* 3;
+		}
+	}
+		
+	void RemovefromLists () {
+		if (transform.parent.GetComponent<EnemyCounter> () != null) {
+			transform.parent.GetComponent<EnemyCounter> ().enemyNum--;
 		}
 	}
 }
