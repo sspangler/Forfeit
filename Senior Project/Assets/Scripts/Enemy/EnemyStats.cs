@@ -55,6 +55,10 @@ public class EnemyStats : MonoBehaviour {
 		health -= (slash * (1 -slashRes)) + (pierce * (1-pierceRes)) + (smash * (1-smashRes));
 	}
 
+	public void TakeRangedDamage (float damage) {
+		health -= damage;
+	}
+		
 	public void KnockBack (float knockback, Vector3 pos) {
 		if (knockback > knockbackRes) {
 			Vector2 direction = transform.position - pos;

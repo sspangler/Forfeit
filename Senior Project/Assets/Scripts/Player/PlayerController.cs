@@ -99,10 +99,10 @@ public class PlayerController : MonoBehaviour {
 		//-------------------------------------------------------------------------------------------------
 		//Attacking left right and down (possible up?)
 		if (Input.GetKey (KeyCode.LeftArrow)) {
-			activeWeaponScript.SendMessage ("StartAttack");
+			activeWeaponScript.SendMessage ("StartAttackLeft");
 			transform.localEulerAngles = leftFacing;
 		} else if (Input.GetKey (KeyCode.RightArrow)) {
-			activeWeaponScript.SendMessage ("StartAttack");
+			activeWeaponScript.SendMessage ("StartAttackRight");
 			transform.localEulerAngles = rightFacing;
 		}
 

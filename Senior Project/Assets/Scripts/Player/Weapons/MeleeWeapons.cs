@@ -44,7 +44,16 @@ public class MeleeWeapons : MonoBehaviour {
 		}
 	}
 
-	public void StartAttack () {
+	public void StartAttackLeft () {
+		if (canAttack) {
+			swinging = true;
+			canAttack = false;
+			weaponCol.enabled = true;
+			transform.localPosition = startPos;
+		}
+	}
+
+	public void StartAttackRight () {
 		if (canAttack) {
 			swinging = true;
 			canAttack = false;
