@@ -28,8 +28,8 @@ public class ClearRoom : MonoBehaviour {
 
 		if (availClearRooms.Count == 0) {
 			int num1 = Random.Range (0, levelGen.GeneratedRooms.Count);
-			availClearRooms [num1].gameObject.AddComponent <EnemyCounter>();
-			availClearRooms [num1].gameObject.GetComponent<EnemyCounter> ().clearRoom = this;
+			levelGen.GeneratedRooms [num1].gameObject.AddComponent <EnemyCounter>();
+			levelGen.GeneratedRooms [num1].gameObject.GetComponent<EnemyCounter> ().clearRoom = this;
 		} else {
 			int num2 = Random.Range (0, availClearRooms.Count);
 			availClearRooms [num2].gameObject.AddComponent <EnemyCounter>();

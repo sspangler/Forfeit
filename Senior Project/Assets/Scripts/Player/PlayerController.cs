@@ -57,9 +57,13 @@ public class PlayerController : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Q)) {
 			if (weapon2 != null && weapon1 != null) {
 				if (activeWeaponNum == 1) {
+					weapon1.SetActive (false);
+					weapon2.SetActive (true);
 					activeWeaponScript = weapon2.GetComponent<MonoBehaviour> ();
 					activeWeaponNum = 2;
 				} else {
+					weapon1.SetActive (true);
+					weapon2.SetActive (false);
 					activeWeaponScript = weapon1.GetComponent<MonoBehaviour> ();
 					activeWeaponNum = 1;
 				}
@@ -99,11 +103,11 @@ public class PlayerController : MonoBehaviour {
 		//-------------------------------------------------------------------------------------------------
 		//Attacking left right and down (possible up?)
 		if (Input.GetKey (KeyCode.LeftArrow)) {
-			activeWeaponScript.SendMessage ("StartAttackLeft");
 			transform.localEulerAngles = leftFacing;
+			activeWeaponScript.SendMessage ("StartAttackLeft");
 		} else if (Input.GetKey (KeyCode.RightArrow)) {
-			activeWeaponScript.SendMessage ("StartAttackRight");
 			transform.localEulerAngles = rightFacing;
+			activeWeaponScript.SendMessage ("StartAttackRight");
 		}
 
 	}
