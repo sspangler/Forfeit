@@ -38,7 +38,7 @@ public class AbilityCanvas : MonoBehaviour {
 		player.AddComponent<Rigidbody2D> ();
 		player.GetComponent<Rigidbody2D>().freezeRotation = true;
 		difMod.InvokeRepeating ("UpDifficulty", difMod.secondsPerDif, difMod.secondsPerDif);
-
+		difMod.timeRunning = true;
 	}
 
 	public void moveToCharacter () {

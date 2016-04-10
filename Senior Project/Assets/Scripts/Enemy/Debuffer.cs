@@ -19,7 +19,6 @@ public class Debuffer : MonoBehaviour {
 	float delay2 = 2f;
 
 	Rigidbody2D enemyRigidbody;
-	public BoxCollider2D physCol;
 	Vector3 direction;
 
 	// Use this for initialization
@@ -50,7 +49,7 @@ public class Debuffer : MonoBehaviour {
 
 		if (inRange && Vector3.Distance (transform.position, player.transform.position) < 5) {
 			direction = transform.position - player.transform.position;
-			enemyRigidbody.AddForce(direction.normalized * speed);
+			transform.Translate (direction.normalized * speed * Time.fixedDeltaTime);
 		}
 			
 	}
@@ -73,6 +72,12 @@ public class Debuffer : MonoBehaviour {
 	void OnTriggerStay2D (Collider2D col) {
 		if (col.tag == "Player") {
 			inRange = true;
+		}
+	}
+
+	void OnTriggerExit2D (Collider2D col) {
+		if (col.tag == "Player") {
+			inRange = false;
 		}
 	}
 }

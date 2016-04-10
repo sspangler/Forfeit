@@ -41,12 +41,12 @@ public class Patrol : MonoBehaviour {
 				spriterend.flipX = false;
 			}
 		} else if (rangeCounter == 2) {
-			if (player.transform.position.x < transform.position.x) { //left
+			if (player.transform.position.x < transform.position.x  && isGroundLeft) { //left
 				spriterend.flipX = true;
 				moveLeft = true;
 				moveRight = false;
 				transform.Translate (Vector2.left * moveSpeed * Time.fixedDeltaTime);
-			}else if (player.transform.position.x > transform.position.x) { //left
+			}else if (player.transform.position.x > transform.position.x && isGroundRight) { //left
 				spriterend.flipX = false;
 				moveLeft = false;
 				moveRight = true;

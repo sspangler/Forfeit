@@ -7,7 +7,7 @@ public class GroundCheck : MonoBehaviour {
 
 	public Patrol controller;
 
-	public int groundCount;
+	int groundCount;
 
 	// Use this for initialization
 	void Start () {

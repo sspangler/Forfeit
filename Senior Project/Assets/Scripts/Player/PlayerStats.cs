@@ -24,6 +24,8 @@ public class PlayerStats : MonoBehaviour {
 	void Start () {
 		avalPoints = 5;
 		DontDestroyOnLoad (this.gameObject);
+		healthSlider = GameObject.FindGameObjectWithTag ("PlayerUI").transform.Find ("HealthBar").GetComponent<Slider> ();
+		healthText = GameObject.FindGameObjectWithTag ("PlayerUI").transform.Find ("HealthBar/HealthText").GetComponent<Text>();
 		healthSlider.maxValue = maxHealth;
 		healthText.text = health + "/" + maxHealth;
 		healthSlider.value = health;
