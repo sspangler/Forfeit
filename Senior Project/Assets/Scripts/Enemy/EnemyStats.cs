@@ -7,12 +7,14 @@ public class EnemyStats : MonoBehaviour {
 	public float health;
 	public float maxHealth;
 	public float damage;
+	public float contactDamage;
 	public float knockback;
 	public float slashRes;
 	public float pierceRes;
 	public float smashRes;
 	public float knockbackRes;
 
+	public int goldDrop;
 
 	bool inGrace;
 	float graceTimer;
@@ -46,6 +48,8 @@ public class EnemyStats : MonoBehaviour {
 				GameObject.FindGameObjectWithTag ("ExitDoor").GetComponent<ExtDoor> ().taskComplete = true;
 				GameObject.Find("GameManager/Player UI/TaskImage/TaskText").GetComponent<Text>().text = "Task Complete!";
 			}
+
+			player.GetComponent<PlayerStats> ().currency += goldDrop;
 			RemovefromLists ();
 			Destroy (this.gameObject);
 		}
@@ -71,6 +75,13 @@ public class EnemyStats : MonoBehaviour {
 	void RemovefromLists () {
 		if (transform.parent.GetComponent<EnemyCounter> () != null) {
 			transform.parent.GetComponent<EnemyCounter> ().enemyNum--;
+		}
+	}
+
+	void OnCollisionEnter2D (Collision2D col) {
+		if (col.transform.tag == "Player") {
+			col.gameObject.GetComponent<PlayerStats> ().TakeDamage (contactDamage);
+			col.gameObject.GetComponent<PlayerStats> ().TakeKnockBack (transform.position, knockback);
 		}
 	}
 }

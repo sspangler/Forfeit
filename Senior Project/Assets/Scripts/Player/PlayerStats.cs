@@ -21,14 +21,20 @@ public class PlayerStats : MonoBehaviour {
 	public Text healthText;
 	public Slider healthSlider;
 
+	Rigidbody2D playerRig;
+
 	void Start () {
 		avalPoints = 5;
 		DontDestroyOnLoad (this.gameObject);
 		healthSlider = GameObject.FindGameObjectWithTag ("PlayerUI").transform.Find ("HealthBar").GetComponent<Slider> ();
 		healthText = GameObject.FindGameObjectWithTag ("PlayerUI").transform.Find ("HealthBar/HealthText").GetComponent<Text>();
 		healthSlider.maxValue = maxHealth;
-		healthText.text = health + "/" + maxHealth;
+		healthText.text = health + " / " + maxHealth;
 		healthSlider.value = health;
+	}
+
+	void OnLevelWasLoaded () {
+		playerRig = GetComponent<Rigidbody2D> ();
 	}
 
 	void Update () {
@@ -43,34 +49,33 @@ public class PlayerStats : MonoBehaviour {
 		}
 	}
 
-	void OnCollisionEnter2D (Collision2D col) {
-		if (col.transform.tag == "Enemy" && !inGrace) {
+	public void TakeDamage (float damage) {
+		if (!inGrace) {
 			inGrace = true;
 			Physics2D.IgnoreLayerCollision (13, 14, true);
 			GetComponent<SpriteRenderer> ().color = Color.red;
+
 			if (protectedHits > 0)
 				protectedHits--;
 			else {
-				health -= col.gameObject.GetComponent<EnemyStats> ().damage;
-				Vector3 direction = col.transform.position - transform.position;
-				healthText.text = health + "/" + maxHealth;
+				health -= damage;
+				healthText.text = health + " / " + maxHealth;
 				healthSlider.value = health;
-				//KnockBack ();
 			}
-			
+
 			if (health <= 0) {
-				//Invoke ("Dead", 2f);
-				//Destroy (this.gameObject);
+				Invoke ("Dead", 3f);
+				Destroy (this.gameObject);
 			}
 		}
 	}
 
-//	public void KnockBack () {
-//			Vector2 direction = transform.position - pos;
-//			Vector2 force = direction.normalized;
-//			GetComponent<Rigidbody2D> ().velocity = Vector2.up * 20;
-//			GetComponent<Rigidbody2D> ().velocity = force * knockback * 3;
-//	}
+	public void TakeKnockBack (Vector3 pos, float knockback) {
+		Vector2 direction = transform.position - pos;
+		Vector2 force = direction.normalized;
+		playerRig.velocity = Vector2.up * 20;
+		playerRig.velocity = force * knockback * 3;
+	}
 
 	void Dead () {
 		Application.LoadLevel (0);

@@ -16,6 +16,8 @@ public class HorzRoomLockedDoors : MonoBehaviour {
 	Vector3 leftPos;
 	Vector3 rightPos;
 
+	LayerMask roomParentLayer;
+
 	// Use this for initialization
 	void Start () {
 		xScale = transform.localScale.x;
@@ -27,18 +29,19 @@ public class HorzRoomLockedDoors : MonoBehaviour {
 		leftPos = new Vector3 (0, -(yScale / 2), 0) + transform.position;
 		rightPos = new Vector3 (xScale, -(yScale / 2), 0) + transform.position;
 
+		roomParentLayer = 1 << LayerMask.NameToLayer ("RoomParent");
 		CheckForDoors ();
 	}
 
 	void CheckForDoors () {
-		RaycastHit2D hitTopLeft = Physics2D.Raycast(topLeftPos + Vector3.up, Vector2.up, 1f);	
-		RaycastHit2D hitBotLeft = Physics2D.Raycast (botLeftPos + Vector3.down, Vector2.down, 1f);
+		RaycastHit2D hitTopLeft = Physics2D.Raycast(topLeftPos + Vector3.up, Vector2.up, 5f, roomParentLayer);	
+		RaycastHit2D hitBotLeft = Physics2D.Raycast (botLeftPos + Vector3.down, Vector2.down, 5f, roomParentLayer);
 
-		RaycastHit2D hitTopRight = Physics2D.Raycast(topRightPos + Vector3.up, Vector2.up, 1f);	
-		RaycastHit2D hitBotRight = Physics2D.Raycast (botRightPos + Vector3.down, Vector2.down, 1f);
+		RaycastHit2D hitTopRight = Physics2D.Raycast(topRightPos + Vector3.up, Vector2.up, 5f, roomParentLayer);	
+		RaycastHit2D hitBotRight = Physics2D.Raycast (botRightPos + Vector3.down, Vector2.down, 5f, roomParentLayer);
 
-		RaycastHit2D hitLeft = Physics2D.Raycast (leftPos + Vector3.left, Vector2.down, 1f);
-		RaycastHit2D hitRight = Physics2D.Raycast (rightPos + Vector3.right, Vector2.down, 1f);
+		RaycastHit2D hitLeft = Physics2D.Raycast (leftPos + Vector3.left, Vector2.left, 5f, roomParentLayer);
+		RaycastHit2D hitRight = Physics2D.Raycast (rightPos + Vector3.right, Vector2.right, 5f, roomParentLayer);
 
 		if (hitTopLeft.collider == null)
 			SpawnVertDoor (topLeftPos);
@@ -48,6 +51,7 @@ public class HorzRoomLockedDoors : MonoBehaviour {
 			SpawnVertDoor (topRightPos);
 		if (hitBotRight.collider == null)
 			SpawnVertDoor (botRightPos);
+		
 		if (hitLeft.collider == null)
 			SpawnHorzDoor (leftPos);
 		if (hitRight.collider == null)

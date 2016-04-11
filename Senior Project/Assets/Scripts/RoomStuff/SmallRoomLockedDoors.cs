@@ -13,6 +13,8 @@ public class SmallRoomLockedDoors : MonoBehaviour {
 	Vector3 leftPos;
 	Vector3 rightPos;
 
+	LayerMask roomParentLayer;
+
 	// Use this for initialization
 	void Start () {
 		scale = transform.localScale.x;
@@ -21,6 +23,7 @@ public class SmallRoomLockedDoors : MonoBehaviour {
 		leftPos = new Vector3 (0, -(scale / 2), 0) + transform.position;
 		rightPos = new Vector3 (scale, -(scale / 2), 0) + transform.position;
 
+		roomParentLayer = 1 << LayerMask.NameToLayer ("RoomParent");
 		CheckForDoors ();
 	}
 	
@@ -30,10 +33,10 @@ public class SmallRoomLockedDoors : MonoBehaviour {
 	}
 
 	void CheckForDoors () {
-		RaycastHit2D hitTop = Physics2D.Raycast(topPos + Vector3.up, Vector2.up, 1f);	
-		RaycastHit2D hitBot = Physics2D.Raycast (botPos + Vector3.down, Vector2.down, 1f);
-		RaycastHit2D hitLeft = Physics2D.Raycast (leftPos + Vector3.left, Vector2.down, 1f);
-		RaycastHit2D hitRight = Physics2D.Raycast (rightPos + Vector3.right, Vector2.down, 1f);
+		RaycastHit2D hitTop = Physics2D.Raycast(topPos + Vector3.up, Vector2.up, 5f, roomParentLayer);	
+		RaycastHit2D hitBot = Physics2D.Raycast (botPos + Vector3.down, Vector2.down, 5f, roomParentLayer);
+		RaycastHit2D hitLeft = Physics2D.Raycast (leftPos + Vector3.left, Vector2.left, 5f, roomParentLayer);
+		RaycastHit2D hitRight = Physics2D.Raycast (rightPos + Vector3.right, Vector2.right, 5f, roomParentLayer);
 
 		if (hitTop.collider == null)
 			SpawnVertDoor (topPos);

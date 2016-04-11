@@ -62,10 +62,11 @@ public class LevelGenerator : MonoBehaviour {
 			Rooms.AddRange (tier5Rooms);
 		}
 
-//		while (levelRows * levelColumns > 100) {
-//			levelRows--;
-//			levelColumns--;
-//		}
+		while (levelRows * levelColumns > 100) {
+			levelRows--;
+			levelColumns--;
+		}
+
 		roomParentLayer = 1 << LayerMask.NameToLayer ("RoomParent");
 		
 		for (int i = 0; i < levelColumns; i++) {
@@ -179,6 +180,12 @@ public class LevelGenerator : MonoBehaviour {
 		offset.Scale (chosenRoom.transform.localScale);
 		playerPos = offset + roomPos;
 		player.transform.position = playerPos;
+
+		foreach (Transform child in GeneratedRooms[num1].transform) {
+			if (child.tag == "Enemy") {
+				Destroy (child.gameObject);
+			}
+		}
 
 		GeneratedRooms.RemoveAt (num1);
 	}

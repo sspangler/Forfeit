@@ -38,6 +38,8 @@ public class RangedWeapons : MonoBehaviour {
 			GameObject projClone = (GameObject)Instantiate (projectile, transform.position, Quaternion.identity);
 			projClone.GetComponent<Rigidbody2D> ().velocity += Vector2.left * bulletSpeed;
 			projClone.transform.up = projClone.GetComponent<Rigidbody2D> ().velocity.normalized;
+			projClone.GetComponent<ProjectileCollision> ().damage = damage;
+			projClone.GetComponent<ProjectileCollision> ().knockBack = knockBack;
 			canFire = false;
 			timer = 0;
 		}
@@ -70,6 +72,8 @@ public class RangedWeapons : MonoBehaviour {
 		if (canFire) {
 			GameObject projClone = (GameObject)Instantiate (projectile, transform.position, Quaternion.identity);
 			projClone.GetComponent<Rigidbody2D> ().velocity += playerRig.velocity + Vector2.right * bulletSpeed;
+			projClone.GetComponent<ProjectileCollision> ().damage = damage;
+			projClone.GetComponent<ProjectileCollision> ().knockBack = knockBack;
 			canFire = false;
 			timer = 0;
 		}

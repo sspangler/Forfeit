@@ -9,14 +9,9 @@ public class LargeRoomLockedDoors : MonoBehaviour {
 	float xScale;
 	float yScale;
 
-	Vector3 topLeftPos;
-	Vector3 botLeftPos;
-	Vector3 topRightPos;
-	Vector3 botRightPos;
-	Vector3 leftTopPos;
-	Vector3 rightTopPos;
-	Vector3 leftBotPos;
-	Vector3 rightBotPos;
+	Vector3 topLeftPos, botLeftPos, topRightPos, botRightPos, leftTopPos, rightTopPos, leftBotPos, rightBotPos;
+
+	LayerMask roomParentLayer;
 
 	// Use this for initialization
 	void Start () {
@@ -32,21 +27,22 @@ public class LargeRoomLockedDoors : MonoBehaviour {
 		leftBotPos = new Vector3 (0, -(yScale / 1.33f), 0) + transform.position;
 		rightBotPos = new Vector3 (xScale, -(yScale / 1.33f), 0) + transform.position;
 
+		roomParentLayer = 1 << LayerMask.NameToLayer ("RoomParent");
 		CheckForDoors ();
 	}
 
 	void CheckForDoors () {
-		RaycastHit2D hitTopLeft = Physics2D.Raycast(topLeftPos + Vector3.up, Vector2.up, 1f);	
-		RaycastHit2D hitBotLeft = Physics2D.Raycast (botLeftPos + Vector3.down, Vector2.down, 1f);
+		RaycastHit2D hitTopLeft = Physics2D.Raycast(topLeftPos + Vector3.up, Vector2.up, 5f, roomParentLayer);	
+		RaycastHit2D hitBotLeft = Physics2D.Raycast (botLeftPos + Vector3.down, Vector2.down, 5f, roomParentLayer);
 
-		RaycastHit2D hitTopRight = Physics2D.Raycast(topRightPos + Vector3.up, Vector2.up, 1f);	
-		RaycastHit2D hitBotRight = Physics2D.Raycast (botRightPos + Vector3.down, Vector2.down, 1f);
+		RaycastHit2D hitTopRight = Physics2D.Raycast(topRightPos + Vector3.up, Vector2.up, 5f, roomParentLayer);	
+		RaycastHit2D hitBotRight = Physics2D.Raycast (botRightPos + Vector3.down, Vector2.down, 5f, roomParentLayer);
 
-		RaycastHit2D hitLeftTop = Physics2D.Raycast (leftTopPos + Vector3.left, Vector2.left, 1f);
-		RaycastHit2D hitRightTop = Physics2D.Raycast (rightTopPos + Vector3.right, Vector2.right, 1f);
+		RaycastHit2D hitLeftTop = Physics2D.Raycast (leftTopPos + Vector3.left, Vector2.left, 5f, roomParentLayer);
+		RaycastHit2D hitRightTop = Physics2D.Raycast (rightTopPos + Vector3.right, Vector2.right, 5f, roomParentLayer);
 
-		RaycastHit2D hitLeftBot = Physics2D.Raycast (leftBotPos + Vector3.left, Vector2.left, 1f);
-		RaycastHit2D hitRightBot = Physics2D.Raycast (rightBotPos + Vector3.right, Vector2.right, 1f);
+		RaycastHit2D hitLeftBot = Physics2D.Raycast (leftBotPos + Vector3.left, Vector2.left, 5f, roomParentLayer);
+		RaycastHit2D hitRightBot = Physics2D.Raycast (rightBotPos + Vector3.right, Vector2.right, 5f, roomParentLayer);
 
 		if (hitTopLeft.collider == null)
 			SpawnVertDoor (topLeftPos);

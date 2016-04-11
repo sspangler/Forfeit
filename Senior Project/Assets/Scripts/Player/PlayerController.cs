@@ -28,6 +28,10 @@ public class PlayerController : MonoBehaviour {
 	[HideInInspector] public int jumpsLeft;
 	bool jumpOffGround;
 
+	public SlopeDetector groundCheckR;
+	public SlopeDetector groundCheckL;
+
+
 	// Use this for initialization
 	void Start () {
 		stats = GetComponent<PlayerStats> ();
@@ -38,6 +42,7 @@ public class PlayerController : MonoBehaviour {
 		activeWeaponNum = 1;
 		jumpForce = 10 + (stats.strength * .5f) * (stats.agility * .25f);
 		jumpsLeft = amountOfJumps;
+
 	}
 		
 	void Update () {
@@ -104,12 +109,13 @@ public class PlayerController : MonoBehaviour {
 		//Attacking left right and down (possible up?)
 		if (Input.GetKey (KeyCode.LeftArrow)) {
 			transform.localEulerAngles = leftFacing;
+			groundCheckL.SwapLeftRight (); groundCheckR.SwapLeftRight ();
 			activeWeaponScript.SendMessage ("StartAttackLeft");
 		} else if (Input.GetKey (KeyCode.RightArrow)) {
 			transform.localEulerAngles = rightFacing;
+			groundCheckL.SwapLeftRight (); groundCheckR.SwapLeftRight ();
 			activeWeaponScript.SendMessage ("StartAttackRight");
 		}
-
 	}
 
 	void OnCollisionStay2D (Collision2D col) {

@@ -14,7 +14,7 @@ public class ClearRoom : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		levelGen = GameObject.FindGameObjectWithTag ("GameController").GetComponent<LevelGenerator> ();
-		taskText = GameObject.Find ("Player UI/TaskImage/TaskText").GetComponent<Text> ();
+		taskText = GameObject.Find ("Player UI/TaskText").GetComponent<Text> ();
 		taskText.text = "Clear the designated room";
 		SelectRooms ();
 	}
