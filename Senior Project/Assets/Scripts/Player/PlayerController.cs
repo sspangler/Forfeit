@@ -25,11 +25,14 @@ public class PlayerController : MonoBehaviour {
 
 	int activeWeaponNum; 
 	[HideInInspector] public int amountOfJumps = 1;
-	[HideInInspector] public int jumpsLeft;
+	//[HideInInspector] 
+	public int jumpsLeft;
 	bool jumpOffGround;
 
 	public SlopeDetector groundCheckR;
 	public SlopeDetector groundCheckL;
+
+	bool leftMove, rightMove, downMove, interactDown, leftAttack, rightAttack, jumpDown;
 
 
 	// Use this for initialization
@@ -48,18 +51,10 @@ public class PlayerController : MonoBehaviour {
 	void Update () {
 
 		if (Input.GetKeyDown (KeyCode.L)) {
-			Application.LoadLevel(Application.loadedLevel + 1);
+			Application.LoadLevel (Application.loadedLevel + 1);
 		}
 
-		if (!isGrounded) {
-			playerRigidbody.velocity += new Vector2 (0, forceDown);
-			if (forceDown > -.1f)
-				forceDown -= .5f * Time.deltaTime;
-		} else 
-			forceDown = 0;
-
-		//switch active weapon
-		if (Input.GetKeyDown (KeyCode.Q)) {
+		if (Input.GetKeyDown(KeyCode.Q)) {
 			if (weapon2 != null && weapon1 != null) {
 				if (activeWeaponNum == 1) {
 					weapon1.SetActive (false);
@@ -75,43 +70,83 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 
+		if (Input.GetKey (KeyCode.A)) {
+			leftMove = true;
+			rightMove = false;
+		} else if (Input.GetKey (KeyCode.D)) {
+			rightMove = true;
+			leftMove = false;
+		} else {
+			rightMove = false;
+			leftMove = false;
+		}
+
+		if (Input.GetKey (KeyCode.RightArrow)) {
+			rightAttack = true;
+			leftAttack = false;
+		} else if (Input.GetKey (KeyCode.LeftArrow)) {
+			leftAttack = true;
+			rightAttack = false;
+		} else {
+			leftAttack = false;
+			rightAttack = false;
+		}
+
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			jumpDown = true;
+		}
+
+		if (Input.GetKey (KeyCode.S)) {
+			downMove = true;
+		} else
+			downMove = false;
+	}
+
+	void FixedUpdate () {
+		
+		if (!isGrounded) {
+			playerRigidbody.velocity += new Vector2 (0, forceDown);
+			if (forceDown > -.1f)
+				forceDown -= .5f * Time.deltaTime;
+		} else 
+			forceDown = 0;
+
+		//switch active weapon
+
 		// MOVEMENT --------------------------------------------------------------------------------------
 		// left and right movement
-		if (Input.GetKey (KeyCode.A) && !isGroundLeft) {
-			playerRigidbody.velocity = new Vector2 (-speed, playerRigidbody.velocity.y);
-			
-		} else if (Input.GetKey (KeyCode.D) && !isGroundRight) {
-			playerRigidbody.velocity = new Vector2 (speed, playerRigidbody.velocity.y);
-			
-		} else {
-			playerRigidbody.velocity = new Vector2 (0, playerRigidbody.velocity.y);
+		if (leftMove && !isGroundLeft) {
+			transform.Translate (Vector2.left * speed * Time.fixedDeltaTime, Space.World);
+		} else if (rightMove && !isGroundRight) {
+			transform.Translate (Vector2.right * speed * Time.fixedDeltaTime, Space.World);
 		}
 			
 
 		// up and down movement
 		// W for doors/stairs S for going through certain platforms
-		if (Input.GetKeyDown (KeyCode.Space) && !Input.GetKey (KeyCode.S)) {
+		if (jumpDown && !downMove) {
 			if (isGrounded) { 
 				playerRigidbody.velocity = new Vector2 (playerRigidbody.velocity.x, jumpForce);
 				jumpsLeft--;
 				jumpOffGround = true;
+				jumpDown = false;
 			} else if (jumpsLeft > 0 && (jumpsLeft > 1 || jumpOffGround)) { // for double jumps
 				playerRigidbody.velocity = new Vector2 (playerRigidbody.velocity.x, jumpForce);
 				jumpsLeft--;
+				jumpDown = false;
 			}
-			
-			
-		} else if (Input.GetKeyDown (KeyCode.Space) && isGrounded && Input.GetKey (KeyCode.S) && onOneWay) {
+		} else if (jumpDown && isGrounded && downMove && onOneWay) {
 			Physics2D.IgnoreCollision (playerCol, oneWayCol);
+			jumpDown = false;
 		}
 
 		//-------------------------------------------------------------------------------------------------
 		//Attacking left right and down (possible up?)
-		if (Input.GetKey (KeyCode.LeftArrow)) {
+		if (leftAttack) {
 			transform.localEulerAngles = leftFacing;
 			groundCheckL.SwapLeftRight (); groundCheckR.SwapLeftRight ();
 			activeWeaponScript.SendMessage ("StartAttackLeft");
-		} else if (Input.GetKey (KeyCode.RightArrow)) {
+		} else if (rightAttack) {
 			transform.localEulerAngles = rightFacing;
 			groundCheckL.SwapLeftRight (); groundCheckR.SwapLeftRight ();
 			activeWeaponScript.SendMessage ("StartAttackRight");

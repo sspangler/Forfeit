@@ -23,6 +23,10 @@ public class ProjectileCollision : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D (Collision2D col) {
+		if (transform.tag == "PlayerProjectile" && col.transform.tag == "Ground") {
+			Destroy (this.gameObject);
+		}
+
 		if (col.transform.tag == "Enemy" && transform.tag == "PlayerProjectile") {
 			col.gameObject.GetComponent<EnemyStats> ().TakeRangedDamage (damage);
 			col.gameObject.GetComponent<EnemyStats> ().KnockBack (knockBack, transform.position);
