@@ -12,7 +12,6 @@ public class PlayerStats : MonoBehaviour {
 	public float dexterity;
 	public float agility;
 
-	public int currency;
 	public int protectedHits;
 
 	bool inGrace;

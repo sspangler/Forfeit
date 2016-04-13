@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
 	public GameObject player;
 	public GameObject playerUI;
 	int sceneNum = 0;
+	public int coins;
+	public Text coinsText;
 
 	// Use this for initialization
 	void Start () {
@@ -33,5 +36,10 @@ public class GameManager : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	public void UpdateUI (int coinNum) {
+		coins += coinNum;
+		coinsText.text = coins.ToString ();
 	}
 }

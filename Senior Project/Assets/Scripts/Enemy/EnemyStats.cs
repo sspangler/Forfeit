@@ -49,7 +49,7 @@ public class EnemyStats : MonoBehaviour {
 				GameObject.Find("GameManager/Player UI/TaskImage/TaskText").GetComponent<Text>().text = "Task Complete!";
 			}
 
-			player.GetComponent<PlayerStats> ().currency += goldDrop;
+			GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameManager> ().UpdateUI (goldDrop);
 			RemovefromLists ();
 			Destroy (this.gameObject);
 		}
