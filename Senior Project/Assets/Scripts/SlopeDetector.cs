@@ -39,6 +39,7 @@ public class SlopeDetector : MonoBehaviour {
 	public void SwapLeftRight () {
 		isRight = !isRight;
 		isLeft = !isLeft;
-
+		Parent.isGroundLeft = false;
+		Parent.isGroundRight = false;
 	}
 }

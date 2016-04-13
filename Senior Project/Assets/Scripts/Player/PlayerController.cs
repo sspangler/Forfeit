@@ -11,7 +11,8 @@ public class PlayerController : MonoBehaviour {
 	[HideInInspector] public bool isGrounded;
 
 	float forceDown;
-	[HideInInspector] public bool leftDown, rightDown, isGroundLeft, isGroundRight;
+	//[HideInInspector] 
+	public bool leftDown, rightDown, isGroundLeft, isGroundRight;
 
 	[HideInInspector] public bool onOneWay;
 	[HideInInspector] public Collider2D oneWayCol;
@@ -32,8 +33,9 @@ public class PlayerController : MonoBehaviour {
 	public SlopeDetector groundCheckR;
 	public SlopeDetector groundCheckL;
 
-	bool leftMove, rightMove, downMove, interactDown, leftAttack, rightAttack, jumpDown;
+	public bool leftMove, rightMove, downMove, interactDown, leftAttack, rightAttack, jumpDown;
 
+	public bool facingLeft, facingRight;
 
 	// Use this for initialization
 	void Start () {
@@ -144,12 +146,22 @@ public class PlayerController : MonoBehaviour {
 		//Attacking left right and down (possible up?)
 		if (leftAttack) {
 			transform.localEulerAngles = leftFacing;
-			groundCheckL.SwapLeftRight (); groundCheckR.SwapLeftRight ();
+			if (!facingLeft) {
+				groundCheckL.SwapLeftRight (); groundCheckR.SwapLeftRight ();
+				facingLeft = true;
+				facingRight = false;
+			}
 			activeWeaponScript.SendMessage ("StartAttackLeft");
 		} else if (rightAttack) {
 			transform.localEulerAngles = rightFacing;
-			groundCheckL.SwapLeftRight (); groundCheckR.SwapLeftRight ();
+			if (!facingRight) {
+				groundCheckL.SwapLeftRight ();
+				groundCheckR.SwapLeftRight ();
+				facingRight = true;
+				facingLeft = false;
+			}
 			activeWeaponScript.SendMessage ("StartAttackRight");
+
 		}
 	}
 
