@@ -22,8 +22,10 @@ public class ExtDoor : MonoBehaviour {
 			}
 		}
 
-		transform.Rotate (Vector3.back * 10 * Time.deltaTime);
+	}
 
+	void FixedUpdate () {
+		transform.Rotate (Vector3.back * 10 * Time.fixedDeltaTime);
 	}
 
 	void LoadNextLevel () {

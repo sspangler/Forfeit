@@ -19,7 +19,7 @@ public class DestroyObjects : MonoBehaviour {
 	void Start () {
 		levelGen = GameObject.FindGameObjectWithTag ("GameController").GetComponent<LevelGenerator> ();
 		SpawnDesObj ();
-		taskText = GameObject.Find ("Player UI/TaskImage/TaskText").GetComponent<Text> ();
+		taskText = GameObject.Find ("Player UI/TaskText").GetComponent<Text> ();
 		taskText.text = "Destroy the " + objsLeft + " " + desObj.name;
 	}
 

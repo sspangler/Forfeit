@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour {
 		if (!isGrounded) {
 			playerRigidbody.velocity += new Vector2 (0, forceDown);
 			if (forceDown > -.1f)
-				forceDown -= .5f * Time.deltaTime;
+				forceDown -= 1f * Time.deltaTime;
 		} else 
 			forceDown = 0;
 
