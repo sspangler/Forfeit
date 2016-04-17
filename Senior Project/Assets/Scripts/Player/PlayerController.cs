@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour {
 	[HideInInspector] public bool isGrounded;
 
 	float forceDown;
-	//[HideInInspector] 
+	[HideInInspector] 
 	public bool leftDown, rightDown, isGroundLeft, isGroundRight;
 
 	[HideInInspector] public bool onOneWay;
@@ -33,9 +33,9 @@ public class PlayerController : MonoBehaviour {
 	public SlopeDetector groundCheckR;
 	public SlopeDetector groundCheckL;
 
-	public bool leftMove, rightMove, downMove, interactDown, leftAttack, rightAttack, jumpDown;
+	bool leftMove, rightMove, downMove, interactDown, leftAttack, rightAttack, jumpDown;
 
-	public bool facingLeft, facingRight;
+	bool facingLeft, facingRight;
 
 	// Use this for initialization
 	void Start () {
@@ -96,6 +96,8 @@ public class PlayerController : MonoBehaviour {
 
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			jumpDown = true;
+		} else if (Input.GetKeyUp (KeyCode.Space)) {
+			jumpDown = false;
 		}
 
 		if (Input.GetKey (KeyCode.S)) {

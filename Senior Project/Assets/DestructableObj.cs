@@ -32,4 +32,8 @@ public class DestructableObj : MonoBehaviour {
 	void DropStuff () {
 
 	}
+
+	public void TakeDamage (float damage) {
+		health -= damage;
+	}
 }

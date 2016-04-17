@@ -36,5 +36,9 @@ public class ProjectileCollision : MonoBehaviour {
 			playerStats.health -= projectileStats.damage;
 			Destroy(this.gameObject);
 		}
+
+		if (col.transform.tag == "DestroyTaskObj" && transform.tag == "PlayerProjectile") {
+			col.transform.GetComponent<DestructableObj> ().TakeDamage (damage);
+		}
 	}
 }

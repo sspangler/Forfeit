@@ -67,5 +67,9 @@ public class MeleeWeapons : MonoBehaviour {
 			col.gameObject.GetComponent<EnemyStats> ().TakeDamage (slashDamage, slashDamage, smashingDamage);
 			col.gameObject.GetComponent<EnemyStats> ().KnockBack (knockBack, transform.position);
 		}
+
+		if (col.tag == "DestroyTaskObj") {
+			col.GetComponent<DestructableObj> ().TakeDamage (smashingDamage + slashDamage + pierceDamage);
+		}
 	}
 }

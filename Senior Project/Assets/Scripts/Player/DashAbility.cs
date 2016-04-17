@@ -11,8 +11,8 @@ public class DashAbility : MonoBehaviour {
 	public int dashAmount;
 	public int dashCount;
 
-	public float leftButtonCooldown = .5f;
-	float rightButtonCooldown = .5f;
+	public float leftButtonCooldown = .15f;
+	float rightButtonCooldown = .15f;
 	public int leftButtonCount = 0;
 	int rightButtonCount = 0;
 
@@ -40,14 +40,14 @@ public class DashAbility : MonoBehaviour {
 		//double tap left
 		if (Input.GetKeyDown (KeyCode.A) && playerCont.isGrounded) {
 			if (leftButtonCooldown > 0 && leftButtonCount == 1) {
-				playerRig.AddForce (Vector2.left * dashPower * 750);
+				playerRig.AddForce (Vector2.left * dashPower * 100);
 			} else {
 				leftButtonCooldown = .5f;
 				leftButtonCount += 1;
 			}
 		} else if (Input.GetKeyDown (KeyCode.D) && playerCont.isGrounded) {
 			if (rightButtonCooldown > 0 && rightButtonCount == 1) {
-				playerRig.AddForce (Vector2.right * dashPower * 750);
+				playerRig.AddForce (Vector2.right * dashPower * 100);
 			} else {
 				rightButtonCooldown = .5f;
 				rightButtonCount += 1;
