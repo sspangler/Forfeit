@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour {
 
 	bool leftMove, rightMove, downMove, interactDown, leftAttack, rightAttack, jumpDown;
 
-	bool facingLeft, facingRight;
+	bool facingLeft, facingRight = true;
 
 	// Use this for initialization
 	void Start () {
@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour {
 		playerCol = GetComponent<Collider2D> ();
 		activeWeaponScript = weapon1.GetComponent<MonoBehaviour> ();
 		activeWeaponNum = 1;
-		jumpForce = 10 + (stats.strength * .5f) * (stats.agility * .25f);
+		jumpForce = 500;
 		jumpsLeft = amountOfJumps;
 
 	}
@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviour {
 		if (!isGrounded) {
 			playerRigidbody.velocity += new Vector2 (0, forceDown);
 			if (forceDown > -.1f)
-				forceDown -= 1f * Time.deltaTime;
+				forceDown -= 2f * Time.deltaTime;
 		} else 
 			forceDown = 0;
 
@@ -130,12 +130,12 @@ public class PlayerController : MonoBehaviour {
 		// W for doors/stairs S for going through certain platforms
 		if (jumpDown && !downMove) {
 			if (isGrounded) { 
-				playerRigidbody.velocity = new Vector2 (playerRigidbody.velocity.x, jumpForce);
+				playerRigidbody.AddForce (Vector2.up * jumpForce);
 				jumpsLeft--;
 				jumpOffGround = true;
 				jumpDown = false;
 			} else if (jumpsLeft > 0 && (jumpsLeft > 1 || jumpOffGround)) { // for double jumps
-				playerRigidbody.velocity = new Vector2 (playerRigidbody.velocity.x, jumpForce);
+				playerRigidbody.AddForce (Vector2.up * jumpForce);
 				jumpsLeft--;
 				jumpDown = false;
 			}

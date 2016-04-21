@@ -18,6 +18,7 @@ public class StatsCanvas : MonoBehaviour {
 		
 	void OnLevelWasLoaded () {
 		gameStarted = true;
+		GetComponent<Canvas> ().enabled = false;
 	}
 
 	public void UpdateStats () {

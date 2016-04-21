@@ -16,7 +16,7 @@ public class FindKey : MonoBehaviour {
 	void Start () {
 		levelGen = GameObject.FindGameObjectWithTag ("GameController").GetComponent<LevelGenerator> ();
 		SpawnExitKey ();
-		taskText = GameObject.Find ("Player UI/TaskImage/TaskText").GetComponent<Text> ();
+		taskText = GameObject.Find ("Player UI/TaskText").GetComponent<Text> ();
 		taskText.text = "Find the Key!";
 	}
 

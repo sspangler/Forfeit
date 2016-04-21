@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class AbilitySelection : MonoBehaviour {
 	
@@ -38,12 +39,16 @@ public class AbilitySelection : MonoBehaviour {
 			if (availPoints > 0 || bonusHealth) {
 				bonusHealth = !bonusHealth;
 				if (bonusHealth && availPoints > 0) {
-					playerStats.health += 2;
+					playerStats.health += 25;
 					availPoints -= 1;
 				} else if (!bonusHealth) {
-					playerStats.health -= 2;
+					playerStats.health -= 25;
 					availPoints += 1;
 				}
+				if (passive.GetComponent<Button> ().image.color != Color.yellow)
+					passive.GetComponent<Button> ().image.color = Color.yellow;
+				else
+					passive.GetComponent<Button> ().image.color = Color.white;
 			}
 		} else if (passive.name == "Extra Movement Speed") {
 			if (availPoints > 0 || movementSpeed) {
@@ -55,6 +60,10 @@ public class AbilitySelection : MonoBehaviour {
 					playerCont.speed -= 2;
 					availPoints += 1;
 				}
+				if (passive.GetComponent<Button> ().image.color != Color.yellow)
+					passive.GetComponent<Button> ().image.color = Color.yellow;
+				else
+					passive.GetComponent<Button> ().image.color = Color.white;
 			}
 		} else if (passive.name == "Added Strength") {
 			if (availPoints > 0 || strengthIncrease) {
@@ -66,6 +75,10 @@ public class AbilitySelection : MonoBehaviour {
 					playerStats.strength -= 1;
 					availPoints += 1;
 				}
+				if (passive.GetComponent<Button> ().image.color != Color.yellow)
+					passive.GetComponent<Button> ().image.color = Color.yellow;
+				else
+					passive.GetComponent<Button> ().image.color = Color.white;
 			}
 		} else if (passive.name == "Added Dexterity") {
 			if (availPoints > 0 || dexterityIncrease) {
@@ -77,6 +90,10 @@ public class AbilitySelection : MonoBehaviour {
 					playerStats.dexterity -= 1;
 					availPoints += 1;
 				}
+				if (passive.GetComponent<Button> ().image.color != Color.yellow)
+					passive.GetComponent<Button> ().image.color = Color.yellow;
+				else
+					passive.GetComponent<Button> ().image.color = Color.white;
 			}
 		} else if (passive.name == "Added Agility") {
 			if (availPoints > 0 || agilityIncrease) {
@@ -88,6 +105,10 @@ public class AbilitySelection : MonoBehaviour {
 					playerStats.agility -= 1;
 					availPoints += 1;
 				}
+				if (passive.GetComponent<Button> ().image.color != Color.yellow)
+					passive.GetComponent<Button> ().image.color = Color.yellow;
+				else
+					passive.GetComponent<Button> ().image.color = Color.white;
 			}
 		} else if (passive.name == "Double Jump") {
 			if (availPoints > 0 || doubleJump) {
@@ -99,6 +120,10 @@ public class AbilitySelection : MonoBehaviour {
 					playerCont.amountOfJumps -= 1;
 					availPoints += 1;
 				}
+				if (passive.GetComponent<Button> ().image.color != Color.yellow)
+					passive.GetComponent<Button> ().image.color = Color.yellow;
+				else
+					passive.GetComponent<Button> ().image.color = Color.white;
 			}
 		} else if (passive.name == "Ground Dash") {
 			if (availPoints > 0 || groundDash) {
@@ -110,6 +135,10 @@ public class AbilitySelection : MonoBehaviour {
 					availPoints += 1;
 					Destroy (player.gameObject.GetComponent<DashAbility> ());
 				}
+				if (passive.GetComponent<Button> ().image.color != Color.yellow)
+					passive.GetComponent<Button> ().image.color = Color.yellow;
+				else
+					passive.GetComponent<Button> ().image.color = Color.white;
 			}
 		} else if (passive.name == "Self Heal") {
 			if (availPoints > 0 || selfHeal) {
@@ -121,6 +150,10 @@ public class AbilitySelection : MonoBehaviour {
 					Destroy (player.gameObject.GetComponent<SelfHeal> ());
 					availPoints += 1;
 				}
+				if (passive.GetComponent<Button> ().image.color != Color.yellow)
+					passive.GetComponent<Button> ().image.color = Color.yellow;
+				else
+					passive.GetComponent<Button> ().image.color = Color.white;
 			}
 		} else if (passive.name == "Invincibility") {
 			if (availPoints > 0 || invincibility) {
@@ -132,6 +165,10 @@ public class AbilitySelection : MonoBehaviour {
 					Destroy (player.gameObject.GetComponent<Invincibility> ());
 					availPoints += 1;
 				}
+				if (passive.GetComponent<Button> ().image.color != Color.yellow)
+					passive.GetComponent<Button> ().image.color = Color.yellow;
+				else
+					passive.GetComponent<Button> ().image.color = Color.white;
 			}
 		} else if (passive.name == "Mass Damage") {
 			if (availPoints > 0 || massDamage) {
@@ -143,6 +180,10 @@ public class AbilitySelection : MonoBehaviour {
 					Destroy (player.gameObject.GetComponent<MassDamage> ());
 					availPoints += 1;
 				}
+				if (passive.GetComponent<Button> ().image.color != Color.yellow)
+					passive.GetComponent<Button> ().image.color = Color.yellow;
+				else
+					passive.GetComponent<Button> ().image.color = Color.white;
 			}
 		}
 
@@ -151,7 +192,6 @@ public class AbilitySelection : MonoBehaviour {
 		} else {
 			abilTracker.abilities.Remove (passive.name);
 		}
-			
 
 		statsCanvas.UpdateStats();
 	}
