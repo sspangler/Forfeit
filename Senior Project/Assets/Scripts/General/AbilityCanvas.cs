@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class AbilityCanvas : MonoBehaviour {
 	GameObject mainCamera;
@@ -11,11 +12,13 @@ public class AbilityCanvas : MonoBehaviour {
 
 	bool toChracter;
 
+	public GameObject[] skills;
+
 	// Use this for initialization
 	void Start () {
 		difMod = GameObject.FindGameObjectWithTag("GameController").GetComponent<DifficultyModifier> ();
 		characterCanvas = GameObject.Find ("CharacterCanvas");
-
+		skills = GameObject.FindGameObjectsWithTag ("SkillButton");
 		mainCamera = Camera.main.gameObject;
 	}
 	
@@ -25,8 +28,8 @@ public class AbilityCanvas : MonoBehaviour {
 			mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, characterPos, 10 * Time.deltaTime);
 			if (mainCamera.transform.position == characterPos) {
 				toChracter = false;
-				characterCanvas.SetActive(true);
-				this.gameObject.SetActive(false);
+				characterCanvas.GetComponent<Canvas> ().enabled = true;
+				this.gameObject.GetComponent<Canvas> ().enabled = false;
 			}
 		}
 	}
@@ -43,5 +46,11 @@ public class AbilityCanvas : MonoBehaviour {
 
 	public void moveToCharacter () {
 		toChracter = true;
+	}
+
+	public void resetSkills () {
+		foreach (GameObject skill in skills) {
+			skill.GetComponent<Button> ().image.color = Color.white;
+		}
 	}
 }

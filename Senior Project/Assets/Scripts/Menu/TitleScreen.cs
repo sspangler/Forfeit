@@ -13,9 +13,9 @@ public class TitleScreen : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		abilitiesCanvas.SetActive (false);
-		characterCanvas.SetActive(false);
-		statsCanvas.SetActive (false);
+		abilitiesCanvas.GetComponent<Canvas> ().enabled = false;
+		characterCanvas.GetComponent<Canvas> ().enabled = false;
+		statsCanvas.GetComponent<Canvas> ().enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -27,8 +27,8 @@ public class TitleScreen : MonoBehaviour {
 			mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, characterPos, 15 * Time.deltaTime);
 			if (mainCamera.transform.position == characterPos) {
 				toCharacter = false;
-				characterCanvas.SetActive(true);
-				statsCanvas.SetActive(true);
+				characterCanvas.GetComponent<Canvas> ().enabled = true;
+				statsCanvas.GetComponent<Canvas> ().enabled = true;
 				this.gameObject.SetActive(false);
 			}
 		}

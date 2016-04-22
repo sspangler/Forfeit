@@ -20,6 +20,8 @@ public class BasicMagicAttack : MonoBehaviour {
 	Rigidbody2D enemyRigidbody;
 	Vector2 direction;
 
+	SpriteRenderer spriterend;
+
 
 	// Use this for initialization
 	void Start () {
@@ -27,6 +29,8 @@ public class BasicMagicAttack : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag ("Player");
 		cooldownTimer = cooldown;
 		delayTimer = delay;
+		spriterend = GetComponent<SpriteRenderer> ();
+
 	}
 	
 	// Update is called once per frame
@@ -46,6 +50,12 @@ public class BasicMagicAttack : MonoBehaviour {
 			transform.Translate (direction.normalized * speed * Time.fixedDeltaTime);
 		}
 
+		if (inRange && player.transform.position.x < transform.position.x) {
+			spriterend.flipX = true;
+		} else if (inRange && player.transform.position.x > transform.position.x) {
+			spriterend.flipX = false;
+		}
+
 	}
 
 	void Fire () {
@@ -54,6 +64,7 @@ public class BasicMagicAttack : MonoBehaviour {
 			GameObject proj = (GameObject)Instantiate (projectile, transform.position, Quaternion.identity);
 			proj.GetComponent<Rigidbody2D> ().velocity = direction.normalized * shotSpeed;
 			proj.GetComponent<Rigidbody2D> ().gravityScale = 0;
+			proj.GetComponent<ProjectileStats> ().damage = GetComponent<EnemyStats> ().damage;
 		}
 		delayTimer = delay;
 		cooldownTimer = cooldown;
@@ -64,5 +75,4 @@ public class BasicMagicAttack : MonoBehaviour {
 			inRange = true;
 		}
 	}
-
 }

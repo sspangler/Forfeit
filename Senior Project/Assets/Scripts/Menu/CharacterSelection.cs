@@ -32,7 +32,7 @@ public class CharacterSelection : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		abilitySelection = GameObject.FindGameObjectWithTag ("GameController").GetComponent<AbilitySelection> ();;
-		abilitiesCanvas.SetActive (false);
+		abilitiesCanvas.GetComponent<Canvas> ().enabled = false;
 		characterPos = GameObject.FindGameObjectWithTag ("Player").transform.position;
 
 	}
@@ -43,7 +43,7 @@ public class CharacterSelection : MonoBehaviour {
 			mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, abilitiesPos, 10 * Time.deltaTime);
 			if (mainCamera.transform.position == abilitiesPos) {
 				toAbilities = false;
-				abilitiesCanvas.SetActive(true);
+				abilitiesCanvas.GetComponent<Canvas> ().enabled = true;
 				selectedCharacter = GameObject.FindGameObjectWithTag("Player");
 				abilitiesCanvas.GetComponent<AbilityCanvas> ().player = selectedCharacter;
 				abilitySelection.player = selectedCharacter;
@@ -52,7 +52,7 @@ public class CharacterSelection : MonoBehaviour {
 				abilitySelection.availPoints = selectedCharacter.GetComponent<PlayerStats>().avalPoints;
 				abilitySelection.startpoints = abilitySelection.availPoints;
 				statsCanvas.UpdateStats ();
-				this.gameObject.SetActive(false);
+				this.gameObject.GetComponent<Canvas> ().enabled = false;
 			}
 		}
 
@@ -60,8 +60,8 @@ public class CharacterSelection : MonoBehaviour {
 			mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, startPos, 15 * Time.deltaTime);
 			if (mainCamera.transform.position == startPos) {
 				toStart = false;
-				titleCanvas.SetActive(true);
-				this.gameObject.SetActive(false);
+				titleCanvas.SetActive (true);
+				this.gameObject.GetComponent<Canvas> ().enabled = false;
 			}
 		}
 	}
@@ -78,6 +78,7 @@ public class CharacterSelection : MonoBehaviour {
 		}
 
 		statsCanvas.Invoke("UpdateStats", .1f);
+		abilitiesCanvas.GetComponent<AbilityCanvas> ().resetSkills ();
 		selectedCharacter = characters[curChar];
 		abilitySelection.ResetBools();
 		charNameText.text = selectedCharacter.name;
@@ -94,6 +95,7 @@ public class CharacterSelection : MonoBehaviour {
 			curChar += 1;
 		}
 
+		abilitiesCanvas.GetComponent<AbilityCanvas> ().resetSkills ();
 		statsCanvas.Invoke("UpdateStats", .1f);
 		selectedCharacter = characters[curChar];
 		abilitySelection.ResetBools();
