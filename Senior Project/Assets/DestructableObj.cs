@@ -22,7 +22,7 @@ public class DestructableObj : MonoBehaviour {
 				desObj.objsLeft--;
 				if (desObj.objsLeft == 0) {
 					GameObject.FindGameObjectWithTag ("ExitDoor").GetComponent<ExtDoor> ().taskComplete = true;
-					GameObject.Find("GameManager/Player UI/TaskImage/TaskText").GetComponent<Text>().text = "Task Complete!";
+					GameObject.Find("GameManager/Player UI/TaskText").GetComponent<Text>().text = "Task Complete!";
 				}
 			}
 			Destroy (this.gameObject);
