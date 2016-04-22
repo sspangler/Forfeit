@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
+//using UnityEditor;
 
 public class LevelGenerator : MonoBehaviour {
 	public int smallDim;
@@ -35,59 +35,65 @@ public class LevelGenerator : MonoBehaviour {
 	}
 
 	void OnLevelWasLoaded () {
-		int rowCounter = 0;
-		nextPos = Vector3.zero;
-		availRooms.Clear ();
-		GeneratedRooms.Clear ();
 
-		int diffLevel = GetComponent<DifficultyModifier> ().difModifier;
+		if (Application.loadedLevelName != "Final_Boss") {
+			int rowCounter = 0;
+			nextPos = Vector3.zero;
+			availRooms.Clear ();
+			GeneratedRooms.Clear ();
 
-		if (diffLevel == 1) {
-			Rooms.AddRange (tier1Rooms);
-			Rooms.AddRange (tier2Rooms);
-		} else if (diffLevel == 2) {
-			Rooms.AddRange (tier1Rooms);
-			Rooms.AddRange (tier2Rooms);
-			Rooms.AddRange (tier3Rooms);
-		} else if (diffLevel == 3) {
-			Rooms.AddRange (tier2Rooms);
-			Rooms.AddRange (tier3Rooms);
-			Rooms.AddRange (tier4Rooms);
-		} else if (diffLevel == 4) {
-			Rooms.AddRange (tier3Rooms);
-			Rooms.AddRange (tier4Rooms);
-			Rooms.AddRange (tier5Rooms);
-		} else {
-			Rooms.AddRange (tier4Rooms);
-			Rooms.AddRange (tier5Rooms);
-		}
+			int diffLevel = GetComponent<DifficultyModifier> ().difModifier;
 
-		while (levelRows * levelColumns > 100) {
-			levelRows--;
-			levelColumns--;
-		}
-
-		roomParentLayer = 1 << LayerMask.NameToLayer ("RoomParent");
-		
-		for (int i = 0; i < levelColumns; i++) {
-			
-			ChooseNextPiece();
-			
-			if (i == levelColumns - 1 && rowCounter != levelRows - 1) {
-				int num = Random.Range(0,levelColumns);
-				nextPos = Vector3.down * smallDim * (rowCounter+1);
-				nextPos += Vector3.left * num * smallDim;
-				i = -1;
-				rowCounter += 1;
+			if (diffLevel == 1) {
+				Rooms.AddRange (tier1Rooms);
+				Rooms.AddRange (tier2Rooms);
+			} else if (diffLevel == 2) {
+				Rooms.AddRange (tier1Rooms);
+				Rooms.AddRange (tier2Rooms);
+				Rooms.AddRange (tier3Rooms);
+			} else if (diffLevel == 3) {
+				Rooms.AddRange (tier2Rooms);
+				Rooms.AddRange (tier3Rooms);
+				Rooms.AddRange (tier4Rooms);
+			} else if (diffLevel == 4) {
+				Rooms.AddRange (tier3Rooms);
+				Rooms.AddRange (tier4Rooms);
+				Rooms.AddRange (tier5Rooms);
+			} else {
+				Rooms.AddRange (tier4Rooms);
+				Rooms.AddRange (tier5Rooms);
 			}
-		}
+
+			while (levelRows * levelColumns > 100) {
+				levelRows--;
+				levelColumns--;
+			}
+
+			roomParentLayer = 1 << LayerMask.NameToLayer ("RoomParent");
 		
-		PlacePlayer ();
-		SpawnExit ();
+			for (int i = 0; i < levelColumns; i++) {
+			
+				ChooseNextPiece ();
+			
+				if (i == levelColumns - 1 && rowCounter != levelRows - 1) {
+					int num = Random.Range (0, levelColumns);
+					nextPos = Vector3.down * smallDim * (rowCounter + 1);
+					nextPos += Vector3.left * num * smallDim;
+					i = -1;
+					rowCounter += 1;
+				}
+			}
+		
+			SpawnExit ();
+			PlacePlayer ();
 
+			int num1 = Random.Range (0, tasks.Count);
+			Instantiate (tasks [num1]);
+		} else {
+			GameObject player = GameObject.FindGameObjectWithTag ("Player");
+			player.transform.position = Vector3.zero;
+		}
 
-		int num1 = Random.Range (0, tasks.Count);
-		Instantiate (tasks [num1]);
 	}
 
 	void ChooseNextPiece () {

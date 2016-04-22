@@ -5,8 +5,9 @@ public class SelfHeal : MonoBehaviour {
 	PlayerStats stats;
 	public float chargeTime;
 
-	float timer;
+	public float timer;
 	bool ready;
+
 
 	// Use this for initialization
 	void Start () {
@@ -24,10 +25,12 @@ public class SelfHeal : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown (KeyCode.E) && ready) {
-			if (stats.maxHealth - stats.health <= 2)
-				stats.health = stats.maxHealth;
+			if (stats.maxHealth - stats.health <= 25)
+				stats.health += 25;
 			else
-				stats.health += 2;
+				stats.health = stats.maxHealth;
+
+			stats.UpdateHealth ();
 			ready = false;
 			timer = 0;
 		}

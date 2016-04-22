@@ -10,7 +10,7 @@ public class ClearRoom : MonoBehaviour {
 	public LevelGenerator levelGen;
 	public List<GameObject> availClearRooms = new List<GameObject> ();
 	public Text taskText;
-
+	public Sprite indicator;
 	// Use this for initialization
 	void Start () {
 		levelGen = GameObject.FindGameObjectWithTag ("GameController").GetComponent<LevelGenerator> ();

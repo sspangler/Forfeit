@@ -40,9 +40,11 @@ public class AbilitySelection : MonoBehaviour {
 				bonusHealth = !bonusHealth;
 				if (bonusHealth && availPoints > 0) {
 					playerStats.health += 25;
+					playerStats.maxHealth += 25;
 					availPoints -= 1;
 				} else if (!bonusHealth) {
 					playerStats.health -= 25;
+					playerStats.maxHealth += 25;
 					availPoints += 1;
 				}
 				if (passive.GetComponent<Button> ().image.color != Color.yellow)

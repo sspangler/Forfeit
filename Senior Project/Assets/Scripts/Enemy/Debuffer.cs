@@ -59,6 +59,7 @@ public class Debuffer : MonoBehaviour {
 		GameObject proj = (GameObject)Instantiate (projectile, transform.position , Quaternion.identity);
 		proj.GetComponent<Rigidbody2D> ().velocity = direction.normalized * shotSpeed;
 		proj.GetComponent<Rigidbody2D> ().gravityScale = 0;
+		proj.GetComponent<ProjectileStats> ().damage = GetComponent<EnemyStats> ().damage;
 		delay2 = 2;
 		cooldown2 = 5;
 	}

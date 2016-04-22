@@ -25,9 +25,7 @@ public class Patrol : MonoBehaviour {
 	}
 
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.P)) {
-			enemyRigidbody.velocity = new Vector2 (-10, 0);;
-		}
+		
 	}
 
 	// Update is called once per frame
@@ -40,7 +38,7 @@ public class Patrol : MonoBehaviour {
 				transform.Translate (Vector2.right * moveSpeed * Time.fixedDeltaTime);
 				spriterend.flipX = false;
 			}
-		} else if (rangeCounter == 2) {
+		} else if (rangeCounter >= 2) {
 			if (player.transform.position.x < transform.position.x  && isGroundLeft) { //left
 				spriterend.flipX = true;
 				moveLeft = true;

@@ -40,6 +40,7 @@ public class EnemyStats : MonoBehaviour {
 			if (graceTimer < 0) {
 				inGrace = false;
 				graceTimer = .1f;
+				GetComponent<SpriteRenderer> ().color = Color.white;
 			}
 		}
 
@@ -56,11 +57,19 @@ public class EnemyStats : MonoBehaviour {
 	}
 
 	public void TakeDamage (float slash, float pierce, float smash) {
-		health -= (slash * (1 -slashRes)) + (pierce * (1-pierceRes)) + (smash * (1-smashRes));
+		if (!inGrace) {
+			health -= (slash * (1 - slashRes)) + (pierce * (1 - pierceRes)) + (smash * (1 - smashRes));
+			GetComponent<SpriteRenderer> ().color = Color.red;
+			inGrace = true;
+		}
 	}
 
 	public void TakeRangedDamage (float damage) {
-		health -= damage;
+		if (!inGrace) {
+			health -= damage;
+			GetComponent<SpriteRenderer> ().color = Color.red;
+			inGrace = true;
+		}
 	}
 		
 	public void KnockBack (float knockback, Vector3 pos) {

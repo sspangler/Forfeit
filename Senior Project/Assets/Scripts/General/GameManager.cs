@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour {
 		sceneNum += 1;
 		if (level == 1) {
 			player = GameObject.FindGameObjectWithTag ("Player");
+			//playerUI.transform.GetChild (0).GetComponent<Slider> ().maxValue = player.GetComponent<PlayerStats> ().maxHealth;
 			playerUI.GetComponent<Canvas> ().enabled = true;
 			foreach (MonoBehaviour script in player.GetComponents<MonoBehaviour>()) {
 				script.enabled = true;

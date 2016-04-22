@@ -27,12 +27,19 @@ public class PlayerStats : MonoBehaviour {
 		DontDestroyOnLoad (this.gameObject);
 		healthSlider = GameObject.FindGameObjectWithTag ("PlayerUI").transform.Find ("HealthBar").GetComponent<Slider> ();
 		healthText = GameObject.FindGameObjectWithTag ("PlayerUI").transform.Find ("HealthBar/HealthText").GetComponent<Text>();
-		healthSlider.maxValue = maxHealth;
-		healthText.text = health + " / " + maxHealth;
-		healthSlider.value = health;
+//		maxHealth = health;
+//		healthSlider.maxValue = maxHealth;
+//		healthText.text = health + " / " + maxHealth;
+//		healthSlider.value = health;
 	}
 
 	void OnLevelWasLoaded () {
+		if (Application.loadedLevel == 1) {
+			maxHealth = health;
+			healthSlider.maxValue = maxHealth;
+			healthText.text = health + " / " + maxHealth;
+			healthSlider.value = health;
+		}
 		playerRig = GetComponent<Rigidbody2D> ();
 	}
 
@@ -78,5 +85,9 @@ public class PlayerStats : MonoBehaviour {
 
 	void Dead () {
 		Application.LoadLevel (0);
+	}
+
+	public void UpdateHealth () {
+		healthSlider.value = health;
 	}
 }
