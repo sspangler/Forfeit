@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
+
 
 public class AbilityCanvas : MonoBehaviour {
 	GameObject mainCamera;
@@ -8,17 +10,34 @@ public class AbilityCanvas : MonoBehaviour {
 	DifficultyModifier difMod;
 	Vector3 characterPos = new Vector3 (0,0,-10);
 
+	public GameObject[] bodyParts = new GameObject[5];
+	int bodyPartNum;
+	public Text bodyPartText;
+
 	public GameObject player;
 
 	bool toChracter;
 
-	public GameObject[] skills;
+	public List<GameObject> skills = new List<GameObject>();
 
 	// Use this for initialization
 	void Start () {
 		difMod = GameObject.FindGameObjectWithTag("GameController").GetComponent<DifficultyModifier> ();
 		characterCanvas = GameObject.Find ("CharacterCanvas");
-		skills = GameObject.FindGameObjectsWithTag ("SkillButton");
+		foreach (GameObject skill in GameObject.FindGameObjectsWithTag ("HeadItem"))
+			skills.Add (skill);
+		foreach (GameObject skill in GameObject.FindGameObjectsWithTag ("ChestItem"))
+			skills.Add (skill);
+		foreach (GameObject skill in GameObject.FindGameObjectsWithTag ("ArmItem"))
+			skills.Add (skill);
+		foreach (GameObject skill in GameObject.FindGameObjectsWithTag ("LegItem"))
+			skills.Add (skill);
+		foreach (GameObject skill in GameObject.FindGameObjectsWithTag ("MiscItem"))
+			skills.Add (skill);
+
+		for (int i = 1; i <= 4; i++)
+			bodyParts [i].SetActive (false);
+		
 		mainCamera = Camera.main.gameObject;
 	}
 	
@@ -52,5 +71,31 @@ public class AbilityCanvas : MonoBehaviour {
 		foreach (GameObject skill in skills) {
 			skill.GetComponent<Button> ().image.color = Color.white;
 		}
+	}
+
+	public void PrevAbilities () {
+		bodyParts [bodyPartNum].SetActive (false);
+		bodyPartNum--;
+		if (bodyPartNum < 0) {
+			bodyParts [bodyParts.Length-1].SetActive (true); 
+			bodyPartNum = bodyParts.Length-1;
+		}
+		else
+			bodyParts [bodyPartNum].SetActive (true);
+		
+		bodyPartText.text = bodyParts [bodyPartNum].name;
+	}
+
+	public void NextAbilities () {
+		bodyParts [bodyPartNum].SetActive (false);
+		bodyPartNum++;
+		if (bodyPartNum >= bodyParts.Length) {
+			bodyParts [0].SetActive (true);
+			bodyPartNum = 0;
+		}
+		else 
+			bodyParts [bodyPartNum].SetActive (true);
+
+		bodyPartText.text = bodyParts [bodyPartNum].name;
 	}
 }

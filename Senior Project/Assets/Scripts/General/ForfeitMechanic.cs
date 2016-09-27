@@ -19,12 +19,27 @@ public class ForfeitMechanic : MonoBehaviour {
 		abilTrack = GameObject.FindGameObjectWithTag ("GameController").GetComponent<AbilityTracker> ();
 
 		foreach (string ability in abilTrack.abilities) {
+			if (ability == "")
+				continue;
+			
 			GameObject button = (GameObject) Instantiate (Resources.Load("AbilityButtons/" + ability ), transform.position, Quaternion.identity);
 			button.transform.parent = this.gameObject.transform;
 			button.transform.localPosition = startPos + Vector2.right * 300 * i;
+			button.transform.localScale = new Vector3 (2, 2, 1);
 			button.name = ability;
+
 			button.GetComponent<Button> ().onClick.AddListener (() => {
-				abilSelect.SetAbilities(button);
+				if (button.tag == "HeadItem")
+					abilSelect.SetAbilities(button,0);
+				else if (button.tag == "ChestItem")
+					abilSelect.SetAbilities(button,1);
+				else if (button.tag == "ArmItem")
+					abilSelect.SetAbilities(button,2);
+				else if (button.tag == "LegItem")
+					abilSelect.SetAbilities(button,3);
+				else if (button.tag == "MiscItem")
+					abilSelect.SetAbilities(button,4);
+				
 				RemoveAbility(button.name);
 				Application.LoadLevel(Application.loadedLevel + 1);
 			});
