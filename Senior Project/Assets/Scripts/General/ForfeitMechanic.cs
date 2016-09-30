@@ -30,15 +30,15 @@ public class ForfeitMechanic : MonoBehaviour {
 
 			button.GetComponent<Button> ().onClick.AddListener (() => {
 				if (button.tag == "HeadItem")
-					abilSelect.SetAbilities(button,0);
+					abilSelect.HeadAbilites(button);
 				else if (button.tag == "ChestItem")
-					abilSelect.SetAbilities(button,1);
+					abilSelect.ChestAbilites(button);
 				else if (button.tag == "ArmItem")
-					abilSelect.SetAbilities(button,2);
+					abilSelect.ArmAbilites(button);
 				else if (button.tag == "LegItem")
-					abilSelect.SetAbilities(button,3);
+					abilSelect.LegAbilites(button);
 				else if (button.tag == "MiscItem")
-					abilSelect.SetAbilities(button,4);
+					abilSelect.MiscAbilites(button);
 				
 				RemoveAbility(button.name);
 				Application.LoadLevel(Application.loadedLevel + 1);

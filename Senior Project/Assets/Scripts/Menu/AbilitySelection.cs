@@ -58,7 +58,7 @@ public class AbilitySelection : MonoBehaviour {
 					playerStats.maxHealth += 25;
 				} else if (!bonusHealth) {
 					playerStats.health -= 25;
-					playerStats.maxHealth += 25;
+					playerStats.maxHealth -= 25;
 				}
 			}
 		}
@@ -183,7 +183,9 @@ public class AbilitySelection : MonoBehaviour {
 
 
 	public void ResetBools () {
-		abilTracker.abilities.Clear ();
+		//abilTracker.abilities.Clear ();
+		for (int i = 0; i < 5; i++)
+			abilTracker.abilities [i] = "";
 		bonusHealth = false;
 		movementSpeed = false;
 		strengthIncrease = false;
