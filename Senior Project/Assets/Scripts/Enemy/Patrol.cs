@@ -24,8 +24,9 @@ public class Patrol : MonoBehaviour {
 		spriterend = GetComponent<SpriteRenderer> ();
 	}
 
+
 	void Update () {
-		
+
 	}
 
 	// Update is called once per frame

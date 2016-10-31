@@ -11,10 +11,12 @@ public class LevelGenerator : MonoBehaviour {
 
 	List<GameObject> tier1Rooms, tier2Rooms, tier3Rooms, tier4Rooms, tier5Rooms;
 
-	public List<GameObject> Rooms; //list of rooms that can be spawned
+	[HideInInspector] public List<GameObject> Rooms; //list of rooms that can be spawned
 	public List<GameObject> tasks = new List<GameObject>(); //list of tasks that can be chosen to open the gate without penilty
 	[HideInInspector] public List<GameObject> GeneratedRooms = new List<GameObject>(); // rooms that are in this level
-	public List<GameObject> availRooms = new List<GameObject> (); //rooms that the exit can be put into
+	[HideInInspector] public List<GameObject> availRooms = new List<GameObject> (); //rooms that the exit can be put into
+	public List<GameObject> groundEnemies = new List<GameObject>();
+	public List<GameObject> flyingEnemies = new List<GameObject>();
 	public int levelColumns;
 	public int levelRows;
 	Vector3 nextPos;
@@ -23,10 +25,8 @@ public class LevelGenerator : MonoBehaviour {
 	LayerMask roomParentLayer;
 	Vector3 playerPos;
 
-	SpawnEnemies spawnEnemies;
 
 	void Start () {
-		spawnEnemies = GetComponent<SpawnEnemies> ();
 		tier1Rooms = Resources.LoadAll<GameObject> ("Rooms/Tier1").ToList ();
 		tier2Rooms = Resources.LoadAll<GameObject> ("Rooms/Tier2").ToList ();
 		tier3Rooms = Resources.LoadAll<GameObject> ("Rooms/Tier3").ToList ();
@@ -85,6 +85,7 @@ public class LevelGenerator : MonoBehaviour {
 			}
 		
 			SpawnExit ();
+			SpawnEnemies ();
 			PlacePlayer ();
 
 			int num1 = Random.Range (0, tasks.Count);
@@ -127,48 +128,6 @@ public class LevelGenerator : MonoBehaviour {
 		
 	}
 	
-	bool CheckSmall () {
-		RaycastHit2D hit = Physics2D.Raycast(nextPos + rayCastOffSet, Vector2.right, 1f, roomParentLayer);
-
-		if (hit.collider == null) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	bool CheckLarge () {
-		RaycastHit2D hitTop = Physics2D.Raycast(nextPos + rayCastOffSet, Vector2.right, smallDim, roomParentLayer);	
-		RaycastHit2D hitBottom = Physics2D.Raycast(nextPos + rayCastOffSet + Vector3.down * smallDim, Vector2.right, smallDim, roomParentLayer);
-
-		if (hitTop.collider == null && hitBottom.collider == null) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	bool CheckVert () {
-		RaycastHit2D hitTop = Physics2D.Raycast(nextPos + rayCastOffSet, Vector2.right, 1f, roomParentLayer);
-		RaycastHit2D hitBottom = Physics2D.Raycast(nextPos + rayCastOffSet, Vector2.right, 1f, roomParentLayer);
-
-		if (hitTop.collider == null && hitBottom.collider == null) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	bool CheckHorz () {
-		RaycastHit2D hit = Physics2D.Raycast(nextPos + rayCastOffSet, Vector2.right, smallDim, roomParentLayer);
-
-		if (hit.collider == null) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
 	void CreatePiece (int roomPiece) {
 		GameObject nextLevelPiece = (GameObject)Instantiate (Rooms [roomPiece], nextPos, Quaternion.identity);
 		nextPos += Vector3.right * nextLevelPiece.transform.localScale.x;
@@ -194,6 +153,20 @@ public class LevelGenerator : MonoBehaviour {
 		}
 
 		GeneratedRooms.RemoveAt (num1);
+	}
+
+	void SpawnEnemies () {
+		foreach (GameObject spawn in GameObject.FindGameObjectsWithTag("GroundEnemySpawn")) {
+			int num = Random.Range (0, groundEnemies.Count);
+			GameObject enemy = (GameObject) Instantiate (groundEnemies [num], spawn.transform.position, Quaternion.identity);
+			enemy.transform.SetParent(spawn.transform.parent);
+		}
+
+		foreach (GameObject spawn in GameObject.FindGameObjectsWithTag("FlyingEnemySpawn")) {
+			int num = Random.Range (0, flyingEnemies.Count);
+			GameObject enemy = (GameObject) Instantiate (flyingEnemies [num], spawn.transform.position, Quaternion.identity);
+			enemy.transform.SetParent(spawn.transform.parent);
+		}
 	}
 
 	void SpawnExit () {
@@ -255,5 +228,47 @@ public class LevelGenerator : MonoBehaviour {
 			return true;
 		else 
 			return false;
+	}
+
+	bool CheckSmall () {
+		RaycastHit2D hit = Physics2D.Raycast(nextPos + rayCastOffSet, Vector2.right, 1f, roomParentLayer);
+
+		if (hit.collider == null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	bool CheckLarge () {
+		RaycastHit2D hitTop = Physics2D.Raycast(nextPos + rayCastOffSet, Vector2.right, smallDim, roomParentLayer);	
+		RaycastHit2D hitBottom = Physics2D.Raycast(nextPos + rayCastOffSet + Vector3.down * smallDim, Vector2.right, smallDim, roomParentLayer);
+
+		if (hitTop.collider == null && hitBottom.collider == null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	bool CheckVert () {
+		RaycastHit2D hitTop = Physics2D.Raycast(nextPos + rayCastOffSet, Vector2.right, 1f, roomParentLayer);
+		RaycastHit2D hitBottom = Physics2D.Raycast(nextPos + rayCastOffSet, Vector2.right, 1f, roomParentLayer);
+
+		if (hitTop.collider == null && hitBottom.collider == null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	bool CheckHorz () {
+		RaycastHit2D hit = Physics2D.Raycast(nextPos + rayCastOffSet, Vector2.right, smallDim, roomParentLayer);
+
+		if (hit.collider == null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

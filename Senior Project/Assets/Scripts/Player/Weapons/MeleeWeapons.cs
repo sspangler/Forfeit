@@ -65,7 +65,7 @@ public class MeleeWeapons : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D col) {
 		if (col.tag == "Enemy" && !col.isTrigger) {
 			col.gameObject.GetComponent<EnemyStats> ().TakeDamage (slashDamage, slashDamage, smashingDamage);
-			col.gameObject.GetComponent<EnemyStats> ().KnockBack (knockBack, transform.position);
+			col.gameObject.GetComponent<EnemyStats> ().KnockBack (knockBack, transform.parent.transform.position);
 		}
 
 		if (col.tag == "DestroyTaskObj") {

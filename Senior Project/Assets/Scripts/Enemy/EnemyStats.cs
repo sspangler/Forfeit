@@ -26,11 +26,20 @@ public class EnemyStats : MonoBehaviour {
 	SpriteRenderer rend;
 	Rigidbody2D rigBody;
 
+	public Text healthText;
+	public Slider healthSlider;
+
 	// Use this for initialization
 	void Start () {
 		maxHealth = health;
 		rend = GetComponent<SpriteRenderer> ();
 		rigBody = GetComponent<Rigidbody2D> ();
+		healthSlider = transform.Find("HealthBarCanvas/Slider").GetComponent<Slider>();
+
+		maxHealth = health;
+		healthSlider.maxValue = maxHealth;
+		healthSlider.value = health;
+
 	}
 	
 	// Update is called once per frame
@@ -61,6 +70,7 @@ public class EnemyStats : MonoBehaviour {
 			health -= (slash * (1 - slashRes)) + (pierce * (1 - pierceRes)) + (smash * (1 - smashRes));
 			GetComponent<SpriteRenderer> ().color = Color.red;
 			inGrace = true;
+			healthSlider.value = health;
 		}
 	}
 
@@ -69,6 +79,7 @@ public class EnemyStats : MonoBehaviour {
 			health -= damage;
 			GetComponent<SpriteRenderer> ().color = Color.red;
 			inGrace = true;
+			healthSlider.value = health;
 		}
 	}
 		
