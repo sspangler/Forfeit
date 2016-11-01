@@ -5,6 +5,8 @@ public class ChargeAttack : MonoBehaviour {
 
 	bool inRange;
 
+	float timer = 5f;
+
 	public float cooldown = 4f;
 	public float delay = 1f;
 
@@ -22,6 +24,11 @@ public class ChargeAttack : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (inRange && cooldown < 0) {
+			timer -= Time.deltaTime;
+			if (timer < 0) {
+				inRange = false;
+				timer = 5f;
+			}
 			delay -= Time.deltaTime;
 			if (delay <= 0)
 				Charge ();

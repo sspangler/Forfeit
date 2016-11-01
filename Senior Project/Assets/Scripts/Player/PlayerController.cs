@@ -125,7 +125,6 @@ public class PlayerController : MonoBehaviour {
 			transform.Translate (Vector2.right * speed * Time.fixedDeltaTime, Space.World);
 		}
 			
-
 		// up and down movement
 		// W for doors/stairs S for going through certain platforms
 		if (jumpDown && !downMove) {

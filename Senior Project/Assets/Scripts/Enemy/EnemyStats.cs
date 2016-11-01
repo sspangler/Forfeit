@@ -27,6 +27,7 @@ public class EnemyStats : MonoBehaviour {
 	Rigidbody2D rigBody;
 
 	public Text healthText;
+	GameObject healthCanvas;
 	public Slider healthSlider;
 
 	// Use this for initialization
@@ -34,8 +35,10 @@ public class EnemyStats : MonoBehaviour {
 		maxHealth = health;
 		rend = GetComponent<SpriteRenderer> ();
 		rigBody = GetComponent<Rigidbody2D> ();
+		healthCanvas = GameObject.Find ("HealthBarCanvas");
 		healthSlider = transform.Find("HealthBarCanvas/Slider").GetComponent<Slider>();
 
+		healthCanvas.SetActive (false);
 		maxHealth = health;
 		healthSlider.maxValue = maxHealth;
 		healthSlider.value = health;
@@ -75,6 +78,7 @@ public class EnemyStats : MonoBehaviour {
 	}
 
 	public void TakeRangedDamage (float damage) {
+		healthCanvas.SetActive (true);
 		if (!inGrace) {
 			health -= damage;
 			GetComponent<SpriteRenderer> ().color = Color.red;
