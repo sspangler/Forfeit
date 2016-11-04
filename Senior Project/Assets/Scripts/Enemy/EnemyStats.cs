@@ -27,22 +27,18 @@ public class EnemyStats : MonoBehaviour {
 	Rigidbody2D rigBody;
 
 	public Text healthText;
-	GameObject healthCanvas;
-	public Slider healthSlider;
+	public Transform healthBar;
 
+	public float healthScale;
 	// Use this for initialization
 	void Start () {
 		maxHealth = health;
 		rend = GetComponent<SpriteRenderer> ();
 		rigBody = GetComponent<Rigidbody2D> ();
-		healthCanvas = GameObject.Find ("HealthBarCanvas");
-		healthSlider = transform.Find("HealthBarCanvas/Slider").GetComponent<Slider>();
+		healthBar = transform.Find ("HealthBar/Foreground").transform;
 
-		healthCanvas.SetActive (false);
 		maxHealth = health;
-		healthSlider.maxValue = maxHealth;
-		healthSlider.value = health;
-
+		healthScale = transform.Find ("HealthBar/Foreground").localScale.x / maxHealth;
 	}
 	
 	// Update is called once per frame
@@ -73,17 +69,16 @@ public class EnemyStats : MonoBehaviour {
 			health -= (slash * (1 - slashRes)) + (pierce * (1 - pierceRes)) + (smash * (1 - smashRes));
 			GetComponent<SpriteRenderer> ().color = Color.red;
 			inGrace = true;
-			healthSlider.value = health;
+			healthBar.localScale = new Vector3 ((health / maxHealth), 1, 1);
 		}
 	}
 
 	public void TakeRangedDamage (float damage) {
-		healthCanvas.SetActive (true);
 		if (!inGrace) {
 			health -= damage;
 			GetComponent<SpriteRenderer> ().color = Color.red;
 			inGrace = true;
-			healthSlider.value = health;
+			healthBar.localScale = new Vector3 ((health / maxHealth), 1, 1);
 		}
 	}
 		
