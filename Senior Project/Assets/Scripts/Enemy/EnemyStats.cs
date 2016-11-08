@@ -29,6 +29,9 @@ public class EnemyStats : MonoBehaviour {
 	public Text healthText;
 	public Transform healthBar;
 
+	public AudioClip hit;
+	public AudioSource audioSource;
+
 	public float healthScale;
 	// Use this for initialization
 	void Start () {
@@ -66,10 +69,13 @@ public class EnemyStats : MonoBehaviour {
 
 	public void TakeDamage (float slash, float pierce, float smash) {
 		if (!inGrace) {
+			audioSource.PlayOneShot (hit);
+		
 			health -= (slash * (1 - slashRes)) + (pierce * (1 - pierceRes)) + (smash * (1 - smashRes));
 			GetComponent<SpriteRenderer> ().color = Color.red;
 			inGrace = true;
 			healthBar.localScale = new Vector3 ((health / maxHealth), 1, 1);
+
 		}
 	}
 
