@@ -56,7 +56,7 @@ public class AbilityCanvas : MonoBehaviour {
 	public void LoadLevel () {
 		Application.LoadLevel (1);
 		player.transform.position = new Vector3 (0f, 0f, -.1f);
-		player.transform.localScale = new Vector3 (5f, 5f, 1f);
+		player.transform.localScale = new Vector3 (1f, 1f, 1f);
 		player.AddComponent<Rigidbody2D> ();
 		player.GetComponent<Rigidbody2D>().freezeRotation = true;
 		difMod.InvokeRepeating ("UpDifficulty", difMod.secondsPerDif, difMod.secondsPerDif);
