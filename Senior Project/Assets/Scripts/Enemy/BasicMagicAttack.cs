@@ -30,7 +30,8 @@ public class BasicMagicAttack : MonoBehaviour {
 		cooldownTimer = cooldown;
 		delayTimer = delay;
 		spriterend = GetComponent<SpriteRenderer> ();
-
+		cooldownTimer = .5f;
+		delayTimer = .5f;
 	}
 	
 	// Update is called once per frame

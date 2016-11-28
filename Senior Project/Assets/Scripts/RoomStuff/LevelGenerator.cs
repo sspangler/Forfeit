@@ -36,7 +36,7 @@ public class LevelGenerator : MonoBehaviour {
 
 	void OnLevelWasLoaded () {
 
-		if (Application.loadedLevelName != "Final_Boss") {
+		if (Application.loadedLevelName != "Final_Boss" && Application.loadedLevelName != "Abilities") {
 			int rowCounter = 0;
 			nextPos = Vector3.zero;
 			availRooms.Clear ();

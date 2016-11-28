@@ -79,7 +79,7 @@ public class PlayerStats : MonoBehaviour {
 	public void TakeKnockBack (Vector3 pos, float knockback) {
 		Vector2 direction = transform.position - pos;
 		Vector2 force = direction.normalized;
-		playerRig.velocity = Vector2.up * 20;
+		playerRig.velocity = Vector2.up * 10;
 		playerRig.velocity = force * knockback * 3;
 	}
 

@@ -20,7 +20,7 @@ public class EnemyStats : MonoBehaviour {
 	float graceTimer;
 
 	public bool dropKey;
-
+	public bool isBoss;
 	GameObject player;
 
 	SpriteRenderer rend;
@@ -59,6 +59,10 @@ public class EnemyStats : MonoBehaviour {
 			if (dropKey) {
 				GameObject.FindGameObjectWithTag ("ExitDoor").GetComponent<ExtDoor> ().taskComplete = true;
 				GameObject.Find("GameManager/Player UI/TaskImage/TaskText").GetComponent<Text>().text = "Task Complete!";
+			}
+
+			if (isBoss) {
+				Invoke ("LoadMenu", 5f);
 			}
 
 			GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameManager> ().UpdateUI (goldDrop);
@@ -108,5 +112,10 @@ public class EnemyStats : MonoBehaviour {
 			col.gameObject.GetComponent<PlayerStats> ().TakeDamage (contactDamage);
 			col.gameObject.GetComponent<PlayerStats> ().TakeKnockBack (transform.position, knockback);
 		}
+	}
+
+
+	void LoadMenu () {
+		Application.LoadLevel (0);
 	}
 }
