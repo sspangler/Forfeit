@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class EnemyStats : MonoBehaviour {
 
@@ -19,6 +20,7 @@ public class EnemyStats : MonoBehaviour {
 	bool inGrace;
 	float graceTimer;
 
+	public List<GameObject> itemDrops = new List<GameObject> ();
 	public bool dropKey;
 	public bool isBoss;
 	GameObject player;
@@ -56,6 +58,8 @@ public class EnemyStats : MonoBehaviour {
 		}
 
 		if (health <= 0) {
+			ItemDrops ();
+
 			if (dropKey) {
 				GameObject.FindGameObjectWithTag ("ExitDoor").GetComponent<ExtDoor> ().taskComplete = true;
 				GameObject.Find("GameManager/Player UI/TaskImage/TaskText").GetComponent<Text>().text = "Task Complete!";
@@ -112,7 +116,11 @@ public class EnemyStats : MonoBehaviour {
 			col.gameObject.GetComponent<PlayerStats> ().TakeKnockBack (transform.position, knockback);
 		}
 	}
-
+		
+	void ItemDrops () {
+		int num1 = Random.Range (0, itemDrops.Count);
+		Instantiate(itemDrops[num1], transform.position, Quaternion.identity);
+	}
 
 	void LoadMenu () {
 		Application.LoadLevel (0);

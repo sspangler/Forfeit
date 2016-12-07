@@ -30,7 +30,7 @@ public class MassDamage : MonoBehaviour {
 				ready = true;
 		}
 
-		if (Input.GetKeyDown (KeyCode.E) && ready) {
+		if (Input.GetKeyDown (KeyCode.F) && ready) {
 			col.enabled = true;	
 			Invoke ("BlowShitUp", .1f);
 		}

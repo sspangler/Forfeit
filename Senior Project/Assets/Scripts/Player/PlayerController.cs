@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour {
 
 	int activeWeaponNum; 
 	[HideInInspector] public int amountOfJumps = 1;
-	//[HideInInspector] 
+	[HideInInspector] 
 	public int jumpsLeft;
 	bool jumpOffGround;
 
@@ -36,6 +36,9 @@ public class PlayerController : MonoBehaviour {
 	bool leftMove, rightMove, downMove, interactDown, leftAttack, rightAttack, jumpDown;
 
 	bool facingLeft, facingRight = true;
+
+	public GameObject selectedInteractable;
+	Vector2 handPos = new Vector2 (1.4f, 1.15f);
 
 	// Use this for initialization
 	void Start () {
@@ -52,10 +55,6 @@ public class PlayerController : MonoBehaviour {
 		
 	void Update () {
 
-		if (Input.GetKeyDown (KeyCode.L)) {
-			Application.LoadLevel (Application.loadedLevel + 1);
-		}
-
 		if (Input.GetKeyDown(KeyCode.Q)) {
 			if (weapon2 != null && weapon1 != null) {
 				if (activeWeaponNum == 1) {
@@ -71,6 +70,11 @@ public class PlayerController : MonoBehaviour {
 				}
 			}
 		}
+
+		//picking up weapons
+		if (Input.GetKeyDown (KeyCode.E)) {
+			PickUpWeapon ();
+		} 
 
 		if (Input.GetKey (KeyCode.A)) {
 			leftMove = true;
@@ -182,4 +186,68 @@ public class PlayerController : MonoBehaviour {
 			isGrounded = false;
 		}
 	}
+
+	void OnTriggerEnter2D (Collider2D col) {
+		if (col.tag == "Melee Weapon") {
+			selectedInteractable = col.gameObject;
+		}
+	}
+
+	void OnTriggerExit2D (Collider2D col) {
+		if (col.tag == "Melee Weapon" && col.gameObject == selectedInteractable) {
+			selectedInteractable = null;
+		}
+	}
+
+	void PickUpWeapon () {
+		if (weapon1 == null) {
+			weapon1 = selectedInteractable;
+			selectedInteractable.transform.SetParent (this.gameObject.transform);
+			weapon1.transform.localPosition = new Vector2 (handPos.x, handPos.y);
+			if (facingLeft)
+				weapon1.transform.localEulerAngles = new Vector3 (0, 0, 0);
+			if (activeWeaponNum == 2) {
+				weapon1.SetActive (false);
+			}
+			weapon1.GetComponent<MeleeWeapons> ().setPos ();
+		} else if (weapon2 == null) {
+			weapon2 = selectedInteractable;
+			selectedInteractable.transform.SetParent (this.gameObject.transform);
+			weapon2.transform.localPosition = new Vector2 (handPos.x, handPos.y);
+			if (facingLeft)
+				weapon2.transform.localEulerAngles = new Vector3 (0, 0, 0);
+			if (activeWeaponNum == 1) {
+				weapon2.SetActive (false);
+			}
+			weapon2.GetComponent<MeleeWeapons> ().setPos ();
+		} else if (weapon1 != null && weapon2 != null) {
+			if (activeWeaponNum == 1) {
+				weapon1.transform.SetParent (null);
+				weapon1 = selectedInteractable;
+				selectedInteractable.transform.SetParent (this.gameObject.transform);
+				weapon1.transform.localPosition = new Vector2 (handPos.x, handPos.y);
+				activeWeaponScript = weapon1.GetComponent<MonoBehaviour> ();
+				if (facingLeft)
+					weapon1.transform.localEulerAngles = new Vector3 (0, 0, 0);
+				if (activeWeaponNum == 2) {
+					weapon1.SetActive (false);
+				}
+				weapon1.GetComponent<MeleeWeapons> ().setPos ();
+			}
+			if (activeWeaponNum == 2) {
+				weapon2.transform.SetParent (null);
+				weapon2 = selectedInteractable;
+				selectedInteractable.transform.SetParent (this.gameObject.transform);
+				weapon2.transform.localPosition = new Vector2 (handPos.x, handPos.y);
+				activeWeaponScript = weapon2.GetComponent<MonoBehaviour> ();
+				if (facingLeft)
+					weapon2.transform.localEulerAngles = new Vector3 (0, 0, 0);
+				if (activeWeaponNum == 1) {
+					weapon1.SetActive (false);
+				}
+				weapon2.GetComponent<MeleeWeapons> ().setPos ();
+			}
+		}
+	}
+
 }

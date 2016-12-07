@@ -13,8 +13,8 @@ public class MeleeWeapons : MonoBehaviour {
 
 	BoxCollider2D weaponCol;
 
-	Vector3 startPos;
-	Vector3 startRot;
+	public Vector3 startPos;
+	public Vector3 startRot;
 
 	public bool swinging;
 	float timer;
@@ -22,8 +22,9 @@ public class MeleeWeapons : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		startPos = transform.localPosition;
-		startRot = transform.localEulerAngles;
+		//startPos = transform.localPosition;
+		//startRot = transform.localEulerAngles;
+		setPos();
 		weaponCol = GetComponent<BoxCollider2D> ();
 	}
 
@@ -31,8 +32,8 @@ public class MeleeWeapons : MonoBehaviour {
 	void Update () {
 		if (swinging) {
 			timer += Time.deltaTime;
-			if (timer < attackSpeed / 2)
-				transform.RotateAround (transform.parent.position, -transform.forward, attackSpeed * 1000 * Time.deltaTime);
+			if (timer < .25f)
+				transform.RotateAround (transform.parent.position, -transform.forward, 375 * Time.deltaTime);
 			else if (timer >= attackSpeed) {
 				timer = 0;
 				swinging = false;
@@ -71,5 +72,15 @@ public class MeleeWeapons : MonoBehaviour {
 		if (col.tag == "DestroyTaskObj") {
 			col.GetComponent<DestructableObj> ().TakeDamage (smashingDamage + slashDamage + pierceDamage);
 		}
+
+		if (col.tag == "EnemyProjectile") {
+			Destroy (col.gameObject);
+		}
+
+	}
+
+	public void setPos () {
+		startPos = transform.localPosition;
+		startRot = transform.localEulerAngles;
 	}
 }

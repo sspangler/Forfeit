@@ -14,7 +14,7 @@ public class SelfHeal : MonoBehaviour {
 		stats = GetComponent<PlayerStats> ();
 		chargeTime = 25f;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 	
@@ -24,7 +24,7 @@ public class SelfHeal : MonoBehaviour {
 				ready = true;
 		}
 
-		if (Input.GetKeyDown (KeyCode.E) && ready) {
+		if (Input.GetKeyDown (KeyCode.F) && ready) {
 			if (stats.maxHealth - stats.health <= 25)
 				stats.health += 25;
 			else
