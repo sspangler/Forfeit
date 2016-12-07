@@ -10,10 +10,10 @@ public class GameManager : MonoBehaviour {
 	public int coins;
 	public Text coinsText;
 
+
 	// Use this for initialization
 	void Start () {
 		DontDestroyOnLoad (this.gameObject);
-
 	}
 	
 	// Update is called once per frame

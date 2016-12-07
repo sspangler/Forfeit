@@ -11,4 +11,15 @@ public class AbilityTracker : MonoBehaviour {
 	//[3] is legs
 	//[4] is misc
 
+
+	void OnLevelWasLoaded () {
+		if (abilities.Count > 0) {
+			for (int i = 0; i < abilities.Count; i++) {
+				if (abilities [i] == "") {
+					abilities.RemoveAt (i);
+				}
+			}
+		}
+	}
+
 }

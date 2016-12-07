@@ -79,7 +79,6 @@ public class EnemyStats : MonoBehaviour {
 			GetComponent<SpriteRenderer> ().color = Color.red;
 			inGrace = true;
 			healthBar.localScale = new Vector3 ((health / maxHealth), 1, 1);
-
 		}
 	}
 

@@ -26,9 +26,11 @@ public class ProjectileStats : MonoBehaviour {
 		transform.position += transform.forward * speed * Time.deltaTime;
 	}
 
-	void OnCollisionEnter2D (Collision2D col) {
+	void OnTriggerEnter2D (Collider2D col) {
 		if (col.transform.tag == "Player") {
 			Destroy (this.gameObject);
+			playerStats = col.gameObject.GetComponent<PlayerStats> ();
+			playerStats.TakeDamage (damage);
 		}
 	}
 }

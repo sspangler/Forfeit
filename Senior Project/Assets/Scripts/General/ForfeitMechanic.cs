@@ -48,7 +48,8 @@ public class ForfeitMechanic : MonoBehaviour {
 	}
 
 	void RemoveAbility (string ability) {
-		abilTrack.abilities.Remove (ability);
+		int num1 = abilTrack.abilities.IndexOf(ability);
+		abilTrack.abilities.RemoveAt (num1);
 		Destroy (this.gameObject);
 	}
 }
