@@ -38,9 +38,10 @@ public class MeleeWeapons : MonoBehaviour {
 				timer = 0;
 				swinging = false;
 				canAttack = true;
-				weaponCol.enabled = false;
 				transform.localPosition = startPos;
 				transform.localEulerAngles = startRot;
+			} else if (timer >= .25f) {
+				weaponCol.enabled = false;
 			}
 		}
 	}

@@ -40,6 +40,7 @@ public class PlayerStats : MonoBehaviour {
 			healthText.text = health + " / " + maxHealth;
 			healthSlider.value = health;
 		}
+		UpdateHealth ();
 		playerRig = GetComponent<Rigidbody2D> ();
 	}
 
@@ -64,7 +65,10 @@ public class PlayerStats : MonoBehaviour {
 			if (protectedHits > 0)
 				protectedHits--;
 			else {
-				health -= damage;
+				if (health - damage < 0)
+					health = 1;
+				else 
+					health -= damage;
 				healthText.text = health + " / " + maxHealth;
 				healthSlider.value = health;
 			}
@@ -89,5 +93,6 @@ public class PlayerStats : MonoBehaviour {
 
 	public void UpdateHealth () {
 		healthSlider.value = health;
+		healthText.text = health.ToString() + "/ " + maxHealth;
 	}
 }

@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour {
 	public int coins;
 	public Text coinsText;
 
-
 	// Use this for initialization
 	void Start () {
 		DontDestroyOnLoad (this.gameObject);
@@ -43,5 +42,13 @@ public class GameManager : MonoBehaviour {
 	public void UpdateUI (int coinNum) {
 		coins += coinNum;
 		coinsText.text = coins.ToString ();
+	}
+
+	public void loadMenu () {
+		Invoke ("load", 4f);
+	}
+
+	void load () {
+		Application.LoadLevel (0);
 	}
 }

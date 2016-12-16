@@ -19,6 +19,7 @@ public class ChargeAttack : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		enemyRigidbody = GetComponent<Rigidbody2D> ();
+		cooldown = 1;
 	}
 	
 	// Update is called once per frame

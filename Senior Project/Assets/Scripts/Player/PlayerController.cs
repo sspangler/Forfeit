@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		//picking up weapons
-		if (Input.GetKeyDown (KeyCode.E)) {
+		if (Input.GetKeyDown (KeyCode.E) && selectedInteractable != null) {
 			PickUpWeapon ();
 		} 
 
@@ -220,9 +220,10 @@ public class PlayerController : MonoBehaviour {
 				weapon2.SetActive (false);
 			}
 			weapon2.GetComponent<MeleeWeapons> ().setPos ();
-		} else if (weapon1 != null && weapon2 != null) {
+		} else if (weapon1 != null && weapon2 != null) { //swap weapons with active
 			if (activeWeaponNum == 1) {
 				weapon1.transform.SetParent (null);
+				weapon1.GetComponent<BoxCollider2D> ().enabled = false;
 				weapon1 = selectedInteractable;
 				selectedInteractable.transform.SetParent (this.gameObject.transform);
 				weapon1.transform.localPosition = new Vector2 (handPos.x, handPos.y);
@@ -236,6 +237,7 @@ public class PlayerController : MonoBehaviour {
 			}
 			if (activeWeaponNum == 2) {
 				weapon2.transform.SetParent (null);
+				weapon2.GetComponent<BoxCollider2D> ().enabled = false;
 				weapon2 = selectedInteractable;
 				selectedInteractable.transform.SetParent (this.gameObject.transform);
 				weapon2.transform.localPosition = new Vector2 (handPos.x, handPos.y);

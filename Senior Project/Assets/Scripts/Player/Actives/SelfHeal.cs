@@ -25,10 +25,10 @@ public class SelfHeal : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown (KeyCode.F) && ready) {
-			if (stats.maxHealth - stats.health <= 25)
-				stats.health += 25;
-			else
+			if (stats.health + 25f > stats.maxHealth)
 				stats.health = stats.maxHealth;
+			else
+				stats.health += 25f;
 
 			stats.UpdateHealth ();
 			ready = false;

@@ -35,11 +35,26 @@ public class EnemyStats : MonoBehaviour {
 	public AudioSource audioSource;
 
 	public float healthScale;
+
+	public DifficultyModifier difMod;
 	// Use this for initialization
 	void Start () {
 		maxHealth = health;
 		rend = GetComponent<SpriteRenderer> ();
 		rigBody = GetComponent<Rigidbody2D> ();
+
+		//get dif mod and up diff if needed
+		difMod = GameObject.FindGameObjectWithTag ("GameController").GetComponent<DifficultyModifier> ();
+		if (difMod.difModifier > 1) {
+			health = health * 1.25f * (difMod.difModifier - 1);
+			damage = damage * 1.25f * (difMod.difModifier - 1);
+			contactDamage = contactDamage * 1.25f * (difMod.difModifier - 1);
+			//smashRes = smashRes * 1.25f * (difMod.difModifier - 1);
+			//pierceRes = pierceRes * 1.25f * (difMod.difModifier - 1);
+			//slashRes = slashRes * 1.25f * (difMod.difModifier - 1);
+		}
+
+
 		healthBar = transform.Find ("HealthBar/Foreground").transform;
 
 		maxHealth = health;
@@ -66,7 +81,7 @@ public class EnemyStats : MonoBehaviour {
 			}
 
 			if (isBoss) {
-				Invoke ("LoadMenu", 5f);
+				GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameManager> ().loadMenu ();
 			}
 
 			GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameManager> ().UpdateUI (goldDrop);
@@ -105,8 +120,10 @@ public class EnemyStats : MonoBehaviour {
 	}
 		
 	void RemovefromLists () {
-		if (transform.parent.GetComponent<EnemyCounter> () != null) {
-			transform.parent.GetComponent<EnemyCounter> ().enemyNum--;
+		if (transform.parent != null) {
+			if (transform.parent.GetComponent<EnemyCounter> () != null) {
+				transform.parent.GetComponent<EnemyCounter> ().enemyNum--;
+			}
 		}
 	}
 
@@ -118,8 +135,11 @@ public class EnemyStats : MonoBehaviour {
 	}
 		
 	void ItemDrops () {
-		int num1 = Random.Range (0, itemDrops.Count);
-		Instantiate(itemDrops[num1], transform.position, Quaternion.identity);
+		int num1 = Random.Range (0, 100);
+		if (num1 < 33) {
+			int num2 = Random.Range (0, itemDrops.Count);
+			Instantiate (itemDrops [num2], transform.position, Quaternion.identity);
+		}
 	}
 
 	void LoadMenu () {
